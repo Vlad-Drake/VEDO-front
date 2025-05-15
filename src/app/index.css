@@ -1,0 +1,99 @@
+:root {
+
+  --font-size: 16px;
+  --line-height: 1.5;
+  
+  /* Primary Colors */
+  --color-primary: #61892F; /*--my-green-color*/     /* основной (основной элемент, акцент) */
+  --color-secondary: #86C232; /*--my-light-green-color*/   /* дополнительный (hover, акценты) */
+
+  /* Neutrals / Grayscale */
+  --color-black: #222629; /*--my-black-color*/       /* фон, тёмный основной фон */
+  --color-dark-gray: #474B4F; /*--my-gray-color*/   /* второй уровень серого */
+  --color-gray: #6B6E70; /*--my-light-gray-color*/        /* текст второстепенный, бордеры */
+  --color-white: #FFFFFF; /*--my-white-color*/       /* текст, фон светлый */
+  /*#3E5B31, #6A8E3C ????????*/
+
+
+  font-family: Cascadia Code, Courier New, monospace;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+/*body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}*/
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+p,h1,h2,h3,h4,h5,h6 {
+  
+}
+.z-index-selector-list {
+  z-index: 1;
+}
+input{
+  font-family: Cascadia Code, Courier New, monospace;
+  line-height: var(--line-height);
+  font-size: var(--font-size);
+  caret-color: var(--color-gray);
+}
+body {
+  background: linear-gradient(165deg, #6A8E3C, #3E5B31);
+  color: var(--color-black);
+  overflow-y: scroll;
+  margin: 0;
+
+
+  min-height: 100vh;
+}
+button {
+  border-radius: 10px;
+  font-family: Cascadia Code, Courier New, monospace;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  cursor: pointer;
+}

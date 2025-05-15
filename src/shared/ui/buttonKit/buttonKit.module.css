@@ -1,0 +1,23 @@
+.img{
+    width: 20px;
+    height: 20px;
+    animation: rotating 1s infinite linear;
+    vertical-align: baseline;
+}
+@keyframes rotating {
+    100%{transform: rotate(1turn)}
+}
+.loader{
+    position: absolute;
+    top: calc(50% - 10px);
+    left: calc(50% - 10px);
+}
+.invisible{
+    opacity: 0;
+}
+.button{
+    width: fit-content;
+    padding: 10px 14px;
+    border-radius: 10px;
+    position: relative;
+}
