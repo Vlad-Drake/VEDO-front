@@ -1,9 +1,4 @@
-.img{
-    width: 20px;
-    height: 20px;
-    animation: rotating 1s infinite linear;
-    vertical-align: baseline;
-}
+
 @keyframes rotating {
     100%{transform: rotate(1turn)}
 }
@@ -11,6 +6,13 @@
     position: absolute;
     top: calc(50% - 10px);
     left: calc(50% - 10px);
+
+    img{
+        width: 20px;
+        height: 20px;
+        animation: rotating 1s infinite linear;
+        vertical-align: baseline;
+    }
 }
 .invisible{
     opacity: 0;
@@ -20,4 +22,5 @@
     padding: 10px 14px;
     border-radius: 10px;
     position: relative;
+    border: 2px solid var(--color-dark-gray);
 }

@@ -1,0 +1,10 @@
+openapi: 3.0.0
+info:
+  title: VEDO
+  description: API for VEDO
+  version: 1.0.0
+paths:
+
+  /authorization:
+    post:
+      $ref: "./endpoints/auth.yaml#/login"

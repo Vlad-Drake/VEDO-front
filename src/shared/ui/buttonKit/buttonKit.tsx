@@ -1,5 +1,5 @@
 import Circle from './assets/circle.svg';
-import classes from './buttonKit.module.css';
+import classes from './buttonKit.module.scss';
 
 export const BTN_STATUSES = {
     Default: 'default',
@@ -27,12 +27,12 @@ export function ButtonKit({
 
     return (
         <button className={classes["button"]} style={{ width: btnWidth }} onClick={handleClick}>
-            <p className={btnStatus === BTN_STATUSES.Loading ? classes['invisible'] : ''}>{btnContent}</p>
+            <span className={btnStatus === BTN_STATUSES.Loading ? classes['invisible'] : ''}>{btnContent}</span>
             {
                 btnStatus === BTN_STATUSES.Loading
                 ? 
                 (<div className={classes['loader']}>
-                    <img className={classes["img"]} src={Circle} alt="" />
+                    <img src={Circle} alt="" />
                 </div>)
                 : ''
             }

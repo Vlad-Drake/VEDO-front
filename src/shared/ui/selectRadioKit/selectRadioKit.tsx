@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react';
-import classes from './selectRadioKit.module.css';
+import classes from './selectRadioKit.module.scss';
 import ArrowIco from './assets/arrow.svg';
 import { useGlobalClickOutside } from '@/shared/helper/useGlobalClickOutside';
 
@@ -143,9 +143,9 @@ export function SelectRadioKit({
                     style={{ width }}
                     ref={dropdownBody}
                 >
-                    {selected != null && selected != '' && (<p className={classes["selector-body__p"]}>{ options.find(item => item.id == selected)?.name }</p>)}
-                    {(selected == null || selected == '') && (<p className={`${classes["placeholder"]} ${classes["selector-body__p"]}`}>{ placeholder }</p>)}
-                    <p className={classes["selector-body__p"]}><img src={ArrowIco} alt="" /></p>
+                    {selected != null && selected != '' && (<p>{ options.find(item => item.id == selected)?.name }</p>)}
+                    {(selected == null || selected == '') && (<p className={classes["placeholder"]}>{ placeholder }</p>)}
+                    <p><img src={ArrowIco} alt="" /></p>
                 </div>
                 
                 {isSelection && (
@@ -161,7 +161,7 @@ export function SelectRadioKit({
                             style={{ width, maxHeight: dropdownListHeight + 'px' }}
                         >
                             { filteredOptions.map((option, index) => 
-                                <p className={classes["p"]} onClick={() => SelectOption(option)} key={`${option.id}-${index}`}>{ option.name }</p>
+                                <p onClick={() => SelectOption(option)} key={`${option.id}-${index}`}>{ option.name }</p>
                             )}
                         </div>
                     </div>

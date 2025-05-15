@@ -1,0 +1,39 @@
+schemas:
+  LoginRequest:
+    type: object
+    required:
+      - user
+      - password
+    properties:
+      user:
+        type: string
+        format: email
+      password:
+        type: string
+        format: password
+
+  AuthResponse:
+    type: object
+    required:
+      - accessToken
+    properties:
+      accessToken:
+        type: string
+
+login:
+  summary: Login user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/schemas/LoginRequest'
+  responses:
+    '200':
+      description: Login successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/schemas/AuthResponse'
+    '401':
+      $ref: '../shared/responses.yaml#/UnauthorizedError'

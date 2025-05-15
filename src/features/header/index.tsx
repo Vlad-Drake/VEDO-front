@@ -1,4 +1,4 @@
-import { Link, href } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ROUTES } from '@/shared/model/routers';
 import classes from './header.module.scss';
 
