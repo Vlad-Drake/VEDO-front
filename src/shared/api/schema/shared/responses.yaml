@@ -25,6 +25,7 @@ schemas:
     required:
       - message
       - code
+    additionalProperties: false
     properties:
       message:
         type: string

@@ -26,6 +26,7 @@ schemas:
       - code1C
       - email
       - pinCode
+    additionalProperties: false
     properties:
       lastName:
         type: string
@@ -70,6 +71,7 @@ schemas:
     required:
       - code
       - message
+    additionalProperties: false
     properties:
       code:
         type: string

@@ -206,22 +206,24 @@ function RegistationUser() {
                         />
                     }
                 />
-                <ButtonKit 
-                    btnClick={() => 1}
-                    btnContent={<p>Зарегистрировать</p>}
-                    btnStatus={btnStatus}
-                    type='submit'
-                    btnType='primary'
-                />
-                <NotificationKit
-                    type='error'
-                >
-                    {errorMessage}
-                </NotificationKit>
-                            
+                <div className="flex justify-center">
+                    <ButtonKit 
+                        btnClick={() => 1}
+                        btnContent={<p>Зарегистрировать</p>}
+                        btnStatus={btnStatus}
+                        type='submit'
+                        btnType='primary'
+                    />
+                </div>
+                <div className="flex justify-center">
+                    <NotificationKit
+                        type='error'
+                    >
+                        {errorMessage}
+                    </NotificationKit>
+                </div>
             </form>
-            
-            
+
         </div>
     );
 }
