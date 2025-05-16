@@ -2,7 +2,6 @@ import classes from './textInput.module.scss';
 
 export function TextInputKit({
     password = false,
-    validate = true,
     value,
     width = 'auto',
     placeholder = 'Заполните поле',

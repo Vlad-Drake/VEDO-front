@@ -20,8 +20,7 @@ function Home() {
                 btnType='primary'
             />
             <SelectRadioKit
-                isError={false}
-                selected={null}
+                selectedId={null}
                 options={[{ id: '1', name: '1' }, { id: '2', name: '2' }]}
             />
             <TextInputKit 

@@ -60,7 +60,7 @@ function RegistationUser() {
 
     const handlerSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        
+        registerUser(registerUserModel);
     }
 
     const validate = (): boolean => {
