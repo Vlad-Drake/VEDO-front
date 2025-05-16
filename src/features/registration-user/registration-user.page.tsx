@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { TextInputKit } from "@/shared/ui/textInputKit/textInputKit";
 import { FormRowLayout } from './form-row-layout';
 import { SelectRadioKit } from '@/shared/ui/selectRadioKit/selectRadioKit';
@@ -42,13 +42,13 @@ function RegistationUser() {
         codeDax: '',
         pinCode: ''
     };
-    const [registerUserModel, setRegisterUser] = useState<RegisterUser>(initialRegisterUserModel);
+    const [registerUserModel, setRegisterUserModel] = useState<RegisterUser>(initialRegisterUserModel);
     const [ errors, setErrors ] = useState(initialRegisterUserModel);
     const [btnStatus, setBtnStatus] = useState<BtnStatuses>('default');
-
+    
     const { registerUser, isPending, errorMessage } = useRegisterUser();
 
-    const validateField = (field: keyof ValidRegUser, value: any) => {
+    const validateField = (field: keyof ValidRegUser, value: string) => {
         const result = registerUserschema.shape[field].safeParse(value);
         setErrors(prev => ({
             ...prev,
@@ -60,8 +60,26 @@ function RegistationUser() {
 
     const handlerSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
+        
     }
+
+    const validate = (): boolean => {
+        const result = registerUserschema.safeParse(registerUserModel);
+        return result.success;
+    }
+
+    const handleChange = (e: string, field: keyof RegisterUser) => {
+        setRegisterUserModel({...registerUserModel, [field]: e})
+        
+    }
+
+    const isFormValid = useMemo(() => {
+        return validate();
+    }, [registerUserModel]);
+
+    useEffect(() => {
+        isFormValid ? ( isPending ? setBtnStatus('loading') : setBtnStatus('default') ) : setBtnStatus('disabled');
+    }, [isPending, isFormValid, registerUserModel.email, registerUserModel.jobTitle])
 
     return (
         <div className="gap-[35px] content">
@@ -73,10 +91,11 @@ function RegistationUser() {
                     input={
                         <TextInputKit
                             value={registerUserModel.lastName}
-                            placeholder="Фамилия"
+                            placeholder="*Фамилия"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, lastName: event})}
+                            updateValue={event => handleChange(event, 'lastName')}
                             blured={() => validateField('lastName', registerUserModel.lastName)}
+                            error={errors.lastName}
                         />
                     }
                 />
@@ -85,10 +104,11 @@ function RegistationUser() {
                     input={
                         <TextInputKit
                             value={registerUserModel.firstName}
-                            placeholder="Имя"
+                            placeholder="*Имя"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, firstName: event})}
+                            updateValue={event => handleChange(event, 'firstName')}
                             blured={() => validateField('firstName', registerUserModel.firstName)}
+                            error={errors.firstName}
                         />
                     }
                 />
@@ -99,7 +119,7 @@ function RegistationUser() {
                             value={registerUserModel.middleName}
                             placeholder="Отчество"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, middleName: event})}
+                            updateValue={event => handleChange(event, 'middleName')}
                         />
                     }
                 />
@@ -107,11 +127,13 @@ function RegistationUser() {
                     text="Должность"
                     input={
                         <SelectRadioKit
-                            isError={false}
-                            selected={null}
+                            selectedId={registerUserModel.jobTitle}
+                            updateId={event => handleChange(event, 'jobTitle')}
                             width="500px"
+                            placeholder='*Должность'
                             options={[{ id: '1', name: '1' }, { id: '2', name: '2' }]}
-                            blured={() => validateField('jobTitle', registerUserModel.jobTitle)}
+                            blured={(event) => validateField('jobTitle', event)}
+                            error={errors.jobTitle}
                         />
                     }
                 />
@@ -120,10 +142,11 @@ function RegistationUser() {
                     input={
                         <TextInputKit
                             value={registerUserModel.code1C}
-                            placeholder="Код 1С"
+                            placeholder="*Код 1С"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, code1C: event})}
+                            updateValue={event => handleChange(event, 'code1C')}
                             blured={() => validateField('code1C', registerUserModel.code1C)}
+                            error={errors.code1C}
                         />
                     }
                 />
@@ -132,10 +155,12 @@ function RegistationUser() {
                     input={
                         <TextInputKit
                             value={registerUserModel.email}
-                            placeholder="Почта"
+                            placeholder="*Почта"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, email: event})}
+                            name='email'
+                            updateValue={event => handleChange(event, 'email')}
                             blured={() => validateField('email', registerUserModel.email)}
+                            error={errors.email}
                         />
                     }
                 />
@@ -146,7 +171,7 @@ function RegistationUser() {
                             value={registerUserModel.codeSm}
                             placeholder="Код SM"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, codeSm: event})}
+                            updateValue={event => handleChange(event, 'codeSm')}
                         />
                     }
                 />
@@ -157,7 +182,7 @@ function RegistationUser() {
                             value={registerUserModel.codeSymphony}
                             placeholder="Код Symphony"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, codeSymphony: event})}
+                            updateValue={event => handleChange(event, 'codeSymphony')}
                         />
                     }
                 />
@@ -168,7 +193,7 @@ function RegistationUser() {
                             value={registerUserModel.codeTcd}
                             placeholder="Код TCD"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, codeTcd: event})}
+                            updateValue={event => handleChange(event, 'codeTcd')}
                         />
                     }
                 />
@@ -179,7 +204,7 @@ function RegistationUser() {
                             value={registerUserModel.codeInfor}
                             placeholder="Код Infor"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, codeInfor: event})}
+                            updateValue={event => handleChange(event, 'codeInfor')}
                         />
                     }
                 />
@@ -190,7 +215,7 @@ function RegistationUser() {
                             value={registerUserModel.codeDax}
                             placeholder="Код DAX"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, codeDax: event})}
+                            updateValue={event => handleChange(event, 'codeDax')}
                         />
                     }
                 />
@@ -199,10 +224,11 @@ function RegistationUser() {
                     input={
                         <TextInputKit
                             value={registerUserModel.pinCode}
-                            placeholder="Пин-код"
+                            placeholder="*Пин-код"
                             width="500px"
-                            updateValue={event => setRegisterUser({...registerUserModel, pinCode: event})}
+                            updateValue={event => handleChange(event, 'pinCode')}
                             blured={() => validateField('pinCode', registerUserModel.pinCode)}
+                            error={errors.pinCode}
                         />
                     }
                 />

@@ -33,7 +33,7 @@ export function TextInputKit({
             <input
                 name={name}
                 type={password ? 'password' : 'text'}
-                className={!validate ? classes["error-color"] : ''}
+                className={error ? classes["error-color"] : ''}
                 value={value}
                 onChange={handleChange}
                 placeholder={placeholder}

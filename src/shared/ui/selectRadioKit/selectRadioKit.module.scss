@@ -3,9 +3,6 @@
     flex-direction: column;
     gap: 6px;
 }
-.error-text{
-    color: var(--status-01-hover)
-}
 
 .selector-body{
     display: flex;
@@ -34,9 +31,6 @@
 }
 .selector{
     position: relative;
-}
-.error-color{
-    background-color: #8b4545;
 }
 .searcher{
     display: flex;
@@ -120,4 +114,10 @@
 }
 .default-input-focus {
     outline: 2px solid #6A8E3C;
+}
+.error-text{
+    color: #F94E10;
+}
+.error-input{
+    background-color: #FBA788;
 }

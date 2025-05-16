@@ -11,26 +11,24 @@ export interface SelectRadioModel{
 
 export function SelectRadioKit({
     width = 'auto',
-    isError,
-    selected,
+    selectedId,
     options,
     placeholder = 'Выберите из списка',
-    errorMessage = 'Ошибка',
+    error = 'Ошибка',
     focused,
     blured,
-    setId,
-    setName
+    updateId,
+    updateName
 }:{
     width?: string,
-    isError: boolean,
-    selected: string | null,
+    selectedId: string | null,
     options: SelectRadioModel[],
     placeholder?: string,
-    errorMessage?: string,
+    error?: string,
     focused?: () => void,
-    blured?: () => void,
-    setId?: (id: string) => void,
-    setName?: (name: string) => void,
+    blured?: (id: string) => void,
+    updateId?: (id: string) => void,
+    updateName?: (name: string) => void,
 }) {
     const selectorContainer = useRef<HTMLDivElement | null>(null);
     const dropdownBody = useRef<HTMLDivElement | null>(null);
@@ -41,7 +39,7 @@ export function SelectRadioKit({
     const [searchText, setSearchText] = useState('');
     const [filteredOptions, setFilteredOptions] = useState(options);
     const [isAbove, setIsAbove] = useState(false);
-
+    const localSelectedIdRef  = useRef<string | null>(selectedId);
     const { registerComponent, unregisterComponent } = useGlobalClickOutside();
 
     const ToggleDropdown = () => {
@@ -55,7 +53,7 @@ export function SelectRadioKit({
                 element: selectorContainer.current,
                 close: () => {
                     setIsSelection(false);
-                    if(blured) blured();
+                    if(blured) blured(localSelectedIdRef.current ?? '');
                 },
             });
             adjustDropdownPosition();
@@ -63,7 +61,7 @@ export function SelectRadioKit({
                 searcherInput.current?.focus();
             }, 400); // Небольшая задержка для фокуса
         } else {
-            if(blured) blured();
+            if(blured) blured(localSelectedIdRef.current ?? '');
             setIsAbove(false);
             if(selectorContainer.current) {
                 unregisterComponent(selectorContainer.current);
@@ -115,9 +113,10 @@ export function SelectRadioKit({
     };
 
     const SelectOption = (option: SelectRadioModel) => {
+        localSelectedIdRef.current = option.id
+        if(updateId) updateId(option.id);
+        if(updateName) updateName(option.name);
         setIsSelection(false);
-        if(setId) setId(option.id);
-        if(setName) setName(option.name);
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,15 +135,15 @@ export function SelectRadioKit({
                     className={`
                         ${classes["selector-body"]}
                         ${classes["input-body"]}
-                        ${isError && classes["error-input"]}
-                        ${!isError && !isSelection && classes["default-input"]}
-                        ${!isError && isSelection && classes["default-input-focus"]}
+                        ${error && classes["error-input"]}
+                        ${!error && !isSelection && classes["default-input"]}
+                        ${isSelection && classes["default-input-focus"]}
                     `}
                     style={{ width }}
                     ref={dropdownBody}
                 >
-                    {selected != null && selected != '' && (<p>{ options.find(item => item.id == selected)?.name }</p>)}
-                    {(selected == null || selected == '') && (<p className={classes["placeholder"]}>{ placeholder }</p>)}
+                    {selectedId != null && selectedId != '' && (<p>{ options.find(item => item.id == selectedId)?.name }</p>)}
+                    {(selectedId == null || selectedId == '') && (<p className={classes["placeholder"]}>{ placeholder }</p>)}
                     <p><img src={ArrowIco} alt="" /></p>
                 </div>
                 
@@ -167,7 +166,7 @@ export function SelectRadioKit({
                     </div>
                 )}
             </div>
-            {isError && <span className={classes["error-text"]}>{ errorMessage }</span>}
+            {error && <span className={classes["error-text"]}>{ error }</span>}
         </div>
     );
 }
