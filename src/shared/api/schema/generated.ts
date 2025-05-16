@@ -33,7 +33,48 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["AuthResponse"];
+                        "application/json": components["schemas"]["LoginResponse"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/registration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registration user */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["RegistrationRequest"];
+                };
+            };
+            responses: {
+                /** @description Registration successful */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["RegistrationResponse"];
                     };
                 };
                 401: components["responses"]["UnauthorizedError"];
@@ -55,12 +96,45 @@ export interface components {
             /** Format: password */
             password: string;
         };
-        AuthResponse: {
+        LoginResponse: {
             accessToken: string;
         };
         Error: {
             message: string;
             code: string;
+        };
+        RegistrationRequest: {
+            /** @description Фамилия */
+            lastName: string;
+            /** @description Имя */
+            firstName: string;
+            /** @description Отчество (необязательно) */
+            middleName?: string;
+            /** @description Должность */
+            jobTitle: string;
+            /** @description Код 1С */
+            code1C: string;
+            /**
+             * Format: email
+             * @description Электронная почта
+             */
+            email: string;
+            /** @description Пин-код */
+            pinCode: string;
+            /** @description Код SM (необязательно) */
+            codeSm?: string;
+            /** @description Код Symphony (необязательно) */
+            codeSymphony?: string;
+            /** @description Код TCD (необязательно) */
+            codeTcd?: string;
+            /** @description Код Infor (необязательно) */
+            codeInfor?: string;
+            /** @description Код DAX (необязательно) */
+            codeDax?: string;
+        };
+        RegistrationResponse: {
+            code: string;
+            message: string;
         };
     };
     responses: {

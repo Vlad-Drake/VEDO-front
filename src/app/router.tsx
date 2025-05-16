@@ -11,6 +11,10 @@ export const router = createBrowserRouter([
                 lazy: () => import("@/features/home/home.page"),
             },
             {
+                path: ROUTES.REGISTATIONUSER,
+                lazy: () => import("@/features/registration-user/registration-user.page"),
+            },
+            {
                 path: ROUTES.LOGIN,
                 lazy: () => import("@/features/auth/login.page"),
             },

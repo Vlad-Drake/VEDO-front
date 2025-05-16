@@ -7,9 +7,15 @@ export function useLogin() {
     const navigate = useNavigate();
 
     const loginMutation = rqClient.useMutation('post', '/authorization', {
-        onSettled() {
+        /*onSettled() {
             navigate(ROUTES.HOME);
-        }
+        }*/
+        onSuccess() {
+            navigate(ROUTES.HOME);
+        },
+        /*onError(error) {
+            
+        }*/
     });
 
     const login = (data: ApiSchemas['LoginRequest']) => {

@@ -10,16 +10,18 @@ export function TextInputKit({
     updateValue,
     blured,
     focused,
+    error,
 }:{
     password?: boolean,
     validate?: boolean,
-    value: string,
+    value: string | undefined,
     width?: string,
     placeholder?: string,
     name?: string,
     updateValue: (value: string) => void,
     blured?: () => void,
     focused?: () => void,
+    error?: string,
 }) {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +40,7 @@ export function TextInputKit({
                 onBlur={blured}
                 onFocus={focused}
             />
+            {error && <span className={classes["error-text"]}>{error}</span>}
         </div>
     );
 }

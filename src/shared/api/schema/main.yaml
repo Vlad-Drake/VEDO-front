@@ -4,7 +4,9 @@ info:
   description: API for VEDO
   version: 1.0.0
 paths:
-
   /authorization:
     post:
-      $ref: "./endpoints/auth.yaml#/login"
+      $ref: "./endpoints/auth.yaml#/authorization"
+  /registration:
+    post:
+      $ref: "./endpoints/registrationUser.yaml#/registrationUser"  

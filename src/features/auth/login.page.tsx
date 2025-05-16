@@ -1,15 +1,44 @@
+import { useState, useEffect } from 'react';
 import { TextInputKit } from '@/shared/ui/textInputKit/textInputKit';
 import { NotificationKit } from '@/shared/ui/notificationKit/notificationKit';
-import { ButtonKit } from '@/shared/ui/buttonKit/buttonKit';
+import { ButtonKit, type BtnStatuses } from '@/shared/ui/buttonKit/buttonKit';
 import { useLogin } from './model/useLogin';
+import { z } from 'zod';
+
+const loginSchema = z.object({
+    user: z.string().nonempty('Введите почту').email('Неверный email'),
+    password: z.string().nonempty('Введите пароль'),
+});
+
+type User = z.infer<typeof loginSchema>;
 
 function Login() {
+    const [user, setUser] = useState<User>({user: '', password: ''});
+    const [errors, setErrors] = useState<User>({user: '', password: ''});
+    const [btnStatus, setBtnStatus] = useState<BtnStatuses>('default');
+
     const { login, isPending, errorMessage } = useLogin();
-    console.log(isPending)
-    console.log(errorMessage)
-    function testLogin() {
-        login({user: 'v.ermakov@slata.com', password: 'W1ner2ko0Nnnnn'});
-    }
+    
+    useEffect(() => {
+        isPending ? setBtnStatus('loading') : setBtnStatus('default');
+    }, [isPending])
+
+    const validateField = (field: keyof User, value: any) => {
+        const result = loginSchema.shape[field].safeParse(value);
+        console.log(result);
+        setErrors(prev => ({
+            ...prev,
+            [field]: result.success ? '' : result.error.issues[0].message
+        }));
+    
+        return result.success;
+    };
+    
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        login(user);
+        
+    };
 
     return (
         <div className="min-h-screen flex flex-col justify-center">
@@ -17,44 +46,51 @@ function Login() {
                 <div className="flex w-[800px] min-h-[450px]">
                 
                     <div className="right-side">
-                        <div className="right-side__block">
+                        <form className="right-side__block" onSubmit={handleSubmit}>
                             <div className="right-side__item">
                                 <h1>Вход</h1>
                             </div>
                             <div className="right-side__item">
                                 <label>Логин</label>
                                 <TextInputKit
-                                    value={''}
-                                    updateValue={(value) => console.log(value)}
+                                    name='email'
+                                    value={user.user}
+                                    updateValue={event => setUser({...user, user: event})}
                                     placeholder="login@slata.com"
+                                    blured={() => validateField('user', user.user)}
+                                    error={errors.user}
                                 />
                             </div>
                             <div className="right-side__item">
                                 <label>Пароль</label>
                                 <TextInputKit
-                                    value={''}
-                                    updateValue={(value) => console.log(value)}
-                                    placeholder="Пароль"
+                                    name='password'
                                     password={true}
+                                    value={user.password}
+                                    updateValue={event => setUser({...user, password: event})}
+                                    placeholder="Пароль"
+                                    blured={() => validateField('password', user.password)}
+                                    error={errors.password}
                                 />
                             </div>
                             <div className="right-side__btn">
                                 <ButtonKit 
-                                    btnClick={testLogin}
-                                    btnContent={<><p>Войти</p></>}
-                                    btnStatus='default'
+                                    btnClick={() => 1}
+                                    btnContent={<p>Войти</p>}
+                                    btnStatus={btnStatus}
+                                    type='submit'
+                                    btnType='primary'
                                 /> {/*className="btn"*/}
-                                
                             </div>
                             <div className="right-side__item">
                                 <NotificationKit
                                     type='error'
                                 >
-                                    {'text'}
+                                    {errorMessage}
                                 </NotificationKit>
                             </div>
                             
-                        </div>
+                        </form>
                         
                     </div>
                     

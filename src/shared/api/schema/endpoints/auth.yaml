@@ -1,3 +1,21 @@
+authorization:
+  summary: Login user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/schemas/LoginRequest'
+  responses:
+    '200':
+      description: Login successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/schemas/LoginResponse'
+    '401':
+      $ref: '../shared/responses.yaml#/UnauthorizedError'
+
 schemas:
   LoginRequest:
     type: object
@@ -12,28 +30,10 @@ schemas:
         type: string
         format: password
 
-  AuthResponse:
+  LoginResponse:
     type: object
     required:
       - accessToken
     properties:
       accessToken:
         type: string
-
-login:
-  summary: Login user
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          $ref: '#/schemas/LoginRequest'
-  responses:
-    '200':
-      description: Login successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/schemas/AuthResponse'
-    '401':
-      $ref: '../shared/responses.yaml#/UnauthorizedError'

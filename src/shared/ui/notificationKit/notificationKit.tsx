@@ -22,7 +22,14 @@ export function NotificationKit({
     console.log(type)
     return (
         <div className={classes["notification-shadow"]} style={{ width }}>
-            <div className={`${classes["notification-block"]} `}>{/*was :class="{'red': status === 0, 'green': status === 1}"*/}
+            <div
+                className={`
+                    ${classes["notification-block"]}
+                    ${type === 'success' && classes[type]}
+                    ${type === 'info' && classes[type]}
+                    ${type === 'error' && classes[type]}
+                    ${type === 'alert' && classes[type]}
+                `}>
                 <p>{children}</p>
             </div>
         </div>

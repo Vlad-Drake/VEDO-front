@@ -1,12 +1,18 @@
+@import 'tailwindcss';
+* {
+  box-sizing: border-box;
+}
 :root {
 
-  --font-size: 16px;
+  --font-size: 18px;
   --line-height: 1.5;
   
   /* Primary Colors */
   --color-primary: #61892F; /*--my-green-color*/     /* основной (основной элемент, акцент) */
   --color-secondary: #86C232; /*--my-light-green-color*/   /* дополнительный (hover, акценты) */
-
+  --color-additional-dark: #3E5B31;
+  --color-additional-light: #6A8E3C;
+  --color-canvas: #edf0d3;/*E7EBC5*/
   /* Neutrals / Grayscale */
   --color-black: #222629; /*--my-black-color*/       /* фон, тёмный основной фон */
   --color-dark-gray: #474B4F; /*--my-gray-color*/   /* второй уровень серого */
@@ -14,6 +20,12 @@
   --color-white: #FFFFFF; /*--my-white-color*/       /* текст, фон светлый */
   /*#3E5B31, #6A8E3C ????????*/
 
+  /*
+    #61892F
+    #cec9c1
+    #485b0c
+    #181303
+  */
 
   font-family: Cascadia Code, Courier New, monospace;
   font-size: var(--font-size);
@@ -28,10 +40,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  
 }
-
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 1280px;
+  margin: 0 auto 0 auto;
+  
+  background: linear-gradient(75deg, #e7ebc5, var(--color-canvas));
+  padding: 60px 20px;
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -49,14 +67,6 @@ a:hover {
   min-height: 100vh;
 }*/
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-
-
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -64,13 +74,13 @@ h1 {
   }
 }
 
-* {
+
+p,h1,h2,h3,h4,h5,h6 {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-p,h1,h2,h3,h4,h5,h6 {
-  
+h1 {
+  font-size: 2rem;
 }
 .z-index-selector-list {
   z-index: 1;
@@ -82,7 +92,7 @@ input{
   caret-color: var(--color-gray);
 }
 body {
-  background: linear-gradient(165deg, #6A8E3C, #3E5B31);
+  background: linear-gradient(165deg, var(--color-additional-light), var(--color-additional-dark));
   color: var(--color-black);
   overflow-y: scroll;
   margin: 0;

@@ -16,8 +16,8 @@ export function SelectRadioKit({
     options,
     placeholder = 'Выберите из списка',
     errorMessage = 'Ошибка',
-    focus,
-    blur,
+    focused,
+    blured,
     setId,
     setName
 }:{
@@ -27,8 +27,8 @@ export function SelectRadioKit({
     options: SelectRadioModel[],
     placeholder?: string,
     errorMessage?: string,
-    focus?: () => void,
-    blur?: () => void,
+    focused?: () => void,
+    blured?: () => void,
     setId?: (id: string) => void,
     setName?: (name: string) => void,
 }) {
@@ -49,13 +49,13 @@ export function SelectRadioKit({
         setIsSelection(newIsSelection);
 
         if(newIsSelection && selectorContainer.current) {
-            if(focus) focus();
+            if(focused) focused();
 
             registerComponent({
                 element: selectorContainer.current,
                 close: () => {
                     setIsSelection(false);
-                    if(blur) blur();
+                    if(blured) blured();
                 },
             });
             adjustDropdownPosition();
@@ -63,7 +63,7 @@ export function SelectRadioKit({
                 searcherInput.current?.focus();
             }, 400); // Небольшая задержка для фокуса
         } else {
-            if(blur) blur();
+            if(blured) blured();
             setIsAbove(false);
             if(selectorContainer.current) {
                 unregisterComponent(selectorContainer.current);

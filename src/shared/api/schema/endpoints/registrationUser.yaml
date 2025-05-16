@@ -1,0 +1,77 @@
+registrationUser:
+  summary: Registration user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/schemas/RegistrationRequest'
+  responses:
+    '200':
+      description: Registration successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/schemas/RegistrationResponse'
+    '401':
+      $ref: '../shared/responses.yaml#/UnauthorizedError'
+
+schemas:
+  RegistrationRequest:
+    type: object
+    required:
+      - lastName
+      - firstName
+      - jobTitle
+      - code1C
+      - email
+      - pinCode
+    properties:
+      lastName:
+        type: string
+        description: Фамилия
+      firstName:
+        type: string
+        description: Имя
+      middleName:
+        type: string
+        description: Отчество (необязательно)
+      jobTitle:
+        type: string
+        description: Должность
+      code1C:
+        type: string
+        description: Код 1С
+      email:
+        type: string
+        format: email
+        description: Электронная почта
+      pinCode:
+        type: string
+        description: Пин-код
+      codeSm:
+        type: string
+        description: Код SM (необязательно)
+      codeSymphony:
+        type: string
+        description: Код Symphony (необязательно)
+      codeTcd:
+        type: string
+        description: Код TCD (необязательно)
+      codeInfor:
+        type: string
+        description: Код Infor (необязательно)
+      codeDax:
+        type: string
+        description: Код DAX (необязательно)
+
+  RegistrationResponse:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string

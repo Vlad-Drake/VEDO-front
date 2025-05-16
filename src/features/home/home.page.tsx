@@ -11,12 +11,13 @@ function Home() {
     }
     const [testInput, setTestInput] = useState('');
     return (
-        <>
+        <div>
             <div>Home</div>
             <ButtonKit
-                btnContent='Кнопка'
+                btnContent={<p>Кнопка</p>}
                 btnStatus='default'
                 btnClick={test}
+                btnType='primary'
             />
             <SelectRadioKit
                 isError={false}
@@ -32,9 +33,9 @@ function Home() {
             <NotificationKit
                 type='error'
             >
-                {'Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка Ошибка'}
+                {'Ошибка'}
             </NotificationKit>
-        </>
+        </div>
         
     );
 }

@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  title: VEDO
+  description: API for VEDO
+  version: 1.0.0
+paths:
+  /authorization:
+    post:
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /registration:
+    post:
+      summary: Registration user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequest'
+      responses:
+        '200':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistrationResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - user
+        - password
+      properties:
+        user:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+    LoginResponse:
+      type: object
+      required:
+        - accessToken
+      properties:
+        accessToken:
+          type: string
+    Error:
+      type: object
+      required:
+        - message
+        - code
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    RegistrationRequest:
+      type: object
+      required:
+        - lastName
+        - firstName
+        - jobTitle
+        - code1C
+        - email
+        - pinCode
+      properties:
+        lastName:
+          type: string
+          description: Фамилия
+        firstName:
+          type: string
+          description: Имя
+        middleName:
+          type: string
+          description: Отчество (необязательно)
+        jobTitle:
+          type: string
+          description: Должность
+        code1C:
+          type: string
+          description: Код 1С
+        email:
+          type: string
+          format: email
+          description: Электронная почта
+        pinCode:
+          type: string
+          description: Пин-код
+        codeSm:
+          type: string
+          description: Код SM (необязательно)
+        codeSymphony:
+          type: string
+          description: Код Symphony (необязательно)
+        codeTcd:
+          type: string
+          description: Код TCD (необязательно)
+        codeInfor:
+          type: string
+          description: Код Infor (необязательно)
+        codeDax:
+          type: string
+          description: Код DAX (необязательно)
+    RegistrationResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
