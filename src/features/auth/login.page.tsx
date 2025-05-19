@@ -41,7 +41,7 @@ function Login() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col justify-center">
+        <div className="flex flex-col justify-center">{/*min-h-screen */}
             <div className="flex justify-center items-center text-[#F4F4F4]">
                 <div className="flex w-[800px] min-h-[450px]">
                 
