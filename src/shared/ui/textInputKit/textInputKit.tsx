@@ -12,7 +12,6 @@ export function TextInputKit({
     error,
 }:{
     password?: boolean,
-    validate?: boolean,
     value: string | undefined,
     width?: string,
     placeholder?: string,

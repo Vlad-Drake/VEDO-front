@@ -67,12 +67,12 @@ a:hover {
   min-height: 100vh;
 }*/
 
-@media (prefers-color-scheme: light) {
+/*@media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
-}
+}*/
 
 
 p,h1,h2,h3,h4,h5,h6 {

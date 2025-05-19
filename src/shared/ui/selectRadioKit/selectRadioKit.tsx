@@ -33,7 +33,8 @@ export function SelectRadioKit({
     const selectorContainer = useRef<HTMLDivElement | null>(null);
     const dropdownBody = useRef<HTMLDivElement | null>(null);
     const searcherInput = useRef<HTMLInputElement | null>(null);
-    
+    const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+
     const [isSelection, setIsSelection] = useState(false);
     const [dropdownListHeight, setDropdownListHeight] = useState(550);
     const [searchText, setSearchText] = useState('');
@@ -120,12 +121,26 @@ export function SelectRadioKit({
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchText(e.target.value);
-        setFilteredOptions(options.filter(option =>
-            option.name.toLowerCase().includes(e.target.value.toLowerCase())
-        ));
-        console.log('setFilteredOptions', filteredOptions)
+        //TODO debounce
+        if(debounceTimer.current) {
+            clearTimeout(debounceTimer.current);
+        }
+
+        debounceTimer.current = setTimeout(() => {
+            setSearchText(e.target.value);
+            setFilteredOptions(options.filter(option =>
+                option.name.toLowerCase().includes(e.target.value.toLowerCase())
+            ));
+        }, 800);
     };
+
+    useEffect(() => {
+        return (() => {
+            if (debounceTimer.current) {
+                clearTimeout(debounceTimer.current);
+            }
+        }) as () => void;
+    }, []);
 
     return (
         <div className={classes["input-block"]}>
@@ -141,9 +156,9 @@ export function SelectRadioKit({
                     `}
                     style={{ width }}
                     ref={dropdownBody}
-                >
+                >{/*TODO использовать семинтически верный html, случай когда нет options*/}
                     {selectedId != null && selectedId != '' && (<p>{ options.find(item => item.id == selectedId)?.name }</p>)}
-                    {(selectedId == null || selectedId == '') && (<p className={classes["placeholder"]}>{ placeholder }</p>)}
+            {(selectedId == null || selectedId == '') && (<p className={classes["placeholder"]}>{ placeholder }</p>)}
                     <p><img src={ArrowIco} alt="" /></p>
                 </div>
                 

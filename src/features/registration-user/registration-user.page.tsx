@@ -79,7 +79,7 @@ function RegistationUser() {
 
     useEffect(() => {
         isFormValid ? ( isPending ? setBtnStatus('loading') : setBtnStatus('default') ) : setBtnStatus('disabled');
-    }, [isPending, isFormValid, registerUserModel.email, registerUserModel.jobTitle])
+    }, [isPending, isFormValid])
 
     return (
         <div className="gap-[35px] content">
