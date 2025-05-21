@@ -1,5 +1,5 @@
 function TemplateSign() {
-    return <div>TemplateSign</div>
+  return <div>TemplateSign</div>;
 }
 
 export const Component = TemplateSign;

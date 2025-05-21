@@ -3,14 +3,14 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
-import {Provider} from 'react-redux';
+import { Provider } from "react-redux";
 import { store } from "@/shared/store/store";
 
 async function enableMocking() {
-  if(import.meta.env.PROD) {
+  if (import.meta.env.PROD) {
     return;
   }
-  const { worker } = await import('@/shared/api/mocks/browser');
+  const { worker } = await import("@/shared/api/mocks/browser");
   return worker.start();
 }
 
@@ -22,5 +22,4 @@ enableMocking().then(() => {
       </Provider>
     </StrictMode>,
   );
-})
-
+});

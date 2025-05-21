@@ -1,5 +1,5 @@
 function Branch() {
-    return <div>Branch</div>
+  return <div>Branch</div>;
 }
 
 export const Component = Branch;

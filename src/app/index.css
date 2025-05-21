@@ -1,23 +1,22 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 * {
   box-sizing: border-box;
 }
 :root {
-
   --font-size: 18px;
   --line-height: 1.5;
-  
+
   /* Primary Colors */
-  --color-primary: #61892F; /*--my-green-color*/     /* основной (основной элемент, акцент) */
-  --color-secondary: #86C232; /*--my-light-green-color*/   /* дополнительный (hover, акценты) */
-  --color-additional-dark: #3E5B31;
-  --color-additional-light: #6A8E3C;
-  --color-canvas: #edf0d3;/*E7EBC5*/
+  --color-primary: #61892f; /*--my-green-color*/ /* основной (основной элемент, акцент) */
+  --color-secondary: #86c232; /*--my-light-green-color*/ /* дополнительный (hover, акценты) */
+  --color-additional-dark: #3e5b31;
+  --color-additional-light: #6a8e3c;
+  --color-canvas: #edf0d3; /*E7EBC5*/
   /* Neutrals / Grayscale */
-  --color-black: #222629; /*--my-black-color*/       /* фон, тёмный основной фон */
-  --color-dark-gray: #474B4F; /*--my-gray-color*/   /* второй уровень серого */
-  --color-gray: #6B6E70; /*--my-light-gray-color*/        /* текст второстепенный, бордеры */
-  --color-white: #FFFFFF; /*--my-white-color*/       /* текст, фон светлый */
+  --color-black: #222629; /*--my-black-color*/ /* фон, тёмный основной фон */
+  --color-dark-gray: #474b4f; /*--my-gray-color*/ /* второй уровень серого */
+  --color-gray: #6b6e70; /*--my-light-gray-color*/ /* текст второстепенный, бордеры */
+  --color-white: #ffffff; /*--my-white-color*/ /* текст, фон светлый */
   /*#3E5B31, #6A8E3C ????????*/
 
   /*
@@ -27,7 +26,10 @@
     #181303
   */
 
-  font-family: Cascadia Code, Courier New, monospace;
+  font-family:
+    Cascadia Code,
+    Courier New,
+    monospace;
   font-size: var(--font-size);
   line-height: var(--line-height);
   font-weight: 400;
@@ -46,7 +48,7 @@
   flex-direction: column;
   width: 1280px;
   margin: 0 auto 0 auto;
-  
+
   background: linear-gradient(75deg, #e7ebc5, var(--color-canvas));
   padding: 60px 20px;
 }
@@ -74,8 +76,13 @@ a:hover {
   }
 }*/
 
-
-p,h1,h2,h3,h4,h5,h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   padding: 0;
 }
@@ -85,24 +92,33 @@ h1 {
 .z-index-selector-list {
   z-index: 1;
 }
-input{
-  font-family: Cascadia Code, Courier New, monospace;
+input {
+  font-family:
+    Cascadia Code,
+    Courier New,
+    monospace;
   line-height: var(--line-height);
   font-size: var(--font-size);
   caret-color: var(--color-gray);
 }
 body {
-  background: linear-gradient(165deg, var(--color-additional-light), var(--color-additional-dark));
+  background: linear-gradient(
+    165deg,
+    var(--color-additional-light),
+    var(--color-additional-dark)
+  );
   color: var(--color-black);
   overflow-y: scroll;
   margin: 0;
-
 
   min-height: 100vh;
 }
 button {
   border-radius: 10px;
-  font-family: Cascadia Code, Courier New, monospace;
+  font-family:
+    Cascadia Code,
+    Courier New,
+    monospace;
   font-size: var(--font-size);
   line-height: var(--line-height);
   cursor: pointer;

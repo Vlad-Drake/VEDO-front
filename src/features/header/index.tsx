@@ -1,18 +1,17 @@
-import { Link } from 'react-router-dom';
-import { ROUTES } from '@/shared/model/routers';
-import classes from './header.module.scss';
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/shared/model/routers";
+import classes from "./header.module.scss";
 
 export function AppHeader() {
-    return (
-        <div className={classes["navbar"]}>
-            <div className={classes["navbar__content"]}>
+  return (
+    <div className={classes["navbar"]}>
+      <div className={classes["navbar__content"]}>
+        <section className={`${classes["start"]} ${classes["navbar-section"]}`}>
+          <Link to={ROUTES.HOME}>ВЭДО</Link>
+        </section>
 
-                <section className={`${classes["start"]} ${classes["navbar-section"]}`}>
-                    <Link to={ ROUTES.HOME }>ВЭДО</Link>
-                </section>
-
-                <section className={classes["center"]}>
-                    {/*<section class="navbar-section">
+        <section className={classes["center"]}>
+          {/*<section class="navbar-section">
                         <router-link :to="'/common-docs-info'" class="link">Общие сведения о системе&nbsp;</router-link>
                     </section>
 
@@ -43,15 +42,12 @@ export function AppHeader() {
                             </div>
                         </transition>
                     </section>*/}
-                </section>
-                
-                <section className={classes["end"]}>
-                    {/*<img src="@/assets/VEDO-ico.svg" alt="">*/}
-                </section>
+        </section>
 
-            </div>
-            
-        </div>
-    );
+        <section className={classes["end"]}>
+          {/*<img src="@/assets/VEDO-ico.svg" alt="">*/}
+        </section>
+      </div>
+    </div>
+  );
 }
-  

@@ -1,3 +1,3 @@
 export function DocInfo() {
-    return <div>DocInfo</div>
+  return <div>DocInfo</div>;
 }

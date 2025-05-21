@@ -1,24 +1,23 @@
-.notification-shadow{
-    min-height: 40px;
+.notification-shadow {
+  min-height: 40px;
 }
-.notification-block{
-    padding: 5px 10px;
-    border-radius: 10px;
-    border-width: 2px;
-    border-style: solid;
+.notification-block {
+  padding: 5px 10px;
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
 
-   
-    p{
-        white-space: pre-wrap;
-        font-weight: 400;
-    }
+  p {
+    white-space: pre-wrap;
+    font-weight: 400;
+  }
 }
 
-.error{
-    border-color: rgb(126, 0, 0);
-    background-color: rgb(189, 43, 43);
+.error {
+  border-color: rgb(126, 0, 0);
+  background-color: rgb(189, 43, 43);
 }
-.success{
-    border-color: green;
-    background-color: rgb(85, 175, 85);
+.success {
+  border-color: green;
+  background-color: rgb(85, 175, 85);
 }

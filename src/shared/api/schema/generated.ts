@@ -4,201 +4,201 @@
  */
 
 export interface paths {
-    "/authorization": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Login user */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["LoginRequest"];
-                };
-            };
-            responses: {
-                /** @description Login successful */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["LoginResponse"];
-                    };
-                };
-                401: components["responses"]["UnauthorizedError"];
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+  "/authorization": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/registration": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    put?: never;
+    /** Login user */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody: {
+        content: {
+          "application/json": components["schemas"]["LoginRequest"];
         };
-        get?: never;
-        put?: never;
-        /** Registration user */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["RegistrationRequest"];
-                };
-            };
-            responses: {
-                /** @description Registration successful */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RegistrationResponse"];
-                    };
-                };
-                401: components["responses"]["UnauthorizedError"];
-            };
+      };
+      responses: {
+        /** @description Login successful */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["schemas"]["LoginResponse"];
+          };
         };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+        401: components["responses"]["UnauthorizedError"];
+      };
     };
-    "/jobTitles": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Get job titles */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["JobTitlesRequest"];
-                };
-            };
-            responses: {
-                /** @description job titles successful */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["JobTitlesResponse"];
-                    };
-                };
-                401: components["responses"]["UnauthorizedError"];
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/registration": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    get?: never;
+    put?: never;
+    /** Registration user */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody: {
+        content: {
+          "application/json": components["schemas"]["RegistrationRequest"];
+        };
+      };
+      responses: {
+        /** @description Registration successful */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["schemas"]["RegistrationResponse"];
+          };
+        };
+        401: components["responses"]["UnauthorizedError"];
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/jobTitles": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Get job titles */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["JobTitlesRequest"];
+        };
+      };
+      responses: {
+        /** @description job titles successful */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["schemas"]["JobTitlesResponse"];
+          };
+        };
+        401: components["responses"]["UnauthorizedError"];
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        LoginRequest: {
-            /** Format: email */
-            user: string;
-            /** Format: password */
-            password: string;
-        };
-        LoginResponse: {
-            accessToken: string;
-        };
-        Error: {
-            message: string;
-            code: string;
-        };
-        RegistrationRequest: {
-            /** @description Фамилия */
-            lastName: string;
-            /** @description Имя */
-            firstName: string;
-            /** @description Отчество (необязательно) */
-            middleName?: string;
-            /** @description Должность */
-            jobTitle: string;
-            /** @description Код 1С */
-            code1C: string;
-            /**
-             * Format: email
-             * @description Электронная почта
-             */
-            email: string;
-            /** @description Пин-код */
-            pinCode: string;
-            /** @description Код SM (необязательно) */
-            codeSm?: string;
-            /** @description Код Symphony (необязательно) */
-            codeSymphony?: string;
-            /** @description Код TCD (необязательно) */
-            codeTcd?: string;
-            /** @description Код Infor (необязательно) */
-            codeInfor?: string;
-            /** @description Код DAX (необязательно) */
-            codeDax?: string;
-        };
-        RegistrationResponse: {
-            code: string;
-            message: string;
-        };
-        JobTitlesRequest: {
-            dummy?: string;
-        };
-        JobTitlesResponse: {
-            data: string[];
-        };
+  schemas: {
+    LoginRequest: {
+      /** Format: email */
+      user: string;
+      /** Format: password */
+      password: string;
     };
-    responses: {
-        /** @description Unauthorized */
-        UnauthorizedError: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["Error"];
-            };
-        };
+    LoginResponse: {
+      accessToken: string;
     };
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+    Error: {
+      message: string;
+      code: string;
+    };
+    RegistrationRequest: {
+      /** @description Фамилия */
+      lastName: string;
+      /** @description Имя */
+      firstName: string;
+      /** @description Отчество (необязательно) */
+      middleName?: string;
+      /** @description Должность */
+      jobTitle: string;
+      /** @description Код 1С */
+      code1C: string;
+      /**
+       * Format: email
+       * @description Электронная почта
+       */
+      email: string;
+      /** @description Пин-код */
+      pinCode: string;
+      /** @description Код SM (необязательно) */
+      codeSm?: string;
+      /** @description Код Symphony (необязательно) */
+      codeSymphony?: string;
+      /** @description Код TCD (необязательно) */
+      codeTcd?: string;
+      /** @description Код Infor (необязательно) */
+      codeInfor?: string;
+      /** @description Код DAX (необязательно) */
+      codeDax?: string;
+    };
+    RegistrationResponse: {
+      code: string;
+      message: string;
+    };
+    JobTitlesRequest: {
+      dummy?: string;
+    };
+    JobTitlesResponse: {
+      data: string[];
+    };
+  };
+  responses: {
+    /** @description Unauthorized */
+    UnauthorizedError: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": components["schemas"]["Error"];
+      };
+    };
+  };
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
 }
 export type $defs = Record<string, never>;
 export type operations = Record<string, never>;

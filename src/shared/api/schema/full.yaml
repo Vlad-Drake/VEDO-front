@@ -12,16 +12,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: "#/components/schemas/LoginRequest"
       responses:
-        '200':
+        "200":
           description: Login successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
   /registration:
     post:
       summary: Registration user
@@ -30,16 +30,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegistrationRequest'
+              $ref: "#/components/schemas/RegistrationRequest"
       responses:
-        '200':
+        "200":
           description: Registration successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RegistrationResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+                $ref: "#/components/schemas/RegistrationResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
 components:
   schemas:
     LoginRequest:
@@ -134,4 +134,4 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"

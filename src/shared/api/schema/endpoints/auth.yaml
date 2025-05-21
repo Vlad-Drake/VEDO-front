@@ -5,16 +5,16 @@ authorization:
     content:
       application/json:
         schema:
-          $ref: '#/schemas/LoginRequest'
+          $ref: "#/schemas/LoginRequest"
   responses:
-    '200':
+    "200":
       description: Login successful
       content:
         application/json:
           schema:
-            $ref: '#/schemas/LoginResponse'
-    '401':
-      $ref: '../shared/responses.yaml#/UnauthorizedError'
+            $ref: "#/schemas/LoginResponse"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
 
 schemas:
   LoginRequest:

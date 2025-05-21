@@ -5,16 +5,16 @@ jobTitles:
     content:
       application/json:
         schema:
-          $ref: '#/schemas/JobTitlesRequest'
+          $ref: "#/schemas/JobTitlesRequest"
   responses:
-    '200':
+    "200":
       description: job titles successful
       content:
         application/json:
           schema:
-            $ref: '#/schemas/JobTitlesResponse'
-    '401':
-      $ref: '../shared/responses.yaml#/UnauthorizedError'
+            $ref: "#/schemas/JobTitlesResponse"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
 
 schemas:
   JobTitlesResponse:
@@ -27,7 +27,7 @@ schemas:
         type: array
         items:
           type: string
-  
+
   JobTitlesRequest:
     type: object
     additionalProperties: false

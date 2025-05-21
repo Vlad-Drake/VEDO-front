@@ -1,44 +1,47 @@
-
 @keyframes rotating {
-    100%{transform: rotate(1turn)}
+  100% {
+    transform: rotate(1turn);
+  }
 }
-.loader{
-    position: absolute;
-    top: calc(50% - 10px);
-    left: calc(50% - 10px);
+.loader {
+  position: absolute;
+  top: calc(50% - 10px);
+  left: calc(50% - 10px);
+  width: 20px;
+  height: 20px;
+  img {
     width: 20px;
     height: 20px;
-    img{
-        width: 20px;
-        height: 20px;
-        animation: rotating 1s infinite linear;
-        vertical-align: baseline;
-    }
+    animation: rotating 1s infinite linear;
+    vertical-align: baseline;
+  }
 }
-.invisible{
-    opacity: 0;
+.invisible {
+  opacity: 0;
 }
-.button{
-    width: fit-content;
-    padding: 10px 14px;
-    border-radius: 10px;
-    position: relative;
-    border: 2px solid var(--color-dark-gray);
+.button {
+  width: fit-content;
+  padding: 10px 14px;
+  border-radius: 10px;
+  position: relative;
+  border: 2px solid var(--color-dark-gray);
 }
-.primary, .primary-disabled, .primary-loading {
-    background-color: var(--color-additional-light);
-    color: var(--color-white);
+.primary,
+.primary-disabled,
+.primary-loading {
+  background-color: var(--color-additional-light);
+  color: var(--color-white);
 }
 .primary-loading {
-    background-color: var(--color-additional-light);
-    color: var(--color-white);
+  background-color: var(--color-additional-light);
+  color: var(--color-white);
 }
-.primary:hover{
-    background-color: var(--color-additional-dark);
+.primary:hover {
+  background-color: var(--color-additional-dark);
 }
-.primary:active{
-    background-color: var(--color-black);
+.primary:active {
+  background-color: var(--color-black);
 }
 .primary-disabled {
-    opacity: 50%;
+  opacity: 50%;
 }

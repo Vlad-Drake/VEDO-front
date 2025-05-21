@@ -9,7 +9,7 @@ paths:
       $ref: "./endpoints/auth.yaml#/authorization"
   /registration:
     post:
-      $ref: "./endpoints/registrationUser.yaml#/registrationUser"  
+      $ref: "./endpoints/registrationUser.yaml#/registrationUser"
   /jobTitles:
     post:
       $ref: "./endpoints/jobTitles.yaml#/jobTitles"
