@@ -12,6 +12,12 @@ export function AppHeader() {
                 </section>
 
                 <section className={classes["center"]}>
+                    <section className={classes["navbar-section"]}>
+                        <Link to={ ROUTES.REGISTATIONUSER }>Новый пользователь</Link>
+                    </section>
+                    <section className={classes["navbar-section"]}>
+                        <Link to={ ROUTES.BRANCHES }>Филиалы</Link>
+                    </section>
                     {/*<section class="navbar-section">
                         <router-link :to="'/common-docs-info'" class="link">Общие сведения о системе&nbsp;</router-link>
                     </section>

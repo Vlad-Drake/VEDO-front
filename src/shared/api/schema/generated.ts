@@ -86,7 +86,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/jobTitles": {
+    "/jobTitle": {
         parameters: {
             query?: never;
             header?: never;

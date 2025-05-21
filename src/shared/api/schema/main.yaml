@@ -10,6 +10,6 @@ paths:
   /registration:
     post:
       $ref: "./endpoints/registrationUser.yaml#/registrationUser"  
-  /jobTitles:
+  /jobTitle:
     post:
       $ref: "./endpoints/jobTitles.yaml#/jobTitles"

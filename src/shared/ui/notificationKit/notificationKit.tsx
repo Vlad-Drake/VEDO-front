@@ -19,7 +19,7 @@ export function NotificationKit({
     width?: string,
 }) {
     if(children === null || children === undefined) return;
-    console.log(type)
+    //console.log(type)
     return (
         <div className={classes["notification-shadow"]} style={{ width }}>
             <div

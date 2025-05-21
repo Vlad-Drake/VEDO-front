@@ -33,7 +33,7 @@ export function SelectRadioKit({
     const selectorContainer = useRef<HTMLDivElement | null>(null);
     const dropdownBody = useRef<HTMLDivElement | null>(null);
     const searcherInput = useRef<HTMLInputElement | null>(null);
-    const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+    const debounceTimer = useRef<number | null>(null);
 
     const [isSelection, setIsSelection] = useState(false);
     const [dropdownListHeight, setDropdownListHeight] = useState(550);
@@ -107,11 +107,11 @@ export function SelectRadioKit({
         const above = spaceBelow < spaceAbove;
         setIsAbove(above);
     
-        const availableSpace = isAbove ? spaceAbove : spaceBelow;
-        const rootElement = document.documentElement;
-        const rootStyles = getComputedStyle(rootElement);
-        const navbarHeight = Number(rootStyles.getPropertyValue('--navbar-height').replace('px',''));
-    
+        const availableSpace = above ? spaceAbove : spaceBelow;
+        //const rootElement = document.documentElement;
+        //const rootStyles = getComputedStyle(rootElement);
+        const navbarHeight = 50;//Number(rootStyles.getPropertyValue('--navbar-height').replace('px',''));
+        console.log(availableSpace, above, spaceAbove, spaceBelow)
         setDropdownListHeight(Math.min(availableSpace - 60 - 20 - navbarHeight, menuHeight));
         //60px -> 50 размер поисковика, 10 отступ ниже list
         //20px -> отступ от navbar до list
@@ -125,17 +125,18 @@ export function SelectRadioKit({
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        //TODO debounce
+
+        setSearchText(e.target.value);
         if(debounceTimer.current) {
             clearTimeout(debounceTimer.current);
         }
 
         debounceTimer.current = setTimeout(() => {
-            setSearchText(e.target.value);
+            
             setFilteredOptions(options.filter(option =>
                 option.name.toLowerCase().includes(e.target.value.toLowerCase())
             ));
-        }, 800);
+        }, 600);
     };
 
     useEffect(() => {

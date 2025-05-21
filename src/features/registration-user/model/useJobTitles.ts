@@ -6,7 +6,7 @@ export function useJobTitles() {
     //const navigate = useNavigate();
     const [responseData, setResponseData] = useState<ApiSchemas['JobTitlesResponse'] | null>(null);
 
-    const jobTitlesMutation = rqClient.useMutation('post', '/jobTitles', {
+    const jobTitlesMutation = rqClient.useMutation('post', '/jobTitle', {
         /*onSettled() {
             navigate(ROUTES.HOME);
         }*/
