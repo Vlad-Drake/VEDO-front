@@ -1,5 +1,9 @@
+import { useLoadingPage } from '@/shared/model/loadingPage';
+
 function Branch() {
-  return <div>Branch</div>;
+    const { loadingPage, loading, error, done } = useLoadingPage();
+    done();
+    return <div>Branch</div>
 }
 
 export const Component = Branch;

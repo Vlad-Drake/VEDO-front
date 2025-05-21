@@ -29,10 +29,10 @@ export function SelectRadioKit({
   updateId?: (id: string) => void;
   updateName?: (name: string) => void;
 }) {
-  const selectorContainer = useRef<HTMLDivElement | null>(null);
-  const dropdownBody = useRef<HTMLDivElement | null>(null);
-  const searcherInput = useRef<HTMLInputElement | null>(null);
-  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+    const selectorContainer = useRef<HTMLDivElement | null>(null);
+    const dropdownBody = useRef<HTMLDivElement | null>(null);
+    const searcherInput = useRef<HTMLInputElement | null>(null);
+    const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   const [isSelection, setIsSelection] = useState(false);
   const [dropdownListHeight, setDropdownListHeight] = useState(550);
@@ -86,38 +86,34 @@ export function SelectRadioKit({
         console.log('setFilteredOptions', filteredOptions)
     }, [searchText]);*/
 
-  const adjustDropdownPosition = () => {
-    //const container = document.querySelector('.selector-body');
-    //const container = $refs.dropdownBody as HTMLElement;
-    if (!dropdownBody.current) return;
-    //if (!selectorContainer.value) return;
-
-    const containerRect = dropdownBody.current.getBoundingClientRect();
-    //console.log(containerRect)
-    const windowHeight = window.innerHeight;
-    //console.log(windowHeight)
-
-    const spaceBelow = windowHeight - containerRect.bottom;
-    const spaceAbove = containerRect.top;
-
-    const menuHeight = 560;
-
-    const above = spaceBelow < spaceAbove;
-    setIsAbove(above);
-
-    const availableSpace = isAbove ? spaceAbove : spaceBelow;
-    const rootElement = document.documentElement;
-    const rootStyles = getComputedStyle(rootElement);
-    const navbarHeight = Number(
-      rootStyles.getPropertyValue("--navbar-height").replace("px", ""),
-    );
-
-    setDropdownListHeight(
-      Math.min(availableSpace - 60 - 20 - navbarHeight, menuHeight),
-    );
-    //60px -> 50 размер поисковика, 10 отступ ниже list
-    //20px -> отступ от navbar до list
-  };
+    const adjustDropdownPosition = () => {
+        //const container = document.querySelector('.selector-body');
+        //const container = $refs.dropdownBody as HTMLElement;
+        if (!dropdownBody.current) return;
+        //if (!selectorContainer.value) return;
+    
+        const containerRect = dropdownBody.current.getBoundingClientRect();
+        //console.log(containerRect)
+        const windowHeight = window.innerHeight;
+        //console.log(windowHeight)
+    
+        const spaceBelow = windowHeight - containerRect.bottom;
+        const spaceAbove = containerRect.top;
+    
+        const menuHeight = 560;
+    
+        const above = spaceBelow < spaceAbove;
+        setIsAbove(above);
+    
+        const availableSpace = above ? spaceAbove : spaceBelow;
+        //const rootElement = document.documentElement;
+        //const rootStyles = getComputedStyle(rootElement);
+        const navbarHeight = 50;//Number(rootStyles.getPropertyValue('--navbar-height').replace('px',''));
+        console.log(availableSpace, above, spaceAbove, spaceBelow)
+        setDropdownListHeight(Math.min(availableSpace - 60 - 20 - navbarHeight, menuHeight));
+        //60px -> 50 размер поисковика, 10 отступ ниже list
+        //20px -> отступ от navbar до list
+    };
 
   const SelectOption = (option: SelectRadioModel) => {
     localSelectedIdRef.current = option.id;
@@ -126,21 +122,20 @@ export function SelectRadioKit({
     setIsSelection(false);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //TODO debounce
-    if (debounceTimer.current) {
-      clearTimeout(debounceTimer.current);
-    }
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-    debounceTimer.current = setTimeout(() => {
-      setSearchText(e.target.value);
-      setFilteredOptions(
-        options.filter((option) =>
-          option.name.toLowerCase().includes(e.target.value.toLowerCase()),
-        ),
-      );
-    }, 800);
-  };
+        setSearchText(e.target.value);
+        if(debounceTimer.current) {
+            clearTimeout(debounceTimer.current);
+        }
+
+        debounceTimer.current = setTimeout(() => {
+            
+            setFilteredOptions(options.filter(option =>
+                option.name.toLowerCase().includes(e.target.value.toLowerCase())
+            ));
+        }, 600);
+    };
 
   useEffect(() => {
     return (() => {

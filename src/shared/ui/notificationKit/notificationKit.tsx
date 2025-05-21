@@ -19,12 +19,12 @@ export function NotificationKit({
   type: NotificationTypes;
   width?: string;
 }) {
-  if (children === null || children === undefined) return;
-  console.log(type);
-  return (
-    <div className={classes["notification-shadow"]} style={{ width }}>
-      <div
-        className={`
+    if(children === null || children === undefined) return;
+    //console.log(type)
+    return (
+        <div className={classes["notification-shadow"]} style={{ width }}>
+            <div
+                className={`
                     ${classes["notification-block"]}
                     ${type === "success" && classes[type]}
                     ${type === "info" && classes[type]}
