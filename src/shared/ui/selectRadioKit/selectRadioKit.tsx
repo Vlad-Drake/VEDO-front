@@ -43,6 +43,10 @@ export function SelectRadioKit({
     const localSelectedIdRef  = useRef<string | null>(selectedId);
     const { registerComponent, unregisterComponent } = useGlobalClickOutside();
 
+    useEffect(() => {
+        setFilteredOptions(options);
+    }, [options]);
+
     const ToggleDropdown = () => {
         const newIsSelection = !isSelection;
         setIsSelection(newIsSelection);

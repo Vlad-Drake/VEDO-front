@@ -25,7 +25,6 @@ function Home() {
             />
             <TextInputKit 
                 password={false}
-                validate={true}
                 value={testInput}
                 updateValue={(value) => setTestInput(value)}
             />

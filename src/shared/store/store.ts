@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import sessionReducer from '@/shared/model/session';
+import loadingPageSlice from '@/shared/model/loadingPage';
 
-export const useSession = configureStore({
+export const store = configureStore({
     reducer: {
         session: sessionReducer,
+        loadingPage: loadingPageSlice
     }
 });
 
-export type RootState = ReturnType<typeof useSession.getState>;
-export type AppDispatch = typeof useSession.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

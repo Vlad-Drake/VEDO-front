@@ -4,6 +4,7 @@ import { NotificationKit } from '@/shared/ui/notificationKit/notificationKit';
 import { ButtonKit, type BtnStatuses } from '@/shared/ui/buttonKit/buttonKit';
 import { useLogin } from './model/useLogin';
 import { z } from 'zod';
+import { useLoadingPage } from '@/shared/model/loadingPage';
 
 const loginSchema = z.object({
     user: z.string().nonempty('Введите почту').email('Неверный email'),
@@ -16,7 +17,8 @@ function Login() {
     const [user, setUser] = useState<User>({user: '', password: ''});
     const [errors, setErrors] = useState<User>({user: '', password: ''});
     const [btnStatus, setBtnStatus] = useState<BtnStatuses>('default');
-
+    const { loadingPage, loading, error, done } = useLoadingPage();
+    done();
     const { login, isPending, errorMessage } = useLogin();
     
     useEffect(() => {
@@ -45,10 +47,13 @@ function Login() {
             <div className="flex justify-center items-center text-[#F4F4F4]">
                 <div className="flex w-[800px] min-h-[450px]">
                 
-                    <div className="right-side">
-                        <form className="right-side__block" onSubmit={handleSubmit}>
+                    <div 
+                        className="right-side flex justify-center gap-[15px] p-[10px] w-[100%] shadow-[5px_5px_16px_1px_#3A3A3A] bg-cover" 
+                        style={{ backgroundImage: "url('./src/features/auth/assets/_normal.jpg')" }}
+                    >
+                        <form className="right-side__block flex flex-col gap-[15px] w-[50%] p-[10px] bg-[#3E5B3150]" onSubmit={handleSubmit}>
                             <div className="right-side__item">
-                                <h1>Вход</h1>
+                                <h1 className='text-center'>Вход</h1>
                             </div>
                             <div className="right-side__item">
                                 <label>Логин</label>
@@ -73,13 +78,14 @@ function Login() {
                                     error={errors.password}
                                 />
                             </div>
-                            <div className="right-side__btn">
+                            <div className="right-side__btn text-center">
                                 <ButtonKit 
                                     btnClick={() => 1}
                                     btnContent={<p>Войти</p>}
                                     btnStatus={btnStatus}
                                     type='submit'
                                     btnType='primary'
+                                    btnWidth='80%'
                                 /> {/*className="btn"*/}
                             </div>
                             <div className="right-side__item">
