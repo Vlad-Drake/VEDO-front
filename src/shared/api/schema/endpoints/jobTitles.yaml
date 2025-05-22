@@ -15,6 +15,8 @@ jobTitles:
             $ref: "#/schemas/JobTitlesResponse"
     "401":
       $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"
 
 schemas:
   JobTitlesResponse:

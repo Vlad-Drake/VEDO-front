@@ -20,19 +20,32 @@ export const jobTitlesHandlers = [
     console.warn('Unhandled request to:', request.url);
     return HttpResponse.text('No matching route', { status: 404 });
   }),*/
-  http.post("/jobTitles", async (ctx) => {
+  http.post("/jobTitle", async (ctx) => {
     console.log("[MSW] /jobTitles called");
     await delay(2000);
     //await verifyTokenOrThrow(ctx.request);
     //const data = await ctx.request.json();
     //return HttpResponse.json(jobTitles);
     const body = await HttpResponse.json(); // если нужно, можешь логировать body
-    return HttpResponse.json({
+    /*return HttpResponse.json({
       data: [
         "*Заместитель директора магазина",
         "Администратор баз данных",
         "Администратор столовой",
       ],
-    });
+    });*/
+    return HttpResponse.json(
+      {
+        message: "Resource not found",
+        code: "NotFound"
+      },
+      {
+        status: 404,
+        statusText: "Not Found",
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
   }),
 ];

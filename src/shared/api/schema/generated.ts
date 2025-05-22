@@ -119,6 +119,7 @@ export interface paths {
                     };
                 };
                 401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
             };
         };
         delete?: never;
@@ -130,75 +131,84 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    LoginRequest: {
-      /** Format: email */
-      user: string;
-      /** Format: password */
-      password: string;
+    schemas: {
+        LoginRequest: {
+            /** Format: email */
+            user: string;
+            /** Format: password */
+            password: string;
+        };
+        LoginResponse: {
+            accessToken: string;
+        };
+        Error: {
+            message: string;
+            code: string;
+        };
+        RegistrationRequest: {
+            /** @description Фамилия */
+            lastName: string;
+            /** @description Имя */
+            firstName: string;
+            /** @description Отчество (необязательно) */
+            middleName?: string;
+            /** @description Должность */
+            jobTitle: string;
+            /** @description Код 1С */
+            code1C: string;
+            /**
+             * Format: email
+             * @description Электронная почта
+             */
+            email: string;
+            /** @description Пин-код */
+            pinCode: string;
+            /** @description Код SM (необязательно) */
+            codeSm?: string;
+            /** @description Код Symphony (необязательно) */
+            codeSymphony?: string;
+            /** @description Код TCD (необязательно) */
+            codeTcd?: string;
+            /** @description Код Infor (необязательно) */
+            codeInfor?: string;
+            /** @description Код DAX (необязательно) */
+            codeDax?: string;
+        };
+        RegistrationResponse: {
+            code: string;
+            message: string;
+        };
+        JobTitlesRequest: {
+            dummy?: string;
+        };
+        JobTitlesResponse: {
+            data: string[];
+        };
     };
-    LoginResponse: {
-      accessToken: string;
+    responses: {
+        /** @description Unauthorized */
+        UnauthorizedError: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["Error"];
+            };
+        };
+        /** @description Resource not found */
+        NotFoundError: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["Error"];
+            };
+        };
     };
-    Error: {
-      message: string;
-      code: string;
-    };
-    RegistrationRequest: {
-      /** @description Фамилия */
-      lastName: string;
-      /** @description Имя */
-      firstName: string;
-      /** @description Отчество (необязательно) */
-      middleName?: string;
-      /** @description Должность */
-      jobTitle: string;
-      /** @description Код 1С */
-      code1C: string;
-      /**
-       * Format: email
-       * @description Электронная почта
-       */
-      email: string;
-      /** @description Пин-код */
-      pinCode: string;
-      /** @description Код SM (необязательно) */
-      codeSm?: string;
-      /** @description Код Symphony (необязательно) */
-      codeSymphony?: string;
-      /** @description Код TCD (необязательно) */
-      codeTcd?: string;
-      /** @description Код Infor (необязательно) */
-      codeInfor?: string;
-      /** @description Код DAX (необязательно) */
-      codeDax?: string;
-    };
-    RegistrationResponse: {
-      code: string;
-      message: string;
-    };
-    JobTitlesRequest: {
-      dummy?: string;
-    };
-    JobTitlesResponse: {
-      data: string[];
-    };
-  };
-  responses: {
-    /** @description Unauthorized */
-    UnauthorizedError: {
-      headers: {
-        [name: string]: unknown;
-      };
-      content: {
-        "application/json": components["schemas"]["Error"];
-      };
-    };
-  };
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export type operations = Record<string, never>;

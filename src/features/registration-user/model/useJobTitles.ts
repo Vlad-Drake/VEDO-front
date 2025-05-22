@@ -12,12 +12,13 @@ export function useJobTitles() {
         }*/
         onSuccess(data) {
             //navigate(ROUTES.HOME);
-            //console.log(data);
+            console.log('response', data, jobTitlesMutation);
+            
             setResponseData(data);
         },
-        /*onError(error) {
-            
-        }*/
+        onError(error) {
+            console.log('error', error)
+        }
     });
 
     const jobTitles = (data: ApiSchemas['JobTitlesRequest']) => {

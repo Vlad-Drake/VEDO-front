@@ -90,6 +90,7 @@ function RegistationUser() {
   }, []);
 
   useEffect(() => {
+    console.log('get data', errorMessageJT)
     if (data) {
       setJobTitleOptions(
         data.data.map((jT, index) => ({
