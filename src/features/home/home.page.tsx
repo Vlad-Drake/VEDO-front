@@ -13,7 +13,7 @@ function Home() {
     }
     const [testInput, setTestInput] = useState('');
     return (
-        <div className='flex flex-col gap-[20px]'>
+        <div className='flex flex-col gap-[20px] mx-[50px]'>
             <h1 className='text-center'>ВЭДО - внутренний электронный документооборот</h1>
             <p>Документы хранящиеся в ВЭДО используются для контроля за движением товара, готовой продукции, денежных средств, отражения результатов ревизии.</p>
             
