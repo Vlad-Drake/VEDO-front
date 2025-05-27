@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import type { ApiSchemas } from '@/shared/api/schema';
 import { rqClient } from '@/shared/api/instance';
+import { useLoadingPage } from "@/shared/model/loadingPage";
 
 export function useJobTitles() {
     //const navigate = useNavigate();
     const [responseData, setResponseData] = useState<ApiSchemas['JobTitlesResponse'] | null>(null);
-
+    const { loadingPage, loading, error: errorPage, done } = useLoadingPage();
     const jobTitlesMutation = rqClient.useMutation('post', '/jobTitle', {
         /*onSettled() {
             navigate(ROUTES.HOME);
@@ -18,6 +19,7 @@ export function useJobTitles() {
         },
         onError(error) {
             console.log('error', error)
+            errorPage(error.message);
         }
     });
 

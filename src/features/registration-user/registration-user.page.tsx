@@ -73,9 +73,7 @@ const formFields: FormField[] = [
 ];
 
 function RegistationUser() {
-  const [jobTitleOptions, setJobTitleOptions] = useState<SelectRadioModel[]>(
-    [],
-  );
+  const [jobTitleOptions, setJobTitleOptions] = useState<SelectRadioModel[]>([]);
   const { loadingPage, loading, error, done } = useLoadingPage();
   const {
     jobTitles,

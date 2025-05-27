@@ -2,9 +2,10 @@ import { LoadingKit } from "@/shared/ui/loadingKit/loadingKit";
 import classes from "./preparing-page.module.scss";
 import { StatusPage, useLoadingPage } from "@/shared/model/loadingPage";
 import { NotificationKit } from '@/shared/ui/notificationKit/notificationKit';
+import { NotificationKit } from '@/shared/ui/notificationKit/notificationKit';
 
 export function PreparingPage() {
-  const { loadingPage } = useLoadingPage();
+  const { loadingPage,  } = useLoadingPage();
 
   const renderContent = () => {
     switch (loadingPage.status) {
