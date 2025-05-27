@@ -12,7 +12,7 @@ export function useJobTitles() {
         }*/
         onSuccess(data) {
             //navigate(ROUTES.HOME);
-            console.log('response', data, jobTitlesMutation);
+            //console.log('response', data, jobTitlesMutation);
             
             setResponseData(data);
         },

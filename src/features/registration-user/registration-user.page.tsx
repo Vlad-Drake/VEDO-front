@@ -8,7 +8,7 @@ import {
 import { ButtonKit, type BtnStatuses } from "@/shared/ui/buttonKit/buttonKit";
 import { NotificationKit } from "@/shared/ui/notificationKit/notificationKit";
 import { useRegisterUser } from "./model/useRegisterUser";
-import { useJobTitles } from "./model/useJobTitles";
+import { useJobTitles } from "@/shared/model/useJobTitles";
 import { z } from "zod";
 import { useLoadingPage } from "@/shared/model/loadingPage";
 
@@ -90,8 +90,12 @@ function RegistationUser() {
   }, []);
 
   useEffect(() => {
-    console.log('get data', errorMessageJT)
-    if (data) {
+    
+    if(errorMessageJT) {
+      console.log('get data', errorMessageJT);
+
+      error(errorMessageJT);
+    } else if (data) {
       setJobTitleOptions(
         data.data.map((jT, index) => ({
           id: String(index + 1),
@@ -100,7 +104,7 @@ function RegistationUser() {
       );
       done();
     }
-  }, [data]);
+  }, [data, errorMessageJT]);
 
   const initialRegisterUserModel: RegisterUser = {
     lastName: "",

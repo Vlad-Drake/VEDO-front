@@ -1,0 +1,263 @@
+.calendar--top {
+    transform: translateY(calc(-100% - 50px));
+}
+.calendar{
+    position: relative;
+    width: fit-content;
+    &__body{
+        display: flex;
+        flex-direction: row;
+        border: 2px solid var(--color-dark-gray);
+        border-radius: 4px;
+        background-color: var(--color-white);
+        padding: 2px;
+        /*width: fit-content;*/
+        width: 250px;
+
+        .date-input-wrapper{
+            position: relative;
+            width: 125px;
+            align-self: center;
+            padding-left: 10px;
+            input {
+                color: var(--color-black);
+                width: 100%;
+                /*padding: 4px;*/
+                padding: 4px 0;
+                padding-left: 4px;
+                font-size: 16px;
+                /*caret-color: var(--my-light-gray-color);*/
+                background: transparent;
+                /*position: absolute;*/
+                z-index: 2;
+                /*border: 10px solid #ccc;*/
+                border: 2px solid var(--my-gray-color);
+                border-radius: 4px;
+            }
+            input:focus {
+                border: 2px solid var(--my-gray-color);
+                outline: 2px solid var(--my-light-gray-color);
+            }
+            .placeholder-text {
+                position: absolute;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                width: 100%;
+                text-align: left;
+                /*padding: 4px;*/
+                padding: 4px 0;
+                padding-left: 17px;
+                font-size: 16px;
+                
+                white-space: nowrap;
+                z-index: 1;
+
+                .entered {
+                    user-select: none;
+                    color: transparent;
+                }
+
+                .remaining {
+                    color: var(--my-gray-color);
+                }
+            }
+        }
+        .img-btn{
+            padding-left: 16px;
+            padding-right: 16px;
+            margin-left: auto;
+            margin-right: auto;
+            /*width: 40px;*/
+            height: 40px;
+
+            cursor: pointer;
+
+            img{
+                width: 40px;
+                height: 40px;
+            }
+        }
+        .img-btn:hover > img{
+            filter: brightness(0) saturate(100%) invert(45%) sepia(0%) saturate(607%) hue-rotate(265deg) brightness(93%) contrast(83%);
+        }
+        .img-btn:hover{
+            background-color: var(--my-light-gray-color);
+            border-radius: 10px;
+        }
+        
+    }
+
+    &__selector{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        background-color: var(--color-white);
+        padding: 10px;
+        width: 250px;
+        border-radius: 4px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        z-index: 5;
+
+        .top-panel{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            color: var(--color-black);
+            margin: 0 10px;
+
+            .btn{
+                align-self: center;
+                padding: 2px 6px;
+                cursor: pointer;
+            }
+            .btn:hover{
+                /*color: var(--color-dark-gray);*/
+                background-color: var(--color-gray);
+                border-radius: 5px;
+            }
+
+            .arrows{
+                display: flex;
+                flex-direction: row;
+                gap: 5px;
+
+                p{
+                    font-size: 20px;
+                    padding: 0 6px;
+                    cursor: pointer;
+                }
+                p:hover{
+                    /*color: var(--color-dark-gray);*/
+                    background-color: var(--color-gray);
+                    border-radius: 5px;
+                }
+            }
+        }
+
+        .cells{
+            &__days{
+                .weeks{
+                    color: var(--color-black);
+                    display: grid;
+                    grid-template-columns: repeat(7, 1fr);
+                    border-top: 2px solid var(--color-gray);
+                    border-bottom: 2px dashed var(--color-gray);
+                    padding: 6px 0;
+
+                    cursor: default;
+                }
+
+                .days{
+                    /*color: var(--my-light-gray-color);*/
+                    display: grid;
+                    grid-template-columns: repeat(7, 1fr);
+                    margin-top: 10px;
+                    cursor: pointer;
+                    p{
+                        font-size: 14px;
+                        padding: 6px 0;
+                        text-align: center;
+                    }
+                    .month-days{
+                        color: var(--color-black);
+                    }
+                    .month-days:hover{
+                        color: var(--color-black);
+                        background-color: var(--color-additional-light);
+                        border-radius: 5px;
+                    }
+                    .today-day{
+                        font-weight: 900;
+                        color: var(--color-primary);
+                    }
+                    .today-day:hover{
+                        color: var(--color-black);
+                        background-color: var(--color-primary);
+                        border-radius: 5px;
+                    }
+                    .additional-days{
+                        color: var(--color-gray);
+                    }
+                    .additional-days:hover{
+                        color: var(--color-gray);
+                        background-color: var(--color-white);
+                    }
+                    .selected-day{
+                        color: var(--color-primary);
+                        background-color: var(--color-dark-gray);
+                        border-radius: 5px;
+                    }
+                    .selected-day:hover{
+                        color: var(--color-primary);
+                        background-color: var(--color-dark-gray);
+                        border-radius: 5px;
+                    }
+                }
+            }
+
+            &__monthes{
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                color: var(--color-black);
+                font-size: 14px;
+                border-top: 2px solid var(--color-gray);
+                padding: 30px 0 30px 0;
+                cursor: pointer;
+                text-align: center;
+
+                .current-month{
+                    color: var(--color-additional-light);
+                    padding: 10px 0;
+                    font-weight: 900;
+                }
+                .current-month:hover{
+                    color: var(--color-black);
+                    background-color: var(--color-additional-light);
+                    border-radius: 5px;
+                    
+                }
+                .additional-monthes{
+                    padding: 10px 0;
+                }
+                .additional-monthes:hover{
+                    color: var(--color-black);
+                    background-color: var(--color-additional-light);
+                    border-radius: 5px;
+                }
+            }
+
+            &__years{
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                color: var(--my-light-gray-color);
+                border-top: 2px solid var(--my-gray-color);
+                padding: 30px 0 30px 0;
+                font-size: 14px;
+                cursor: pointer;
+                text-align: center;
+
+                .current-year{
+                    color: var(--color-additional-light);
+                    padding: 10px 0;
+                    font-weight: 900;
+                }
+                .current-year:hover{
+                    color: var(--color-black);
+                    background-color: var(--color-additional-light);
+                    border-radius: 5px;
+                }
+                .additional-years{
+                    padding: 10px 0;
+                }
+                .additional-years:hover{
+                    color: var(--color-black);
+                    background-color: var(--color-additional-light);
+                    border-radius: 5px;
+                }
+            }
+        }
+    }
+}

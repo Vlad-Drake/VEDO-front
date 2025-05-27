@@ -3,7 +3,7 @@
   box-sizing: border-box;
 }
 :root {
-  --font-size: 18px;
+  --font-size: 16px;
   --line-height: 1.5;
 
   /* Primary Colors */
@@ -46,7 +46,8 @@
 .content {
   display: flex;
   flex-direction: column;
-  width: 1280px;
+  width: 100%;
+  max-width: 1280px;
   margin: 0 auto 0 auto;
 
   background: linear-gradient(75deg, #e7ebc5, var(--color-canvas));
@@ -87,10 +88,16 @@ h6 {
   padding: 0;
 }
 h1 {
-  font-size: 2rem;
+  font-size: 2.25rem;
+}
+h2 {
+  font-size: 1.875rem;
+}
+p {
+  font-size: 	1.125rem;
 }
 .z-index-selector-list {
-  z-index: 1;
+  z-index: 1.125rem;
 }
 input {
   font-family:

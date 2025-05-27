@@ -6,6 +6,8 @@
   height: 50px;
   align-content: center;
 
+  z-index: 21;
+
   &__content {
     display: flex;
     justify-content: space-between;

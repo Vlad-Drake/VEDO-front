@@ -13,7 +13,7 @@ export function SelectRadioKit({
   selectedId,
   options,
   placeholder = "Выберите из списка",
-  error = "Ошибка",
+  error = "",
   focused,
   blured,
   updateId,
@@ -109,7 +109,7 @@ export function SelectRadioKit({
         //const rootElement = document.documentElement;
         //const rootStyles = getComputedStyle(rootElement);
         const navbarHeight = 50;//Number(rootStyles.getPropertyValue('--navbar-height').replace('px',''));
-        console.log(availableSpace, above, spaceAbove, spaceBelow)
+        //console.log(availableSpace, above, spaceAbove, spaceBelow)
         setDropdownListHeight(Math.min(availableSpace - 60 - 20 - navbarHeight, menuHeight));
         //60px -> 50 размер поисковика, 10 отступ ниже list
         //20px -> отступ от navbar до list

@@ -4,6 +4,7 @@ import { TextInputKit } from '@/shared/ui/textInputKit/textInputKit';
 import { NotificationKit } from '@/shared/ui/notificationKit/notificationKit';
 import { useLoadingPage } from '@/shared/model/loadingPage';
 import { useState } from 'react';
+import { CalendarKit } from '@/shared/ui/calendarKit/calendarKit';
 
 function Home() {
     const { loadingPage, loading, error, done } = useLoadingPage();
@@ -12,6 +13,7 @@ function Home() {
         console.log('Hi!')
     }
     const [testInput, setTestInput] = useState('');
+    const [testDate, setTestDate] = useState<Date | null>(null);
     return (
         <div className='flex flex-col gap-[20px]'>
             <h1 className='text-center'>ВЭДО - внутренний электронный документооборот</h1>
@@ -37,6 +39,11 @@ function Home() {
             >
                 {'Ошибка'}
             </NotificationKit>
+            <CalendarKit
+                value={testDate}
+                updateValue={event => setTestDate(event)}
+                placeholder='dd.mm.yyyy'
+            />
         </div>
         
     );

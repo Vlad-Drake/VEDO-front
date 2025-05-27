@@ -27,14 +27,14 @@ export const jobTitlesHandlers = [
     //const data = await ctx.request.json();
     //return HttpResponse.json(jobTitles);
     const body = await HttpResponse.json(); // если нужно, можешь логировать body
-    /*return HttpResponse.json({
+    return HttpResponse.json({
       data: [
         "*Заместитель директора магазина",
         "Администратор баз данных",
         "Администратор столовой",
       ],
-    });*/
-    return HttpResponse.json(
+    });
+    /*return HttpResponse.json(
       {
         message: "Resource not found",
         code: "NotFound"
@@ -46,6 +46,6 @@ export const jobTitlesHandlers = [
           'Content-Type': 'application/json'
         }
       }
-    );
+    );*/
   }),
 ];
