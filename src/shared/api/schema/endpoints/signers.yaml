@@ -1,0 +1,44 @@
+schemas:
+  Signer:
+    type: object
+    required:
+      - row
+      - signer
+      - email
+    properties:
+      row:
+        type: integer
+      signer:
+        type: string
+      email:
+        type: string
+  SignersResponse:
+    type: object
+    required:
+      - list
+    additionalProperties: false
+    properties:
+      list:
+        type: array
+        items:
+          $ref: '#/schemas/Signer'
+
+signers:
+  summary: Get signers of branch
+  parameters:
+    - name: branch
+      in: query
+      required: true
+      schema:
+        type: string
+  responses:
+    "200":
+      description: signers successful
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/SignersResponse"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"

@@ -1,20 +1,23 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { useLoadingPage } from '@/shared/model/loadingPage';
 import { SelectRadioKit, type SelectRadioModel } from '@/shared/ui/selectRadioKit/selectRadioKit';
 import { useJobTitles } from "@/shared/model/useJobTitles";
+import { rqClient } from '@/shared/api/instance';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 function Branch() {
-    const { loadingPage, loading, error, done } = useLoadingPage();
+    const { loadingPage: loadingPageData, loading: loadingPage, error: errorPage, done: donePage } = useLoadingPage();
     const [branch, setBranch] = useState<string>('');
     const [jobTitleOptions, setJobTitleOptions] = useState<SelectRadioModel[]>([]);
-    const {
+    /*const {
         jobTitles,
         data,
         isPending: isPendingJT,
         errorMessage: errorMessageJT,
-    } = useJobTitles();
+    } = useJobTitles();*/
 
-    useEffect(() => {
+    /*useEffect(() => {
         loading();
         jobTitles({ dummy: "" });
     }, []);
@@ -34,11 +37,57 @@ function Branch() {
           );
           done();
         }
-    }, [data, errorMessageJT]);
+    }, [data, errorMessageJT]);*/
+
+    const {
+        data: boardQuery,
+        isLoading: isPending,
+        error,
+        isError,
+        isSuccess,
+    } = rqClient.useQuery('get', '/branches');
+
+    useEffect(() => {
+    if (isPending) {
+        loadingPage();
+    } else if (isError) {
+        errorPage(error?.message || 'Ошибка загрузки данных');
+    } else if (isSuccess && boardQuery) {
+        setJobTitleOptions(
+        boardQuery.list.map((jT, index) => ({
+            id: String(index + 1),
+            name: jT,
+        }))
+        );
+        donePage();
+    }
+    }, [isPending, isError, isSuccess, boardQuery]);
 
     const setBranchT = (value: string) => {
         setBranch(value);
     }
+
+    const {
+        data: signersData,
+        isLoading: isSignersLoading,
+        error: signersError,
+    } = rqClient.useQuery('get', '/signers', {
+        enabled: !!branch, // ВАЖНО: только если branch есть
+        params: {
+            query: {
+            branch: branch || "", // или задай дефолт
+            },
+        },
+    });
+
+    useEffect(() => {
+        if (signersData) {
+            console.log("Получены подписанты", signersData);
+        }
+        if (signersError) {
+            console.error("Ошибка при получении подписантов", signersError);
+        }
+    }, [signersData, signersError]);
 
     return (
         <div className='gap-[35px] content'>
@@ -62,9 +111,11 @@ function Branch() {
             <div className='border-t-2 border-dashed'></div>
             <div className='flex flex-col'>
                 <h2 className="text-left">Подписанты</h2>
-                <div>
-                    
-                </div>
+                <TransitionGroup className="list" component="div">
+                    <CSSTransition key={123} timeout={500} classNames="list">
+                        <div className="list-item">{'test1'}</div>
+                    </CSSTransition>
+                </TransitionGroup>
             </div>
         </div>
     );

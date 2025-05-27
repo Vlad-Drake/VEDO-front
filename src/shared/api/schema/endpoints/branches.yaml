@@ -1,0 +1,25 @@
+schemas:
+  BranchesListResponse:
+    type: object
+    required:
+      - list
+    additionalProperties: false
+    properties:
+      list:
+        type: array
+        items:
+          type: string
+
+branches:
+  summary: Get branches
+  responses:
+    "200":
+      description: branches successful
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/BranchesListResponse"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"

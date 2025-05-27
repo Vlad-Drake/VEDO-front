@@ -60,6 +60,40 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
         '404':
           $ref: '#/components/responses/NotFoundError'
+  /branches:
+    get:
+      summary: Get branches
+      responses:
+        '200':
+          description: branches successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchesListResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+  /signers:
+    get:
+      summary: Get signers of branch
+      parameters:
+        - name: branch
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: signers successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignersResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
 components:
   schemas:
     LoginRequest:
@@ -169,6 +203,39 @@ components:
           type: array
           items:
             type: string
+    BranchesListResponse:
+      type: object
+      required:
+        - list
+      additionalProperties: false
+      properties:
+        list:
+          type: array
+          items:
+            type: string
+    Signer:
+      type: object
+      required:
+        - row
+        - signer
+        - email
+      properties:
+        row:
+          type: integer
+        signer:
+          type: string
+        email:
+          type: string
+    SignersResponse:
+      type: object
+      required:
+        - list
+      additionalProperties: false
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Signer'
   responses:
     UnauthorizedError:
       description: Unauthorized

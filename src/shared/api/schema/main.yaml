@@ -13,3 +13,10 @@ paths:
   /jobTitle:
     post:
       $ref: "./endpoints/jobTitles.yaml#/jobTitles"
+  /branches:
+    get:
+      $ref: "./endpoints/branches.yaml#/branches"
+  
+  /signers:
+    get:
+      $ref: "./endpoints/signers.yaml#/signers"
