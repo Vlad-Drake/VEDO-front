@@ -1,0 +1,25 @@
+schemas:
+  DocTypeListResponse:
+    type: object
+    required:
+      - list
+    additionalProperties: false
+    properties:
+      list:
+        type: array
+        items:
+          type: string
+
+docTypes:
+  summary: Get doc types
+  responses:
+    "200":
+      description: doc types successful
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/DocTypeListResponse"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"

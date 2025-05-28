@@ -204,6 +204,11 @@ export function SelectRadioKit({
                   {option.name}
                 </p>
               ))}
+              {filteredOptions.length === 0 && 
+                <p>
+                  здесь пусто
+                </p>
+              }
             </div>
           </div>
         )}

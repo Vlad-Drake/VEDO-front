@@ -5,6 +5,7 @@ schemas:
       - row
       - signer
       - email
+      - docTypes
     properties:
       row:
         type: integer
@@ -12,18 +13,49 @@ schemas:
         type: string
       email:
         type: string
-  SignersResponse:
+      docTypes:
+        type: array
+        items:
+          type: object
+          required:
+            - doc
+            - checked
+          properties:
+            doc:
+              type: string
+            checked:
+              type: boolean
+          
+  Setting:
     type: object
     required:
-      - list
+      - row
+      - type
+      - code
+    properties:
+      row:
+        type: integer
+      type:
+        type: string
+      code:
+        type: string
+  BranchSettingsResponse:
+    type: object
+    required:
+      - signers
+      - settings
     additionalProperties: false
     properties:
-      list:
+      signers:
         type: array
         items:
           $ref: '#/schemas/Signer'
+      settings:
+        type: array
+        items:
+          $ref: '#/schemas/Setting'
 
-signers:
+branchSettings:
   summary: Get signers of branch
   parameters:
     - name: branch
@@ -37,7 +69,7 @@ signers:
       content:
         application/json:
           schema:
-            $ref: "#/schemas/SignersResponse"
+            $ref: "#/schemas/BranchSettingsResponse"
     "401":
       $ref: "../shared/responses.yaml#/UnauthorizedError"
     "404":

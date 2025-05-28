@@ -5,6 +5,7 @@ import { NotificationKit } from '@/shared/ui/notificationKit/notificationKit';
 import { useLoadingPage } from '@/shared/model/loadingPage';
 import { useState } from 'react';
 import { CalendarKit } from '@/shared/ui/calendarKit/calendarKit';
+import { SelectCheckboxKit } from '@/shared/ui/selectCheckboxKit/selectCheckboxKit';
 
 function Home() {
     const { loadingPage, loading, error, done } = useLoadingPage();
@@ -14,6 +15,11 @@ function Home() {
     }
     const [testInput, setTestInput] = useState('');
     const [testDate, setTestDate] = useState<Date | null>(null);
+    const [testselectCheckbox, setTestselectCheckbox] = useState([
+        {id: '1', name: "t1", checked: false},
+        {id: '2', name: "t2", checked: true},
+        {id: '3', name: "t3", checked: false},
+    ]);
     return (
         <div className='flex flex-col gap-[20px] mx-[50px]'>
             <h1 className='text-center'>ВЭДО - внутренний электронный документооборот</h1>
@@ -43,6 +49,18 @@ function Home() {
                 value={testDate}
                 updateValue={event => setTestDate(event)}
                 placeholder='dd.mm.yyyy'
+            />
+            <SelectCheckboxKit
+                options={testselectCheckbox}
+                /*update={(event) => {
+                    const newSigners = [...testselectCheckbox];
+                    const idx = newSigners.findIndex(item => item.id === event.id)
+                    newSigners[idx] = {
+                        ...newSigners[idx],
+                        checked: event.checked
+                    };
+                    setTestselectCheckbox(newSigners)}}*/
+                update={(event) => setTestselectCheckbox(event)}
             />
         </div>
         

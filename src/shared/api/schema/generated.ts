@@ -166,7 +166,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/signers": {
+    "/branch-settings": {
         parameters: {
             query?: never;
             header?: never;
@@ -191,7 +191,83 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["SignersResponse"];
+                        "application/json": components["schemas"]["BranchSettingsResponse"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/branch-codes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get codes branch */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description branches successful */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CodeListResponse"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/doc-types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get doc types */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description doc types successful */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DocTypeListResponse"];
                     };
                 };
                 401: components["responses"]["UnauthorizedError"];
@@ -269,9 +345,25 @@ export interface components {
             row: number;
             signer: string;
             email: string;
+            docTypes: {
+                doc: string;
+                checked: boolean;
+            }[];
         };
-        SignersResponse: {
-            list: components["schemas"]["Signer"][];
+        Setting: {
+            row: number;
+            type: string;
+            code: string;
+        };
+        BranchSettingsResponse: {
+            signers: components["schemas"]["Signer"][];
+            settings: components["schemas"]["Setting"][];
+        };
+        CodeListResponse: {
+            list: string[];
+        };
+        DocTypeListResponse: {
+            list: string[];
         };
     };
     responses: {

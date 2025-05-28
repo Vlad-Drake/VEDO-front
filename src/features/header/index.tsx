@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, href } from "react-router-dom";
 import { ROUTES } from "@/shared/model/routers";
 import classes from "./header.module.scss";
 
@@ -15,7 +15,7 @@ export function AppHeader() {
                         <Link to={ ROUTES.REGISTATIONUSER }>Новый пользователь</Link>
                     </section>
                     <section className={classes["navbar-section"]}>
-                        <Link to={ ROUTES.BRANCHES }>Филиалы</Link>
+                        <Link to={ href(ROUTES.BRANCHES, { branch: 'all' }) }>Филиалы</Link>
                     </section>
                     {/*<section class="navbar-section">
                         <router-link :to="'/common-docs-info'" class="link">Общие сведения о системе&nbsp;</router-link>

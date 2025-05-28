@@ -16,7 +16,12 @@ paths:
   /branches:
     get:
       $ref: "./endpoints/branches.yaml#/branches"
-  
-  /signers:
+  /branch-settings:
     get:
-      $ref: "./endpoints/signers.yaml#/signers"
+      $ref: "./endpoints/branchSettings.yaml#/branchSettings"
+  /branch-codes:
+    get:
+      $ref: "./endpoints/branchCodes.yaml#/branchCodes"
+  /doc-types:
+    get:
+      $ref: "./endpoints/docTypes.yaml#/docTypes"
