@@ -4,7 +4,7 @@ import ArrowIco from "./assets/arrow.svg";
 import { useGlobalClickOutside } from "@/shared/helper/useGlobalClickOutside";
 
 export interface SelectRadioModel {
-  id: string;
+  id: string | number;
   name: string;
 }
 
@@ -20,13 +20,13 @@ export function SelectRadioKit({
   updateName,
 }: {
   width?: string;
-  selectedId: string | null;
+  selectedId: string | number | null;
   options: SelectRadioModel[];
   placeholder?: string;
   error?: string;
   focused?: () => void;
-  blured?: (id: string) => void;
-  updateId?: (id: string) => void;
+  blured?: (id: string | number) => void;
+  updateId?: (id: string | number) => void;
   updateName?: (name: string) => void;
 }) {
     const selectorContainer = useRef<HTMLDivElement | null>(null);
@@ -39,7 +39,7 @@ export function SelectRadioKit({
   const [searchText, setSearchText] = useState("");
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [isAbove, setIsAbove] = useState(false);
-  const localSelectedIdRef = useRef<string | null>(selectedId);
+  const localSelectedIdRef = useRef<string | number | null>(selectedId);
   const { registerComponent, unregisterComponent } = useGlobalClickOutside();
 
   useEffect(() => {

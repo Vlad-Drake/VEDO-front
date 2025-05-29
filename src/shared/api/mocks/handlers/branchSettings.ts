@@ -6,39 +6,39 @@ const branchSettings: ApiSchemas['BranchSettingsResponse'] = {
     signers: [
         {
             row: 1,
-            signer: "1", //Должен быть объект, если такой должности уже не будет?
-            email: "test e1",
+            jobTitleId: 1,
+            email: "test1@slata.com",
             docTypes: [
-                {doc: "1", checked: false},
-                {doc: "2", checked: true},
-                {doc: "3", checked: true},
+                {docId: 1, checked: false},
+                {docId: 2, checked: true},
+                {docId: 3, checked: true},
             ]
         },
         {
             row: 2,
-            signer: "2",
+            jobTitleId: 2,
             email: "test e2",
             docTypes: [
-                {doc: "1", checked: false},
-                {doc: "2", checked: true},
-                {doc: "3", checked: false},
+                {docId: 1, checked: false},
+                {docId: 2, checked: true},
+                {docId: 3, checked: false},
             ]
         },
         {
             row: 3,
-            signer: "1",
+            jobTitleId: 1,
             email: "test e3",
             docTypes: [
-                {doc: "1", checked: true},
-                {doc: "2", checked: false},
-                {doc: "3", checked: false},
+                {docId: 1, checked: true},
+                {docId: 2, checked: false},
+                {docId: 3, checked: false},
             ]
         }
     ],
     settings: [
         {
             row: 1,
-            type: '2',
+            typeId: 2,
             code: '84',
         }
     ]

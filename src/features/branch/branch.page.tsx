@@ -8,207 +8,97 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { TextInputKit } from '@/shared/ui/textInputKit/textInputKit';
 import { useLocation, useNavigate, href, useParams } from 'react-router-dom';
 import { SelectCheckboxKit, type SelectCheckboxModel } from '@/shared/ui/selectCheckboxKit/selectCheckboxKit';
+import { useBranches } from './model/use-branches';
+import { useBranchCode } from './model/use-branch-code';
+import { useDocTypes } from './model/use-doc-types';
+import { useBranchSettings } from './model/use-branch-settings';
+import { moveRowUp, moveRowDown, deleteRow, addRow } from './helper/sortingRow';
 
 interface SignerModel {
     row: number;
-    signer: string;
+    jobTitleId: number | null;
     email: string;
     docTypes: DocTypeModel[];
 }
 interface DocTypeModel {
-    doc: string,
-    checked: boolean,
+    id: number;//docId
+    name: string;
+    checked: boolean;
 }
-
 interface SettingsModel {
-    row: number,
-    type: string,
-    code: string,
+    row: number;
+    typeId: number | null;
+    code: string;
 }
 
 function Branch() {
-    const { branch: branchParam } = useParams<"branch">();
     const navigate = useNavigate();
+    const { branch: branchParam } = useParams<"branch">();
+    const loadingPage = useLoadingPage();
+  
+    const branches = useBranches();
+    const jobTitles = useJobTitles();
+    const branchCode = useBranchCode();
+    const docTypes = useDocTypes();
+    const branchSettings = useBranchSettings(branches.selectedBranchId);
 
-    const { loadingPage: loadingPageData, loading: loadingPage, error: errorPage, done: donePage } = useLoadingPage();
-    const [branch, setBranch] = useState<string>('');
-    const [branchesOptions, setBranchesOptions] = useState<SelectRadioModel[]>([]);
-    const [jobTitleOptions, setJobTitleOptions] = useState<SelectRadioModel[]>([]);
-    const [docTypesOptions, setDocTypesOptions] = useState<SelectCheckboxModel[]>([]);
-    const [codeOptions, setCodeOptions] = useState<SelectRadioModel[]>([]);
     const [signers, setSigners] = useState<SignerModel[]>([]);
     const [settings, setSettings] = useState<SettingsModel[]>([]);
 
-    const {
-        jobTitles,
-        data: dataJT,
-        isPending: isPendingJT,
-        errorMessage: errorMessageJT,
-    } = useJobTitles();
-    
-    const {
-        data: boardQuery,
-        isLoading: isPending,
-        error,
-        isError,
-        isSuccess,
-    } = rqClient.useQuery('get', '/branches');
-    const {
-        data: boardQueryBC,
-        isLoading: isPendingBC,
-        error: errorBC,
-        isError: isErrorBC,
-        isSuccess: isSuccesssBC,
-    } = rqClient.useQuery('get', '/branch-codes');
-    const {
-        data: boardQueryDT,
-        isLoading: isPendingDT,
-        error: errorDT,
-        isError: isErrorDT,
-        isSuccess: isSuccesssDT,
-    } = rqClient.useQuery('get', '/doc-types');
     useEffect(() => {
-        loadingPage();
-        jobTitles({ dummy: "" });
-    }, []);
-    useEffect(() => {
-    
-        if(errorMessageJT) {
-            console.log('get data', errorMessageJT);
-        
-            errorPage(errorMessageJT);
-        } else if (dataJT) {
-            setJobTitleOptions(
-                dataJT.data.map((jT, index) => ({
-                        id: String(index + 1),
-                        name: jT,
-                })),
-            );
-            
-            donePage();
+        loadingPage.loading();
+        if(!(branches.branches.isPending && jobTitles.jobTitles.isPending && branchCode.branchCode.isPending && docTypes.docTypes.isPending)) {
+            if(branches.branches.isError || jobTitles.jobTitles.isError || branchCode.branchCode.isError || docTypes.docTypes.isError) {
+                loadingPage.error(
+                    [branches.branches.error ? `Ошибка получения филиалов: ${branches.branches.error.message}` : '',
+                    jobTitles.jobTitles.error ? `Ошибка получения должностей: ${jobTitles.jobTitles.error.message}` : '',
+                    branchCode.branchCode.error ? `Ошибка получения кодов филиалов: ${branchCode.branchCode.error.message}` : '',
+                    docTypes.docTypes.error ? `Ошибка получения кодов документов: ${docTypes.docTypes.error.message}` : ''].join(' ')
+                );
+            } else {
+                branches.setBranchesState(branches.branches.data?.list ?? []);
+                jobTitles.setJobTitlesState(jobTitles.jobTitles.data?.list ?? []);
+                branchCode.setBranchCodeState(branchCode.branchCode.data?.list ?? []);
+                docTypes.setDocTypesState(docTypes.docTypes.data?.list ?? []);
+                loadingPage.done();
+            }
         }
-      }, [dataJT, errorMessageJT]);
-    useEffect(() => {
-        if (isPending) {
-            loadingPage();
-        } else if (isError) {
-            errorPage(error?.message || 'Ошибка загрузки данных');
-        } else if (isSuccess && boardQuery && boardQueryBC && boardQueryDT) {
-            setBranchesOptions(
-            boardQuery.list.map((jT, index) => {
-                //console.log('test', branchParam && branchParam !== 'all' && jT === branchParam, branchParam, jT)
-                if(branchParam && branchParam !== 'all' && jT === branchParam) {
-                    setBranch(String(index + 1));
-                }
-                return ({
-                    id: String(index + 1),
-                    name: jT,
-                })
-            }));
-
-            setCodeOptions(
-            boardQueryBC.list.map((jT, index) => {
-                //console.log('test', branchParam && branchParam !== 'all' && jT === branchParam, branchParam, jT)
-                if(branchParam && branchParam !== 'all' && jT === branchParam) {
-                    setBranch(String(index + 1));
-                }
-                return ({
-                    id: String(index + 1),
-                    name: jT,
-                })
-            }));
-
-            setDocTypesOptions(
-                boardQueryDT.list.map((jT, index) => {
-                    return ({
-                        id: String(index + 1),
-                        name: jT,
-                        checked: false,
-                    })
-                })
-            );
-
-            donePage();
+        if(branchSettings.isPending && branches.selectedBranchId) {
+            loadingPage.loading();
         }
-    }, [isPending, isError, isSuccess, boardQuery, boardQueryDT, boardQueryBC]);
+        if(branchSettings.isError && branches.selectedBranchId) {
+            loadingPage.error(branchSettings.error.message);
+        }
+        if(branchSettings.status === 'success' && branches.selectedBranchId) {
+            setSigners(branchSettings.data.signers.map(item => ({
+                ...item,
+                docTypes: item.docTypesId.map(dt => {
+                const found = docTypes.docTypesState.find(dts => dts.id === dt.docId);
+                return {
+                    id: dt.docId,
+                    name: found?.docType ?? '', // если не нашли — пустая строка
+                    checked: dt.checked,
+                };
+                })
+            })));
+            setSettings(branchSettings.data.settings); //id name checked
+            loadingPage.done();
+        }
+       
+    }, [
+        branches.branches.isPending,
+        jobTitles.jobTitles.isPending,
+        branchCode.branchCode.isPending,
+        docTypes.docTypes.isPending,
 
-    const setBranchT = (value: string) => {
-        setBranch(value);
-    }
+        branches.selectedBranchId,
+        branchSettings.isPending
+    ]);
+
+    
+
     const setURL = (value: string) => {
         navigate(href("/branches/:branch", { branch: value }));
-    }
-
-    const {
-        data: signersData,
-        isLoading: isSignersLoading,
-        error: signersError,
-    } = rqClient.useQuery('get', '/branch-settings', {
-        enabled: !!branch, // ВАЖНО: только если branch есть
-        params: {
-            query: {
-            branch: branch,
-            },
-        },
-    });
-
-    useEffect(() => {
-        if (signersData) {
-            //console.log("Получены подписанты", signersData);
-            setSigners(signersData.signers)
-            setSettings(signersData.settings)
-
-        }
-        if (signersError) {
-            //console.error("Ошибка при получении подписантов", signersError);
-        }
-    }, [signersData, signersError]);
-
-    const moveRowUp = <T extends { row: number }>(row: number, state: T[]): T[] => {
-        const index = state.findIndex((sign) => sign.row === row);
-        if (index > 0) {
-            const newState = [...state];
-
-            const currentRow = newState[index];
-            const prevRow = newState[index - 1];
-            
-            newState[index] = prevRow;
-            newState[index - 1] = currentRow;
-
-            return newState;
-        } else {
-            return state;
-        }
-    };
-    
-    const moveRowDown = <T extends { row: number }>(row: number, state: T[]): T[] => {
-        const index = state.findIndex((sign) => sign.row === row);
-        if (index < signers.length - 1) {
-            const newState = [...state];
-
-            const currentRow = newState[index];
-            const prevRow = newState[index + 1];
-            
-            newState[index] = prevRow;
-            newState[index + 1] = currentRow;
-
-            return newState;
-        } else {
-            return state;
-        }
-    };
-    
-    const deleteRow = <T extends { row: number }>(row: number, state: T[]): T[] => {
-        return state.filter((sign) => sign.row !== row);
-    };
-
-    const addRow = <T extends { row: number }>(state: T[], newRowData: Omit<T, 'row'>): T[] => {
-        let maxRow = 1;
-        if(state.length > 0) {
-            maxRow = Math.max(...state.map(item => item.row)) + 1;
-        }
-        const newRow: T = { row: maxRow, ...newRowData } as T;
-        return [...state, newRow];
     }
 
     return (
@@ -224,10 +114,13 @@ function Branch() {
                 <SelectRadioKit
                     placeholder='Выберите филиал'
                     width="500px"
-                    selectedId={branch}
-                    updateId={(event) => setBranchT(event)}
+                    selectedId={String(branches.selectedBranchId)}
+                    updateId={(event) => branches.setSelectedBranchId(Number(event))}
                     updateName={(event) => setURL(event)}
-                    options={branchesOptions ?? []}
+                    options={(branches.branchesState ?? []).map(branch => ({
+                        id: branch.id,
+                        name: branch.branch
+                    }))}
                 />
             </div>
             <div className='border-t-2 border-dashed'></div>
@@ -238,7 +131,7 @@ function Branch() {
                     <h3 className='w-[330px]'>Почта</h3>
                     <h3 className='w-[340px]'>Документы</h3>
                 </div>
-                {branch && <AnimatePresence>
+                {branches.selectedBranchId && <AnimatePresence>
                     {
                         signers.map((item, index) => {
                             return (
@@ -255,15 +148,18 @@ function Branch() {
                                     <SelectRadioKit
                                         placeholder='Выберите должность'
                                         width="340px"
-                                        selectedId={item.signer}
+                                        selectedId={item.jobTitleId}
                                         updateId={(event) => {
                                             const newSigners = [...signers];
                                             newSigners[index] = {
                                                 ...newSigners[index],
-                                                signer: event
+                                                jobTitleId: event as typeof item.jobTitleId
                                             };
                                             setSigners(newSigners)}}
-                                        options={jobTitleOptions ?? []}
+                                        options={(jobTitles.jobTitlesState ?? []).map(item => ({
+                                            id: item.id,
+                                            name: item.jobTitle,
+                                        }))}
                                     />
                                     <TextInputKit
                                         name="email"
@@ -281,8 +177,19 @@ function Branch() {
                                     />
                                     <SelectCheckboxKit
                                         width='340px'
-                                        options={docTypesOptions}
-                                        update={(event) => setDocTypesOptions(event)}
+                                        options={item.docTypes}
+                                        update={(event) => {
+                                            setSigners(prev =>
+                                                prev.map(signer =>
+                                                    signer.row === item.row
+                                                        ? {
+                                                            ...signer,
+                                                            docTypes: event as DocTypeModel[]
+                                                        }
+                                                        : signer
+                                                )
+                                            );
+                                        }}
                                     />
                                     <div className={classes["list-content__control-row"]}>
                                         <button 
@@ -308,7 +215,7 @@ function Branch() {
                     }
                     <motion.div layout className={classes["list-content__add-row"]} key="plus">
                         <p>Добавить подписанта</p>
-                        <button onClick={() => setSigners(addRow(signers, {signer: '', email: '', docTypes: []}))}>
+                        <button onClick={() => setSigners(addRow(signers, {jobTitleId: null, email: '', docTypes: []}))}>
                             ✚
                         </button>
                     </motion.div>
@@ -319,7 +226,7 @@ function Branch() {
             <div className='border-t-2 border-dashed'></div>
             <div className='flex flex-col gap-[10px]'>
                 <h2 className="text-left">Настройки ТТ</h2>
-                {branch && <AnimatePresence>
+                {branches.selectedBranchId && <AnimatePresence>
                     {
                         settings.map((item, index) => {
                             return (
@@ -336,15 +243,18 @@ function Branch() {
                                     <SelectRadioKit
                                         placeholder='Выберите настройку'
                                         width="340px"
-                                        selectedId={item.type}
+                                        selectedId={item.typeId}
                                         updateId={(event) => {
                                             const newSettings = [...settings];
                                             newSettings[index] = {
                                                 ...newSettings[index],
-                                                type: event
+                                                typeId: event as typeof item.typeId
                                             };
                                             setSettings(newSettings)}}
-                                        options={codeOptions ?? []}
+                                        options={(branchCode.branchCodeState ?? []).map(item => ({
+                                            id: item.id,
+                                            name: item.code,
+                                        }))}
                                     />
                                     <TextInputKit
                                         name="email"
@@ -384,7 +294,7 @@ function Branch() {
                     }
                     <motion.div layout className={classes["list-content__add-row"]} key="plus">
                         <p>Добавить код</p>
-                        <button onClick={() => setSettings(addRow(settings, {type: '', code: ''}))}>
+                        <button onClick={() => setSettings(addRow(settings, {typeId: null, code: ''}))}>
                             ✚
                         </button>
                     </motion.div>

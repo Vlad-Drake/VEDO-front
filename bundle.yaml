@@ -74,7 +74,7 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
         '404':
           $ref: '#/components/responses/NotFoundError'
-  /signers:
+  /branch-settings:
     get:
       summary: Get signers of branch
       parameters:
@@ -89,7 +89,35 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SignersResponse'
+                $ref: '#/components/schemas/BranchSettingsResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+  /branch-codes:
+    get:
+      summary: Get codes branch
+      responses:
+        '200':
+          description: branches successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeListResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+  /doc-types:
+    get:
+      summary: Get doc types
+      responses:
+        '200':
+          description: doc types successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocTypeListResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
@@ -219,6 +247,7 @@ components:
         - row
         - signer
         - email
+        - docTypes
       properties:
         row:
           type: integer
@@ -226,7 +255,47 @@ components:
           type: string
         email:
           type: string
-    SignersResponse:
+        docTypes:
+          type: array
+          items:
+            type: object
+            required:
+              - doc
+              - checked
+            properties:
+              doc:
+                type: string
+              checked:
+                type: boolean
+    Setting:
+      type: object
+      required:
+        - row
+        - type
+        - code
+      properties:
+        row:
+          type: integer
+        type:
+          type: string
+        code:
+          type: string
+    BranchSettingsResponse:
+      type: object
+      required:
+        - signers
+        - settings
+      additionalProperties: false
+      properties:
+        signers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Signer'
+        settings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Setting'
+    CodeListResponse:
       type: object
       required:
         - list
@@ -235,7 +304,17 @@ components:
         list:
           type: array
           items:
-            $ref: '#/components/schemas/Signer'
+            type: string
+    DocTypeListResponse:
+      type: object
+      required:
+        - list
+      additionalProperties: false
+      properties:
+        list:
+          type: array
+          items:
+            type: string
   responses:
     UnauthorizedError:
       description: Unauthorized

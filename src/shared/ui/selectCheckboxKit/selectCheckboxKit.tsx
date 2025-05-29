@@ -5,7 +5,7 @@ import { useGlobalClickOutside } from "@/shared/helper/useGlobalClickOutside";
 import Checkbox_ico from './assets/checkbox.svg';
 
 export interface SelectCheckboxModel {
-  id: string;
+  id: string | number;
   name: string;
   checked: boolean;
 }

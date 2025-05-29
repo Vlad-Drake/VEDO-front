@@ -8,7 +8,15 @@ schemas:
       list:
         type: array
         items:
-          type: string
+          type: object
+          required:
+            - id
+            - docType
+          properties:
+            id:
+              type: integer
+            docType:
+              type: string
 
 docTypes:
   summary: Get doc types

@@ -4,9 +4,9 @@ import { delay, HttpResponse } from 'msw';
 
 const branches: ApiSchemas["BranchesListResponse"] = {
     list: [
-        'TT 1',
-        'TT 2',
-        'TT 3',
+        {id: 1, branch: 'TT 1'},
+        {id: 2, branch: 'TT 2'},
+        {id: 3, branch: 'TT 3'},
     ]
 }
 
@@ -14,5 +14,18 @@ export const branchesHandler = [
     http.get('/branches', async (ctx) => {
         await delay(1500);
         return HttpResponse.json(branches);
+        /*return HttpResponse.json(
+            {
+                message: "Resource not found",
+                code: "NotFound"
+            },
+            {
+                status: 404,
+                statusText: "Not Found",
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            }
+        );*/
     })
 ]

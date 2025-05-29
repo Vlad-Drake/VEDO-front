@@ -8,7 +8,15 @@ schemas:
       list:
         type: array
         items:
-          type: string
+          type: object
+          required:
+            - id
+            - code
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
 
 branchCodes:
   summary: Get codes branch

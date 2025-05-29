@@ -93,21 +93,15 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
         /** Get job titles */
-        post: {
+        get: {
             parameters: {
                 query?: never;
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["JobTitlesRequest"];
-                };
-            };
+            requestBody?: never;
             responses: {
                 /** @description job titles successful */
                 200: {
@@ -122,6 +116,8 @@ export interface paths {
                 404: components["responses"]["NotFoundError"];
             };
         };
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -177,7 +173,7 @@ export interface paths {
         get: {
             parameters: {
                 query: {
-                    branch: string;
+                    branchId: number;
                 };
                 header?: never;
                 path?: never;
@@ -332,27 +328,30 @@ export interface components {
             code: string;
             message: string;
         };
-        JobTitlesRequest: {
-            dummy?: string;
-        };
         JobTitlesResponse: {
-            data: string[];
+            list: {
+                id: number;
+                jobTitle: string;
+            }[];
         };
         BranchesListResponse: {
-            list: string[];
+            list: {
+                id: number;
+                branch: string;
+            }[];
         };
         Signer: {
             row: number;
-            signer: string;
+            jobTitleId: number;
             email: string;
-            docTypes: {
-                doc: string;
+            docTypesId: {
+                docId: number;
                 checked: boolean;
             }[];
         };
         Setting: {
             row: number;
-            type: string;
+            typeId: number;
             code: string;
         };
         BranchSettingsResponse: {
@@ -360,10 +359,16 @@ export interface components {
             settings: components["schemas"]["Setting"][];
         };
         CodeListResponse: {
-            list: string[];
+            list: {
+                id: number;
+                code: string;
+            }[];
         };
         DocTypeListResponse: {
-            list: string[];
+            list: {
+                id: number;
+                docType: string;
+            }[];
         };
     };
     responses: {

@@ -11,7 +11,7 @@ paths:
     post:
       $ref: "./endpoints/registrationUser.yaml#/registrationUser"  
   /jobTitle:
-    post:
+    get:
       $ref: "./endpoints/jobTitles.yaml#/jobTitles"
   /branches:
     get:

@@ -3,26 +3,26 @@ schemas:
     type: object
     required:
       - row
-      - signer
+      - jobTitleId
       - email
-      - docTypes
+      - docTypesId
     properties:
       row:
         type: integer
-      signer:
-        type: string
+      jobTitleId:
+        type: integer
       email:
         type: string
-      docTypes:
+      docTypesId:
         type: array
         items:
           type: object
           required:
-            - doc
+            - docId
             - checked
           properties:
-            doc:
-              type: string
+            docId:
+              type: integer
             checked:
               type: boolean
           
@@ -30,13 +30,13 @@ schemas:
     type: object
     required:
       - row
-      - type
+      - typeId
       - code
     properties:
       row:
         type: integer
-      type:
-        type: string
+      typeId:
+        type: integer
       code:
         type: string
   BranchSettingsResponse:
@@ -58,11 +58,11 @@ schemas:
 branchSettings:
   summary: Get signers of branch
   parameters:
-    - name: branch
+    - name: branchId
       in: query
       required: true
       schema:
-        type: string
+        type: integer
   responses:
     "200":
       description: signers successful

@@ -1,13 +1,12 @@
 import { HttpResponse, delay } from "msw";
 import { http } from "../http";
 import type { ApiSchemas } from "../../schema";
-import { http as rawHttp } from "msw"; // <--- это обычный http из msw
 
 const jobTitles: ApiSchemas["JobTitlesResponse"] = {
-  data: [
-    "*Заместитель директора магазина",
-    "Администратор баз данных",
-    "Администратор столовой",
+  list: [
+    {id: 1, jobTitle: '*Заместитель директора магазина'},
+    {id: 2, jobTitle: 'Администратор баз данных'},
+    {id: 3, jobTitle: 'Администратор столовой'},
   ],
 };
 
@@ -20,20 +19,14 @@ export const jobTitlesHandlers = [
     console.warn('Unhandled request to:', request.url);
     return HttpResponse.text('No matching route', { status: 404 });
   }),*/
-  http.post("/jobTitle", async (ctx) => {
-    console.log("[MSW] /jobTitles called");
+  http.get("/jobTitle", async (ctx) => {
+    
     await delay(2000);
     //await verifyTokenOrThrow(ctx.request);
     //const data = await ctx.request.json();
     //return HttpResponse.json(jobTitles);
     const body = await HttpResponse.json(); // если нужно, можешь логировать body
-    return HttpResponse.json({
-      data: [
-        "*Заместитель директора магазина",
-        "Администратор баз данных",
-        "Администратор столовой",
-      ],
-    });
+    return HttpResponse.json(jobTitles);
     /*return HttpResponse.json(
       {
         message: "Resource not found",

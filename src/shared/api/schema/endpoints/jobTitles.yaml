@@ -1,11 +1,25 @@
+schemas:
+  JobTitlesResponse:
+    type: object
+    required:
+      - list
+    additionalProperties: false
+    properties:
+      list:
+        type: array
+        items:
+          type: object
+          required:
+            - id
+            - jobTitle
+          properties:
+            id:
+              type: integer
+            jobTitle:
+              type: string
+
 jobTitles:
   summary: Get job titles
-  requestBody:
-    required: false
-    content:
-      application/json:
-        schema:
-          $ref: "#/schemas/JobTitlesRequest"
   responses:
     "200":
       description: job titles successful
@@ -17,22 +31,3 @@ jobTitles:
       $ref: "../shared/responses.yaml#/UnauthorizedError"
     "404":
       $ref: "../shared/responses.yaml#/NotFoundError"
-
-schemas:
-  JobTitlesResponse:
-    type: object
-    required:
-      - data
-    additionalProperties: false
-    properties:
-      data:
-        type: array
-        items:
-          type: string
-
-  JobTitlesRequest:
-    type: object
-    additionalProperties: false
-    properties:
-      dummy:
-        type: string
