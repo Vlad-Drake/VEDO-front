@@ -17,7 +17,7 @@ function Login() {
   const [user, setUser] = useState<User>({ user: "", password: "" });
   const [errors, setErrors] = useState<User>({ user: "", password: "" });
   const [btnStatus, setBtnStatus] = useState<BtnStatuses>("default");
-  const { loadingPage, loading, error, done } = useLoadingPage();
+  const { done } = useLoadingPage();
   done();
   const { login, isPending, errorMessage } = useLogin();
 

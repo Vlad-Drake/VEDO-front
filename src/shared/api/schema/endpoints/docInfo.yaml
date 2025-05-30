@@ -1,0 +1,39 @@
+schemas:
+  DocInfoResponse:
+    type: object
+    required:
+      - list
+    additionalProperties: false
+    properties:
+      list:
+        type: array
+        items:
+          type: object
+          required:
+            - question
+            - answer
+          properties:
+            question:
+              type: string
+            answer:
+              type: string
+
+docInfo:
+  summary: Get a doc info
+  parameters:
+    - name: docId
+      in: query
+      required: true
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: docInfo successful
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/DocInfoResponse"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"

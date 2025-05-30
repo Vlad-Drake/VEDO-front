@@ -11,11 +11,13 @@ export function CalendarKit({
     value = null,
     locale = 'defalut',
     placeholder,
+    width = 'auto',
     updateValue,
 }:{
     value: Date | null,
     placeholder: string,
     locale?: string,
+    width?: string,
     updateValue: (newVal: Date) => void,
 }) {
     const {state, functions } = useCalendar({ locale: locale, selectedDate: value, firstWeekDay: 2 });
@@ -160,7 +162,7 @@ export function CalendarKit({
 
     return (
         <div className={classes["calendar"]} ref={calendarContainer}>
-            <div className={classes["calendar__body"]} ref={calendarBody}>
+            <div className={classes["calendar__body"]} ref={calendarBody} style={{width}}>
                 <div className={classes["date-input-wrapper"]}>
                     <input
                         type="text"

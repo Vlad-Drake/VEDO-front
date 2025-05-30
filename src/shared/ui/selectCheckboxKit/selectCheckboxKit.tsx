@@ -16,7 +16,7 @@ export function SelectCheckboxKit({
   options,
   error = "",
   focused,
-  blured,
+  //blured,
   update,
 }: {
   width?: string;
@@ -24,7 +24,7 @@ export function SelectCheckboxKit({
   options: SelectCheckboxModel[];
   error?: string;
   focused?: () => void;
-  blured?: (id: string) => void;
+  //blured?: (id: string) => void;
   update: (item: SelectCheckboxModel[]) => void;
 }) {
   const selectorContainer = useRef<HTMLDivElement | null>(null);
@@ -244,7 +244,7 @@ export function SelectCheckboxKit({
                    
               ))}
               {filteredOptions.length === 0 && 
-                <p>
+                <p className={classes['selector-row']}>
                   здесь пусто
                 </p>
               }

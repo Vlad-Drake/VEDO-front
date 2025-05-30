@@ -54,6 +54,10 @@ export const useLoadingPage = () => {
   const loading = () => dispatch(loadingAction());
   const error = (error: string) => dispatch(errorAction(error));
   const done = () => dispatch(doneAction());
+  const reset = () => { 
+    dispatch(errorAction(initialState.errorMessage)); 
+    dispatch(loadingAction());
+  }
 
-  return { loadingPage, loading, error, done };
+  return { loadingPage, loading, error, done, reset };
 };

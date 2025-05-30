@@ -3,7 +3,6 @@ import { TextInputKit } from "@/shared/ui/textInputKit/textInputKit";
 import { FormRowLayout } from "./form-row-layout";
 import {
   SelectRadioKit,
-  type SelectRadioModel,
 } from "@/shared/ui/selectRadioKit/selectRadioKit";
 import { ButtonKit, type BtnStatuses } from "@/shared/ui/buttonKit/buttonKit";
 import { NotificationKit } from "@/shared/ui/notificationKit/notificationKit";
@@ -73,36 +72,8 @@ const formFields: FormField[] = [
 ];
 
 function RegistationUser() {
-  const [jobTitleOptions, setJobTitleOptions] = useState<SelectRadioModel[]>([]);
-  const { loadingPage, loading, error, done } = useLoadingPage();
-  const {
-    jobTitles,
-    data,
-    isPending: isPendingJT,
-    errorMessage: errorMessageJT,
-  } = useJobTitles();
-
-  useEffect(() => {
-    loading();
-    jobTitles({ dummy: "" });
-  }, []);
-
-  useEffect(() => {
-    
-    if(errorMessageJT) {
-      console.log('get data', errorMessageJT);
-
-      error(errorMessageJT);
-    } else if (data) {
-      setJobTitleOptions(
-        data.data.map((jT, index) => ({
-          id: String(index + 1),
-          name: jT,
-        })),
-      );
-      done();
-    }
-  }, [data, errorMessageJT]);
+  const loadingPage = useLoadingPage();
+  const jobTitles = useJobTitles();
 
   const initialRegisterUserModel: RegisterUser = {
     lastName: "",
@@ -154,6 +125,20 @@ function RegistationUser() {
     return validate();
   }, [registerUserModel]);
 
+  useEffect(() => {loadingPage.reset();}, [])
+  useEffect(() => {
+    loadingPage.loading();
+    if(!jobTitles.jobTitles.isPending) {
+      if(jobTitles.jobTitles.isError) {
+        loadingPage.error(jobTitles.jobTitles.error.message);
+      } else {
+        jobTitles.setJobTitlesState(jobTitles.jobTitles.data?.list ?? []);
+        loadingPage.done();
+        console.log('wtf?')
+      }
+    }
+    
+  }, [jobTitles.jobTitles.isPending]);
   useEffect(() => {
     isFormValid
       ? isPending
@@ -184,9 +169,12 @@ function RegistationUser() {
             <SelectRadioKit
               {...commonProps}
               selectedId={registerUserModel[field.fieldName]}
-              updateId={(event) => handleChange(event, field.fieldName)}
-              blured={(event) => validateField(field.fieldName, event)}
-              options={field.fieldName === "jobTitle" ? jobTitleOptions : []}
+              updateId={(event) => handleChange(String(event), field.fieldName)}
+              blured={(event) => validateField(field.fieldName, String(event))}
+              options={field.fieldName === "jobTitle" ? jobTitles.jobTitlesState.map(item => ({
+                id: item.id,
+                name: item.jobTitle,
+              })) : []}
             />
           ) : (
             <TextInputKit {...commonProps} />

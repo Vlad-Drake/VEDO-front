@@ -39,7 +39,7 @@ const docTypes: ApiSchemas["DocTypeListResponse"] = {
 }
 
 export const docTypesHandler = [
-    http.get('/doc-types', async (ctx) => {
+    http.get('/doc-types', async (_) => {
         await delay(1500);
         return HttpResponse.json(docTypes);
     })

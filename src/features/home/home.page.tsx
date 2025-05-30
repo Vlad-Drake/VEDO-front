@@ -8,14 +8,14 @@ import { CalendarKit } from '@/shared/ui/calendarKit/calendarKit';
 import { SelectCheckboxKit } from '@/shared/ui/selectCheckboxKit/selectCheckboxKit';
 
 function Home() {
-    const { loadingPage, loading, error, done } = useLoadingPage();
+    const { done } = useLoadingPage();
     done();
     function test() {
         console.log('Hi!')
     }
     const [testInput, setTestInput] = useState('');
     const [testDate, setTestDate] = useState<Date | null>(null);
-    const [testselectCheckbox, setTestselectCheckbox] = useState([
+    const [testselectCheckbox ] = useState([
         {id: '1', name: "t1", checked: false},
         {id: '2', name: "t2", checked: true},
         {id: '3', name: "t3", checked: false},
@@ -60,7 +60,7 @@ function Home() {
                         checked: event.checked
                     };
                     setTestselectCheckbox(newSigners)}}*/
-                update={(event) => setTestselectCheckbox(event)}
+                update={(event) => console.log(event)}
             />
         </div>
         

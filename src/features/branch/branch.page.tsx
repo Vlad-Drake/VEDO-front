@@ -1,13 +1,12 @@
-import { useState, useEffect, useMemo, createRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useLoadingPage } from '@/shared/model/loadingPage';
-import { SelectRadioKit, type SelectRadioModel } from '@/shared/ui/selectRadioKit/selectRadioKit';
+import { SelectRadioKit } from '@/shared/ui/selectRadioKit/selectRadioKit';
 import { useJobTitles } from "@/shared/model/useJobTitles";
-import { rqClient } from '@/shared/api/instance';
 import classes from './branch.module.scss';
 import { AnimatePresence, motion } from 'framer-motion';
 import { TextInputKit } from '@/shared/ui/textInputKit/textInputKit';
-import { useLocation, useNavigate, href, useParams } from 'react-router-dom';
-import { SelectCheckboxKit, type SelectCheckboxModel } from '@/shared/ui/selectCheckboxKit/selectCheckboxKit';
+import { useNavigate, href, useParams } from 'react-router-dom';
+import { SelectCheckboxKit } from '@/shared/ui/selectCheckboxKit/selectCheckboxKit';
 import { useBranches } from './model/use-branches';
 import { useBranchCode } from './model/use-branch-code';
 import { useDocTypes } from './model/use-doc-types';
@@ -37,17 +36,20 @@ function Branch() {
     const loadingPage = useLoadingPage();
   
     const branches = useBranches();
+    const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null);
     const jobTitles = useJobTitles();
     const branchCode = useBranchCode();
     const docTypes = useDocTypes();
-    const branchSettings = useBranchSettings(branches.selectedBranchId);
+    const branchSettings = useBranchSettings(selectedBranchId);
 
+    
     const [signers, setSigners] = useState<SignerModel[]>([]);
     const [settings, setSettings] = useState<SettingsModel[]>([]);
-
+    
+    useEffect(() => {loadingPage.reset();}, [])
     useEffect(() => {
         loadingPage.loading();
-        if(!(branches.branches.isPending && jobTitles.jobTitles.isPending && branchCode.branchCode.isPending && docTypes.docTypes.isPending)) {
+        if(!(branches.branches.isPending || jobTitles.jobTitles.isPending || branchCode.branchCode.isPending || docTypes.docTypes.isPending)) {
             if(branches.branches.isError || jobTitles.jobTitles.isError || branchCode.branchCode.isError || docTypes.docTypes.isError) {
                 loadingPage.error(
                     [branches.branches.error ? `Ошибка получения филиалов: ${branches.branches.error.message}` : '',
@@ -57,22 +59,27 @@ function Branch() {
                 );
             } else {
                 branches.setBranchesState(branches.branches.data?.list ?? []);
+                if(branchParam && branchParam !== 'all' && selectedBranchId === null) {
+                    const item = branches.branches.data?.list.find(item => item.branch === branchParam)
+                    setSelectedBranchId(item?.id ?? null);
+                }
                 jobTitles.setJobTitlesState(jobTitles.jobTitles.data?.list ?? []);
                 branchCode.setBranchCodeState(branchCode.branchCode.data?.list ?? []);
                 docTypes.setDocTypesState(docTypes.docTypes.data?.list ?? []);
-                loadingPage.done();
+                !loadingPage.loadingPage.errorMessage && loadingPage.done();
+                
             }
         }
-        if(branchSettings.isPending && branches.selectedBranchId) {
+        if(branchSettings.isPending && selectedBranchId) {
             loadingPage.loading();
         }
-        if(branchSettings.isError && branches.selectedBranchId) {
+        if(branchSettings.isError && selectedBranchId) {
             loadingPage.error(branchSettings.error.message);
         }
-        if(branchSettings.status === 'success' && branches.selectedBranchId) {
+        if(branchSettings.status === 'success' && selectedBranchId) {
             setSigners(branchSettings.data.signers.map(item => ({
                 ...item,
-                docTypes: item.docTypesId.map(dt => {
+                docTypes: item.docTypes.map(dt => {
                 const found = docTypes.docTypesState.find(dts => dts.id === dt.docId);
                 return {
                     id: dt.docId,
@@ -82,7 +89,7 @@ function Branch() {
                 })
             })));
             setSettings(branchSettings.data.settings); //id name checked
-            loadingPage.done();
+            !loadingPage.loadingPage.errorMessage && loadingPage.done();
         }
        
     }, [
@@ -91,11 +98,9 @@ function Branch() {
         branchCode.branchCode.isPending,
         docTypes.docTypes.isPending,
 
-        branches.selectedBranchId,
+        selectedBranchId,
         branchSettings.isPending
     ]);
-
-    
 
     const setURL = (value: string) => {
         navigate(href("/branches/:branch", { branch: value }));
@@ -103,7 +108,7 @@ function Branch() {
 
     return (
         <div className='gap-[35px] content'>
-            <h1 className="text-center">Управление филиалами</h1>
+            <h1 className="text-center">Настройки филиалов</h1>
 
             <div className="flex flex-row gap-10 justify-start">
                 <p
@@ -114,8 +119,11 @@ function Branch() {
                 <SelectRadioKit
                     placeholder='Выберите филиал'
                     width="500px"
-                    selectedId={String(branches.selectedBranchId)}
-                    updateId={(event) => branches.setSelectedBranchId(Number(event))}
+                    selectedId={selectedBranchId}
+                    updateId={(event) => {
+                        const newId = Number(event)
+                        setSelectedBranchId(newId);
+                    }}
                     updateName={(event) => setURL(event)}
                     options={(branches.branchesState ?? []).map(branch => ({
                         id: branch.id,
@@ -131,7 +139,7 @@ function Branch() {
                     <h3 className='w-[330px]'>Почта</h3>
                     <h3 className='w-[340px]'>Документы</h3>
                 </div>
-                {branches.selectedBranchId && <AnimatePresence>
+                {selectedBranchId && <AnimatePresence>
                     {
                         signers.map((item, index) => {
                             return (
@@ -215,7 +223,18 @@ function Branch() {
                     }
                     <motion.div layout className={classes["list-content__add-row"]} key="plus">
                         <p>Добавить подписанта</p>
-                        <button onClick={() => setSigners(addRow(signers, {jobTitleId: null, email: '', docTypes: []}))}>
+                        <button 
+                            onClick={() => 
+                                setSigners(addRow(
+                                    signers,
+                                    {jobTitleId: null, email: '', docTypes: docTypes.docTypesState.map(item => ({
+                                        id: item.id,
+                                        name: item.docType,
+                                        checked: true,
+                                    }))}
+                                ))
+                            }
+                        >
                             ✚
                         </button>
                     </motion.div>
@@ -226,7 +245,11 @@ function Branch() {
             <div className='border-t-2 border-dashed'></div>
             <div className='flex flex-col gap-[10px]'>
                 <h2 className="text-left">Настройки ТТ</h2>
-                {branches.selectedBranchId && <AnimatePresence>
+                <div className='flex gap-[10px]'>
+                    <h3 className='w-[340px]'>Тип кода</h3>
+                    <h3 className='w-[330px]'>Код</h3>
+                </div>
+                {selectedBranchId && <AnimatePresence>
                     {
                         settings.map((item, index) => {
                             return (
@@ -301,6 +324,12 @@ function Branch() {
                 </AnimatePresence>}
                 
             </div>
+
+            <div className='border-t-2 border-dashed'></div>
+            <div className='flex flex-col gap-[10px]'>
+                <h2 className="text-left">История изменений</h2>
+            </div>
+            
         </div>
     );
 }

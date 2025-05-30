@@ -79,41 +79,35 @@ export function SelectRadioKit({
       }
     };
   }, []);
-  /*useEffect(() => {
-        setFilteredOptions(options.filter(option =>
-            option.name.toLowerCase().includes(searchText.toLowerCase())
-        ));
-        console.log('setFilteredOptions', filteredOptions)
-    }, [searchText]);*/
+  
+  const adjustDropdownPosition = () => {
+    //const container = document.querySelector('.selector-body');
+    //const container = $refs.dropdownBody as HTMLElement;
+    if (!dropdownBody.current) return;
+    //if (!selectorContainer.value) return;
 
-    const adjustDropdownPosition = () => {
-        //const container = document.querySelector('.selector-body');
-        //const container = $refs.dropdownBody as HTMLElement;
-        if (!dropdownBody.current) return;
-        //if (!selectorContainer.value) return;
-    
-        const containerRect = dropdownBody.current.getBoundingClientRect();
-        //console.log(containerRect)
-        const windowHeight = window.innerHeight;
-        //console.log(windowHeight)
-    
-        const spaceBelow = windowHeight - containerRect.bottom;
-        const spaceAbove = containerRect.top;
-    
-        const menuHeight = 560;
-    
-        const above = spaceBelow < spaceAbove;
-        setIsAbove(above);
-    
-        const availableSpace = above ? spaceAbove : spaceBelow;
-        //const rootElement = document.documentElement;
-        //const rootStyles = getComputedStyle(rootElement);
-        const navbarHeight = 50;//Number(rootStyles.getPropertyValue('--navbar-height').replace('px',''));
-        //console.log(availableSpace, above, spaceAbove, spaceBelow)
-        setDropdownListHeight(Math.min(availableSpace - 60 - 20 - navbarHeight, menuHeight));
-        //60px -> 50 размер поисковика, 10 отступ ниже list
-        //20px -> отступ от navbar до list
-    };
+    const containerRect = dropdownBody.current.getBoundingClientRect();
+    //console.log(containerRect)
+    const windowHeight = window.innerHeight;
+    //console.log(windowHeight)
+
+    const spaceBelow = windowHeight - containerRect.bottom;
+    const spaceAbove = containerRect.top;
+
+    const menuHeight = 560;
+
+    const above = spaceBelow < spaceAbove;
+    setIsAbove(above);
+
+    const availableSpace = above ? spaceAbove : spaceBelow;
+    //const rootElement = document.documentElement;
+    //const rootStyles = getComputedStyle(rootElement);
+    const navbarHeight = 50;//Number(rootStyles.getPropertyValue('--navbar-height').replace('px',''));
+    //console.log(availableSpace, above, spaceAbove, spaceBelow)
+    setDropdownListHeight(Math.min(availableSpace - 60 - 20 - navbarHeight, menuHeight));
+    //60px -> 50 размер поисковика, 10 отступ ниже list
+    //20px -> отступ от navbar до list
+  };
 
   const SelectOption = (option: SelectRadioModel) => {
     localSelectedIdRef.current = option.id;
@@ -122,20 +116,20 @@ export function SelectRadioKit({
     setIsSelection(false);
   };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-        setSearchText(e.target.value);
-        if(debounceTimer.current) {
-            clearTimeout(debounceTimer.current);
-        }
+    setSearchText(e.target.value);
+    if(debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
+    }
 
-        debounceTimer.current = setTimeout(() => {
-            
-            setFilteredOptions(options.filter(option =>
-                option.name.toLowerCase().includes(e.target.value.toLowerCase())
-            ));
-        }, 600);
-    };
+    debounceTimer.current = setTimeout(() => {
+        
+        setFilteredOptions(options.filter(option =>
+            option.name.toLowerCase().includes(e.target.value.toLowerCase())
+        ));
+    }, 600);
+  };
 
   useEffect(() => {
     return (() => {
@@ -190,10 +184,10 @@ export function SelectRadioKit({
             </div>
             <div
               className={`
-                                ${classes["list"]}
-                                ${classes["scrollable"]}
-                                ${classes["z-index-select-list-in-modal-window"]}
-                            `}
+                          ${classes["list"]}
+                          ${classes["scrollable"]}
+                          ${classes["z-index-select-list-in-modal-window"]}
+                      `}
               style={{ width, maxHeight: dropdownListHeight + "px" }}
             >
               {filteredOptions.map((option, index) => (

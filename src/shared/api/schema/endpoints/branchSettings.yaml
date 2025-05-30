@@ -5,7 +5,7 @@ schemas:
       - row
       - jobTitleId
       - email
-      - docTypesId
+      - docTypes
     properties:
       row:
         type: integer
@@ -13,7 +13,7 @@ schemas:
         type: integer
       email:
         type: string
-      docTypesId:
+      docTypes:
         type: array
         items:
           type: object

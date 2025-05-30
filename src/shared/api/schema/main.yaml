@@ -25,3 +25,9 @@ paths:
   /doc-types:
     get:
       $ref: "./endpoints/docTypes.yaml#/docTypes"
+  /doc-info:
+    get:
+      $ref: "./endpoints/docInfo.yaml#/docInfo"
+  /docs:
+    get:
+      $ref: "./endpoints/docs.yaml#/docs"

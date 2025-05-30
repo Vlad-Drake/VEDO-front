@@ -1,0 +1,57 @@
+schemas:
+  DocsResponse:
+    type: object
+    required:
+      - list
+    additionalProperties: false
+    properties:
+      list:
+        type: array
+        items:
+          type: object
+          required:
+            - docName
+            - date
+            - approved
+          properties:
+            docName:
+              type: string
+            date:
+              type: string
+            approved:
+              type: boolean
+
+docs:
+  summary: Get docs
+  parameters:
+    - name: docId
+      in: query
+      required: true
+      schema:
+        type: integer
+    - name: branchId
+      in: query
+      required: true
+      schema:
+        type: integer
+    - name: dateStart
+      in: query
+      required: true
+      schema:
+        type: string
+    - name: dateEnd
+      in: query
+      required: true
+      schema:
+        type: string
+  responses:
+    "200":
+      description: docs successful
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/DocsResponse"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"

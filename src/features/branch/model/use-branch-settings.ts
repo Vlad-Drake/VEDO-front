@@ -5,7 +5,7 @@ export function useBranchSettings(branchId: number | null) {
         enabled: !!branchId, // ВАЖНО: только если branch есть
         params: {
             query: {
-            branchId: branchId || -1,
+                branchId: branchId || -1,
             },
         },
     });

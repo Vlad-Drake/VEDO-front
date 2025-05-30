@@ -76,6 +76,9 @@
     }
     .navbar-section {
       position: relative;
+      .link_active {
+        color: red;
+      }
     }
     .navbar-section:hover > a {
       color: var(--color-white);

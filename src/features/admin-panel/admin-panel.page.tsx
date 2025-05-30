@@ -1,5 +1,9 @@
 function AdminPanel() {
-  return <div>AdminPanel</div>;
+    return (
+        <div className="gap-[35px] content">
+            admin
+        </div>
+    );
 }
 
 export const Component = AdminPanel;

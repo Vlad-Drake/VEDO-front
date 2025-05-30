@@ -45,7 +45,7 @@ const branchSettings: ApiSchemas['BranchSettingsResponse'] = {
 }
 
 export const branchSettingsHandler = [
-    http.get('/branch-settings', async (ctx) => {
+    http.get('/branch-settings', async (_) => {
         //console.log('ctx', ctx);
         await delay(1500);
         return HttpResponse.json(branchSettings);

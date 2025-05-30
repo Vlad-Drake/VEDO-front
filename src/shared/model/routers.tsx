@@ -5,11 +5,12 @@ export const ROUTES = {
   HOME: "/home",
   REGISTATIONUSER: "/registation-user",
   LOGIN: "/login",
-  INFO: "/info",
   DOCINFO: "/doc-info/:doctype",
   ADMINPANEL: "/admin-panel",
   BRANCHES: "/branches/:branch",
   TEMPLATESIGN: "template-sign",
+  TASKS: "/tasks",
+  DOCS: "/docs/:docstype",
 } as const;
 
 export type PathParams = {
@@ -18,6 +19,9 @@ export type PathParams = {
   };
   [ROUTES.BRANCHES]: {
     branch: string;
+  };
+  [ROUTES.DOCS]: {
+    docstype: string;
   };
 };
 

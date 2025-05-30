@@ -16,6 +16,7 @@
   --color-black: #222629; /*--my-black-color*/ /* фон, тёмный основной фон */
   --color-dark-gray: #474b4f; /*--my-gray-color*/ /* второй уровень серого */
   --color-gray: #6b6e70; /*--my-light-gray-color*/ /* текст второстепенный, бордеры */
+  --color-gray-light: #e7e7e7;
   --color-white: #ffffff; /*--my-white-color*/ /* текст, фон светлый */
   /*#3E5B31, #6A8E3C ????????*/
 
@@ -27,9 +28,11 @@
   */
 
   font-family:
-    Cascadia Code,
+    /*Cascadia Code,
     Courier New,
-    monospace;
+    monospace*/
+    sans-serif;
+
   font-size: var(--font-size);
   line-height: var(--line-height);
   font-weight: 400;
@@ -103,13 +106,14 @@ p {
   font-size: 	1.125rem;
 }
 .z-index-selector-list {
-  z-index: 1;
+  z-index: 2;
 }
 input {
   font-family:
-    Cascadia Code,
+    /*Cascadia Code,
     Courier New,
-    monospace;
+    monospace*/
+    sans-serif;
   line-height: var(--line-height);
   font-size: var(--font-size);
   caret-color: var(--color-gray);
@@ -130,9 +134,10 @@ body {
 button {
   border-radius: 10px;
   font-family:
-    Cascadia Code,
+    /*Cascadia Code,
     Courier New,
-    monospace;
+    monospace*/
+    sans-serif;
   font-size: var(--font-size);
   line-height: var(--line-height);
   cursor: pointer;

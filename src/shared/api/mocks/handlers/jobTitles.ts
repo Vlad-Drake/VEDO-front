@@ -19,13 +19,13 @@ export const jobTitlesHandlers = [
     console.warn('Unhandled request to:', request.url);
     return HttpResponse.text('No matching route', { status: 404 });
   }),*/
-  http.get("/jobTitle", async (ctx) => {
+  http.get("/jobTitle", async (_) => {
     
     await delay(2000);
     //await verifyTokenOrThrow(ctx.request);
     //const data = await ctx.request.json();
     //return HttpResponse.json(jobTitles);
-    const body = await HttpResponse.json(); // если нужно, можешь логировать body
+    //const body = await HttpResponse.json(); // если нужно, можешь логировать body
     return HttpResponse.json(jobTitles);
     /*return HttpResponse.json(
       {

@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { createDate } from '../createDate';
 import { createMonth } from '../createMonth';
 import { getMonthesNames } from '../getMonthNames';

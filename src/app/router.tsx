@@ -1,7 +1,6 @@
 import { ROUTES } from "@/shared/model/routers";
 import { createBrowserRouter, redirect } from "react-router-dom";
 import { App } from "./app";
-import { AppHeader } from "@/features/header";
 import { ProtectedRoute } from "./protected-route";
 import { ProtectedLayout } from "./protectedLayout";
 
@@ -29,8 +28,16 @@ export const router = createBrowserRouter([
                   import("@/features/registration-user/registration-user.page"),
               },
               {
-                path: ROUTES.INFO,
-                lazy: () => import("@/features/info/info.page"),
+                path: ROUTES.TASKS,
+                lazy: () => import("@/features/tasks/tasks.page"),
+              },
+              {
+                path: ROUTES.DOCS,
+                lazy: () => import("@/features/docs/docs.page"),
+              },
+              {
+                path: ROUTES.DOCINFO,
+                lazy: () => import("@/features/doc-info/doc-into.page"),
               },
               {
                 path: ROUTES.ADMINPANEL,
