@@ -9,7 +9,7 @@ export function App() {
         <Outlet />
       </div>
 
-      <PreparingPage />
+      {/*<PreparingPage />*/}
     </Providers>
   );
 }

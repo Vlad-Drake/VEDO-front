@@ -11,20 +11,20 @@ function DocInfo() {
 	const { doctype: docTypeParam } = useParams<"doctype">();
 
 	const loadingPage = useLoadingPage();
-	const docTypes = useDocTypes();
+	const docTypes = useDocTypes(docTypeParam);
 	const [selectedDocId, setSelectedDocId] = useState<number | null>(null);
 	const docName = useRef<string>('');
 	const docInfo = useDocInfo(selectedDocId ?? -1);
 
-	useEffect(() => {loadingPage.reset();}, [])
+	useEffect(() => { loadingPage.reset(); }, [])
 	useEffect(() => {
 		loadingPage.loading();
-		if(!(docTypes.docTypes.isPending)) {
-			if(docTypes.docTypes.isError) {
+		if (!(docTypes.docTypes.isPending)) {
+			if (docTypes.docTypes.isError) {
 				loadingPage.error(docTypes.docTypes.error ? `Ошибка получения кодов документов: ${docTypes.docTypes.error.message}` : '');
 			} else {
 				docTypes.setDocTypesState(docTypes.docTypes.data?.list ?? []);
-				if(docTypeParam && docTypeParam !== 'all' && selectedDocId === null) {
+				if (docTypeParam && docTypeParam !== 'all' && selectedDocId === null) {
 					const item = docTypes.docTypes.data?.list.find(item => item.docType === docTypeParam)
 					docName.current = item?.docType ?? '';
 					setSelectedDocId(item?.id ?? null);
@@ -72,7 +72,7 @@ function DocInfo() {
 				/>
 			</div>
 			<div className='border-t-2 border-dashed'></div>
-			{selectedDocId && 
+			{selectedDocId &&
 				<div className='flex flex-col gap-[10px]'>
 					<h2 className="text-left">{docName.current}</h2>
 
@@ -88,9 +88,9 @@ function DocInfo() {
 								</div>
 							</div>
 						))}
-						
+
 					</div>
-					
+
 				</div>
 			}
 		</div>

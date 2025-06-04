@@ -8,7 +8,7 @@ export const StatusPage = {
   Done: "done",
 } as const;
 
-export type StatusPageType = (typeof StatusPage)[keyof typeof StatusPage];
+export type StatusPageType = typeof StatusPage[keyof typeof StatusPage];
 
 type LoadingPageState = {
   status: StatusPageType;
@@ -54,8 +54,8 @@ export const useLoadingPage = () => {
   const loading = () => dispatch(loadingAction());
   const error = (error: string) => dispatch(errorAction(error));
   const done = () => dispatch(doneAction());
-  const reset = () => { 
-    dispatch(errorAction(initialState.errorMessage)); 
+  const reset = () => {
+    dispatch(errorAction(initialState.errorMessage));
     dispatch(loadingAction());
   }
 

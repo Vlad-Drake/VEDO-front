@@ -7,15 +7,9 @@ interface BranchesModel {
 }
 
 export function useBranches() {
-    
-    const [branchesState, setBranchesState] = useState<BranchesModel[]>([]);
-
     const branches = rqClient.useQuery('get', '/branches');
     
     return {
-
         branches,
-        branchesState,
-        setBranchesState,
     };
 }

@@ -7,12 +7,9 @@ interface BranchCodeModel {
 }
 
 export function useBranchCode() {
-    const [branchCodeState, setBranchCodeState] = useState<BranchCodeModel[]>([]);
     const branchCode = rqClient.useQuery('get', '/branch-codes');
 
     return {
         branchCode,
-        branchCodeState,
-        setBranchCodeState,
     }
 }
