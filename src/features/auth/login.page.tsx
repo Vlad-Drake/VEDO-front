@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TextInputKit } from "@/shared/ui/textInputKit/textInputKit";
 import { NotificationKit } from "@/shared/ui/notificationKit/notificationKit";
 import { ButtonKit, type BtnStatuses } from "@/shared/ui/buttonKit/buttonKit";
-import { useLogin } from "./model/useLogin";
+import { useLogin } from "./model/use-login";
 import { z } from "zod";
 import { useLoadingPage } from "@/shared/model/loadingPage";
 

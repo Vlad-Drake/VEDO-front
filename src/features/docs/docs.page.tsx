@@ -1,13 +1,13 @@
 import { useLoadingPage } from "@/shared/model/loadingPage";
 import { SelectRadioKit } from "@/shared/ui/selectRadioKit/selectRadioKit";
 import { useEffect, useRef, useState } from "react";
-import { useDocTypes } from "@/shared/model/useDocTypes";
+import { useDocTypes } from "@/shared/model/use-doc-types";
 import { href, useNavigate, useParams } from "react-router-dom";
-import { useBranches } from "../branch/model/use-branches";
 import { CalendarKit } from "@/shared/ui/calendarKit/calendarKit";
 import { ButtonKit } from "@/shared/ui/buttonKit/buttonKit";
 import { useDocs } from "./use-docs";
 import { useDocTypesWithState } from "./use-doc-types";
+import { useBranches } from "@/shared/model/use-branches";
 
 interface DocsModel {
     docName: string,
@@ -20,9 +20,8 @@ function Docs() {
     const { docstype: docTypeParam } = useParams<"docstype">();
 
     //const loadingPage = useLoadingPage();
-    const docTypes = useDocTypesWithState(docTypeParam);//docTypeParam
+    const docTypes = useDocTypesWithState(docTypeParam);
     const branches = useBranches();
-
 
     const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null);
     const [dateStart, setDateStart] = useState<Date | null>(new Date());
@@ -62,6 +61,12 @@ function Docs() {
         docsRequest.getDocs(docTypes.selectedDocId, selectedBranchId, String(dateStart), String(dateEnd));
     }
 
+    const changeDoc = (event: string | number) => {
+        const newId = Number(event);
+        docTypes.setSelectedDocId(newId);
+        setSelectedBranchId(null);
+    }
+
     return (
         <div className="gap-[35px] content">
             <h1 className="text-center">Документы</h1>
@@ -76,10 +81,7 @@ function Docs() {
                         placeholder='Выберите тип документа'
                         width="500px"
                         selectedId={docTypes.selectedDocId}
-                        updateId={(event) => {
-                            const newId = Number(event)
-                            docTypes.setSelectedDocId(newId);
-                        }}
+                        updateId={(event) => changeDoc(event)}
                         updateName={(event) => {
                             setURL(event);
                             docTypes.docName.current = event;
@@ -148,31 +150,33 @@ function Docs() {
                         </div>
 
                     </div>
-                    <div className='border-t-2 border-dashed'></div>
-                    <div>
-                        <div>Кнопки</div>
-                        <table className="min-w-full border border-[var(--color-gray)] divide-y divide-[var(--color-gray)]">
-                            <thead>
-                                <tr className="bg-[var(--color-gray-light)] divide-x divide-[var(--color-gray)]">
-                                    <th className="px-4 py-2 text-left">Имя документа</th>
-                                    <th className="px-4 py-2 text-left">Дата прихода</th>
-                                    <th className="px-4 py-2 text-left">Статус</th>
-                                </tr>
-                            </thead>
-                            {docsRequest.docsMutation.data && docsRequest.docsMutation.data.list.length > 0 &&
-                                <tbody className="divide-y divide-[var(--color-gray)]">
-                                    {docsRequest.docsMutation.data.list.map((item, index) => (
-                                        <tr key={`${index}_docRow`} className="odd:bg-[var(--color-gray-light)] divide-x divide-[var(--color-gray)]">
-                                            <td className="px-4 py-2 text-left">{item.docName}</td>
-                                            <td className="px-4 py-2 text-left">{item.date}</td>
-                                            <td className="px-4 py-2 text-left">{item.approved ? '+' : '-'}</td>
-                                        </tr>
-                                    ))}
+                    {selectedBranchId !== null && 
+                        <div>
+                            <div>Кнопки</div>
+                            <table className="min-w-full border border-[var(--color-gray)] divide-y divide-[var(--color-gray)]">
+                                <thead>
+                                    <tr className="bg-[var(--color-gray-light)] divide-x divide-[var(--color-gray)]">
+                                        <th className="px-4 py-2 text-left">Имя документа</th>
+                                        <th className="px-4 py-2 text-left">Дата прихода</th>
+                                        <th className="px-4 py-2 text-left">Статус</th>
+                                    </tr>
+                                </thead>
+                                {docsRequest.docsMutation.data && docsRequest.docsMutation.data.list.length > 0 &&
+                                    <tbody className="divide-y divide-[var(--color-gray)]">
+                                        {docsRequest.docsMutation.data.list.map((item, index) => (
+                                            <tr key={`${index}_docRow`} className="odd:bg-[var(--color-gray-light)] divide-x divide-[var(--color-gray)]">
+                                                <td className="px-4 py-2 text-left">{item.docName}</td>
+                                                <td className="px-4 py-2 text-left">{item.date}</td>
+                                                <td className="px-4 py-2 text-left">{item.approved ? '+' : '-'}</td>
+                                            </tr>
+                                        ))}
 
-                                </tbody>
-                            }
-                        </table>
-                    </div>
+                                    </tbody>
+                                }
+                            </table>
+                        </div>
+                    }
+                    
                 </>
             }
         </div>

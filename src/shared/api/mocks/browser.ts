@@ -6,6 +6,7 @@ import { branchCodesHandler } from "./handlers/branchCodes";
 import { docTypesHandler } from "./handlers/docTypes";
 import { docInfoHandler } from "./handlers/docInfo";
 import { docsHandler } from "./handlers/docs";
+import { registrationUserHandlers } from "./handlers/registrationUser";
 
 export const worker = setupWorker(
     ...jobTitlesHandlers,
@@ -15,4 +16,5 @@ export const worker = setupWorker(
     ...docTypesHandler,
     ...docInfoHandler,
     ...docsHandler,
+    ...registrationUserHandlers,
 );

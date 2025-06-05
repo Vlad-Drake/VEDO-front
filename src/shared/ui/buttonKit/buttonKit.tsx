@@ -57,12 +57,10 @@ export function ButtonKit({
       >
         {btnContent}
       </span>
-      {btnStatus === BTN_STATUSES.Loading ? (
+      {btnStatus === BTN_STATUSES.Loading && (
         <div className={classes["loader"]}>
           <img src={Circle} alt="" />
         </div>
-      ) : (
-        ""
       )}
     </button>
   );

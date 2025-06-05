@@ -1,41 +1,18 @@
 import { useLoadingPage } from "@/shared/model/loadingPage";
-import { useEffect, useRef, useState } from "react";
-import { useDocTypes } from "../branch/model/use-doc-types";
+import { useDocTypesWithState } from "./use-doc-types";
 import { SelectRadioKit } from "@/shared/ui/selectRadioKit/selectRadioKit";
 import { href, useNavigate, useParams } from "react-router-dom";
 import classes from './doc-info.module.scss';
 import { useDocInfo } from "./use-doc-info";
+import { LoaderKit } from "@/shared/ui/loaderKit/loaderKit";
 
 function DocInfo() {
 	const navigate = useNavigate();
 	const { doctype: docTypeParam } = useParams<"doctype">();
 
-	const loadingPage = useLoadingPage();
-	const docTypes = useDocTypes(docTypeParam);
-	const [selectedDocId, setSelectedDocId] = useState<number | null>(null);
-	const docName = useRef<string>('');
-	const docInfo = useDocInfo(selectedDocId ?? -1);
-
-	useEffect(() => { loadingPage.reset(); }, [])
-	useEffect(() => {
-		loadingPage.loading();
-		if (!(docTypes.docTypes.isPending)) {
-			if (docTypes.docTypes.isError) {
-				loadingPage.error(docTypes.docTypes.error ? `Ошибка получения кодов документов: ${docTypes.docTypes.error.message}` : '');
-			} else {
-				docTypes.setDocTypesState(docTypes.docTypes.data?.list ?? []);
-				if (docTypeParam && docTypeParam !== 'all' && selectedDocId === null) {
-					const item = docTypes.docTypes.data?.list.find(item => item.docType === docTypeParam)
-					docName.current = item?.docType ?? '';
-					setSelectedDocId(item?.id ?? null);
-				}
-				!loadingPage.loadingPage.errorMessage && loadingPage.done();
-			}
-		}
-	}, [
-		docTypes.docTypes.isPending,
-		selectedDocId
-	]);
+	//const loadingPage = useLoadingPage();
+	const docTypes = useDocTypesWithState(docTypeParam);
+	const docInfo = useDocInfo(docTypes.selectedDocId);
 
 	const setURL = (value: string) => {
 		navigate(href("/doc-info/:doctype", { doctype: value }));
@@ -56,38 +33,42 @@ function DocInfo() {
 				<SelectRadioKit
 					placeholder='Выберите тип документа'
 					width="500px"
-					selectedId={selectedDocId}
+					selectedId={docTypes.selectedDocId}
 					updateId={(event) => {
 						const newId = Number(event)
-						setSelectedDocId(newId);
+						docTypes.setSelectedDocId(newId);
 					}}
 					updateName={(event) => {
 						setURL(event);
-						docName.current = event;
+						docTypes.docName.current = event;
 					}}
-					options={(docTypes.docTypesState ?? []).map(item => ({
+					options={(docTypes.data?.list ?? []).map(item => ({
 						id: item.id,
 						name: item.docType
 					}))}
 				/>
 			</div>
 			<div className='border-t-2 border-dashed'></div>
-			{selectedDocId &&
+			{docTypes.selectedDocId &&
 				<div className='flex flex-col gap-[10px]'>
-					<h2 className="text-left">{docName.current}</h2>
+					<h2 className="text-left">{docTypes.docName.current}</h2>
 
 					<div>
-						{docInfo.data?.list.map((item, index) => (
-							<div className={classes["content-row"]} key={index}>
-								<div className={classes["question"]}>
-									<p>{item.question}</p>
-								</div>
+						{!docInfo.isPending ? docInfo.data?.list.map((item, index) => (
+								<div className={classes["content-row"]} key={index}>
+									<div className={classes["question"]}>
+										<p>{item.question}</p>
+									</div>
 
-								<div className={classes["answer"]}>
-									<p>{item.answer}</p>
+									<div className={classes["answer"]}>
+										<p>{item.answer}</p>
+									</div>
 								</div>
-							</div>
-						))}
+							))
+						: (
+							<LoaderKit/>
+						)
+						}
 
 					</div>
 

@@ -3,7 +3,7 @@
 import type { ApiSchemas } from "@/shared/api/schema";
 import { rqClient } from "@/shared/api/instance";
 
-export function useRegisterUser() {
+export function useRegisterUser(resetForm: () => void) {
   //const navigate = useNavigate();
 
   const registerUserMutation = rqClient.useMutation("post", "/registration", {
@@ -12,6 +12,7 @@ export function useRegisterUser() {
         }*/
     onSuccess() {
       //navigate(ROUTES.HOME);
+      resetForm();
     },
     /*onError(error) {
             
