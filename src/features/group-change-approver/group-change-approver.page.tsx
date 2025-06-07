@@ -18,6 +18,7 @@ function groupChangeApprover() {
                 <ListCheckboxKit
                     options={branches.branches}
                     update={event => branches.setBranches(event)}
+                    width='500px'
                 />
             </div>
         </div>

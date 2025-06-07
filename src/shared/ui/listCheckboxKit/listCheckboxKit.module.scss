@@ -35,3 +35,32 @@
     width: 20px;
     height: 20px;
 }
+.list-checkbox-wrapper{
+    background-color: var(--color-gray-light);
+
+    .searcher {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background-color: var(--base-bg-primary);
+        text-align: left;
+
+        padding: 10px 10px 0 12px;
+        height: 80px;
+
+        .input {
+            background-color: var(--base-bg-primary);
+            color: var(--my-white-color);
+            border: 1px solid var(--line-primary);
+            border-radius: 4px;
+            padding: 0 10px;
+        }
+        .selector-all {
+            display: flex;
+            gap: 10px;
+        }
+    }
+}
