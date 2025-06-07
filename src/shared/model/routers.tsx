@@ -11,6 +11,7 @@ export const ROUTES = {
   TEMPLATESIGN: "template-sign",
   TASKS: "/tasks",
   DOCS: "/docs/:docstype",
+  GROUPCHANGEAPPROVER: "/group-change-approver",
 } as const;
 
 export type PathParams = {

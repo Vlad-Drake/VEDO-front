@@ -17,15 +17,15 @@ function Branch() {
     const navigate = useNavigate();
     const { branch: branchParam } = useParams<"branch">();
     //const loadingPage = useLoadingPage();
-  
+
     const branches = useBranchesWithState(branchParam);
-    
+
     const jobTitles = useJobTitles();
     const branchCode = useBranchCode();
     const docTypes = useDocTypes();
 
     const branchSettings = useBranchSettings(docTypes.docTypes.data?.list, branches.selectedBranchId);
-        
+
     const setURL = (value: string) => {
         navigate(href("/branches/:branch", { branch: value }));
     }
@@ -67,7 +67,7 @@ function Branch() {
                     {
                         branchSettings.signers.map((item, index) => {
                             return (
-                                <motion.div 
+                                <motion.div
                                     key={item.row}
                                     layout
                                     initial={{ opacity: 0, x: 0 }}
@@ -76,7 +76,7 @@ function Branch() {
                                     transition={{ duration: 0.3 }}
                                     className={classes["list"]}
                                 >
-                                    
+
                                     <SelectRadioKit
                                         placeholder='Выберите должность'
                                         width="340px"
@@ -87,7 +87,8 @@ function Branch() {
                                                 ...newSigners[index],
                                                 jobTitleId: event as typeof item.jobTitleId
                                             };
-                                            branchSettings.setSigners(newSigners)}}
+                                            branchSettings.setSigners(newSigners)
+                                        }}
                                         options={(jobTitles.jobTitles.data?.list ?? []).map(item => ({
                                             id: item.id,
                                             name: item.jobTitle,
@@ -124,12 +125,12 @@ function Branch() {
                                         }}
                                     />
                                     <div className={classes["list-content__control-row"]}>
-                                        <button 
+                                        <button
                                             onClick={() => branchSettings.setSigners(moveRowUp(item.row, branchSettings.signers))}
                                         >
                                             ▲
                                         </button>
-                                        <button 
+                                        <button
                                             onClick={() => branchSettings.setSigners(moveRowDown(item.row, branchSettings.signers))}
                                         >
                                             ▼
@@ -140,22 +141,24 @@ function Branch() {
                                             ✖
                                         </button>
                                     </div>
-                                    { item.row }
+                                    {item.row}
                                 </motion.div>
                             )
                         })
                     }
                     <motion.div layout className={classes["list-content__add-row"]} key="plus">
                         <p>Добавить подписанта</p>
-                        <button 
-                            onClick={() => 
+                        <button
+                            onClick={() =>
                                 branchSettings.setSigners(addRow(
                                     branchSettings.signers,
-                                    {jobTitleId: null, email: '', docTypes: (docTypes.docTypes.data?.list ?? []).map(item => ({
-                                        id: item.id,
-                                        name: item.docType,
-                                        checked: true,
-                                    }))}
+                                    {
+                                        jobTitleId: null, email: '', docTypes: (docTypes.docTypes.data?.list ?? []).map(item => ({
+                                            id: item.id,
+                                            name: item.docType,
+                                            checked: true,
+                                        }))
+                                    }
                                 ))
                             }
                         >
@@ -163,7 +166,7 @@ function Branch() {
                         </button>
                     </motion.div>
                 </AnimatePresence>}
-                
+
             </div>
 
             <div className='border-t-2 border-dashed'></div>
@@ -177,7 +180,7 @@ function Branch() {
                     {
                         branchSettings.settings.map((item, index) => {
                             return (
-                                <motion.div 
+                                <motion.div
                                     key={item.row}
                                     layout
                                     initial={{ opacity: 0, x: 0 }}
@@ -197,7 +200,8 @@ function Branch() {
                                                 ...newSettings[index],
                                                 typeId: event as typeof item.typeId
                                             };
-                                            branchSettings.setSettings(newSettings)}}
+                                            branchSettings.setSettings(newSettings)
+                                        }}
                                         options={(branchCode.branchCode.data?.list ?? []).map(item => ({
                                             id: item.id,
                                             name: item.code,
@@ -218,12 +222,12 @@ function Branch() {
                                         placeholder="Введите значение"
                                     />
                                     <div className={classes["list-content__control-row"]}>
-                                        <button 
+                                        <button
                                             onClick={() => branchSettings.setSettings(moveRowUp(item.row, branchSettings.settings))}
                                         >
                                             ▲
                                         </button>
-                                        <button 
+                                        <button
                                             onClick={() => branchSettings.setSettings(moveRowDown(item.row, branchSettings.settings))}
                                         >
                                             ▼
@@ -234,26 +238,31 @@ function Branch() {
                                             ✖
                                         </button>
                                     </div>
-                                    { item.row }
+                                    {item.row}
                                 </motion.div>
                             )
                         })
                     }
                     <motion.div layout className={classes["list-content__add-row"]} key="plus">
                         <p>Добавить код</p>
-                        <button onClick={() => branchSettings.setSettings(addRow(branchSettings.settings, {typeId: null, code: ''}))}>
+                        <button onClick={() => branchSettings.setSettings(addRow(branchSettings.settings, { typeId: null, code: '' }))}>
                             ✚
                         </button>
                     </motion.div>
                 </AnimatePresence>}
-                
+
+            </div>
+
+            <div className='border-t-2 border-dashed'></div>
+            <div className='flex flex-col gap-[10px]'>
+                <h2 className="text-left">Цепочки согласований</h2>
             </div>
 
             <div className='border-t-2 border-dashed'></div>
             <div className='flex flex-col gap-[10px]'>
                 <h2 className="text-left">История изменений</h2>
             </div>
-            
+
         </div>
     );
 }

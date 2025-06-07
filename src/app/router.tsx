@@ -48,6 +48,10 @@ export const router = createBrowserRouter([
                 lazy: () => import("@/features/branch/branch.page"),
               },
               {
+                path: ROUTES.GROUPCHANGEAPPROVER,
+                lazy: () => import("@/features/group-change-approver/group-change-approver.page"),
+              },
+              {
                 path: ROUTES.TEMPLATESIGN,
                 lazy: () =>
                   import("@/features/template-sign/template-sign.page"),
