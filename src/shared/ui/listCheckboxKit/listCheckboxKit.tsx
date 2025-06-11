@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import classes from './listCheckboxKit.module.scss';
 import { CheckboxKit } from '@/shared/ui/checkboxKit/checkboxKit';
 import { useDebounceInput } from '@/shared/helper/debounceInput';

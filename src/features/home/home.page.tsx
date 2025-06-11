@@ -1,17 +1,17 @@
-import { ButtonKit } from '@/shared/ui/buttonKit/buttonKit';
+/*import { ButtonKit } from '@/shared/ui/buttonKit/buttonKit';
 import { SelectRadioKit } from '@/shared/ui/selectRadioKit/selectRadioKit';
 import { TextInputKit } from '@/shared/ui/textInputKit/textInputKit';
-import { NotificationKit } from '@/shared/ui/notificationKit/notificationKit';
+import { NotificationKit } from '@/shared/ui/notificationKit/notificationKit';*/
 import { useLoadingPage } from '@/shared/model/loadingPage';
-import { useState } from 'react';
-import { CalendarKit } from '@/shared/ui/calendarKit/calendarKit';
+//import { useState } from 'react';
+/*import { CalendarKit } from '@/shared/ui/calendarKit/calendarKit';
 import { SelectCheckboxKit } from '@/shared/ui/selectCheckboxKit/selectCheckboxKit';
-import { CheckboxKit } from '@/shared/ui/checkboxKit/checkboxKit';
+import { CheckboxKit } from '@/shared/ui/checkboxKit/checkboxKit';*/
 
 function Home() {
     const { done } = useLoadingPage();
     done();
-    function test() {
+    /*function test() {
         console.log('Hi!')
     }
     const [testInput, setTestInput] = useState('');
@@ -21,7 +21,7 @@ function Home() {
         { id: '2', name: "t2", checked: true },
         { id: '3', name: "t3", checked: false },
     ]);
-    const [checkTest, setCheckTest] = useState(false);
+    const [checkTest, setCheckTest] = useState(false);*/
     return (
         <div className='flex flex-col gap-[20px] mx-[50px]'>
             <h1 className='text-center'>ВЭДО - внутренний электронный документооборот</h1>
