@@ -6,6 +6,7 @@ import { useLoadingPage } from '@/shared/model/loadingPage';
 import { useState } from 'react';
 import { CalendarKit } from '@/shared/ui/calendarKit/calendarKit';
 import { SelectCheckboxKit } from '@/shared/ui/selectCheckboxKit/selectCheckboxKit';
+import { CheckboxKit } from '@/shared/ui/checkboxKit/checkboxKit';
 
 function Home() {
     const { done } = useLoadingPage();
@@ -15,16 +16,18 @@ function Home() {
     }
     const [testInput, setTestInput] = useState('');
     const [testDate, setTestDate] = useState<Date | null>(null);
-    const [testselectCheckbox ] = useState([
-        {id: '1', name: "t1", checked: false},
-        {id: '2', name: "t2", checked: true},
-        {id: '3', name: "t3", checked: false},
+    const [testselectCheckbox] = useState([
+        { id: '1', name: "t1", checked: false },
+        { id: '2', name: "t2", checked: true },
+        { id: '3', name: "t3", checked: false },
     ]);
+    const [checkTest, setCheckTest] = useState(false);
     return (
         <div className='flex flex-col gap-[20px] mx-[50px]'>
             <h1 className='text-center'>ВЭДО - внутренний электронный документооборот</h1>
             <p>Документы хранящиеся в ВЭДО используются для контроля за движением товара, готовой продукции, денежных средств, отражения результатов ревизии.</p>
-            
+
+            {/*
             <ButtonKit
                 btnContent={<p>Кнопка</p>}
                 btnStatus='default'
@@ -35,7 +38,7 @@ function Home() {
                 selectedId={null}
                 options={[{ id: '1', name: '1' }, { id: '2', name: '2' }]}
             />
-            <TextInputKit 
+            <TextInputKit
                 password={false}
                 value={testInput}
                 updateValue={(value) => setTestInput(value)}
@@ -52,18 +55,16 @@ function Home() {
             />
             <SelectCheckboxKit
                 options={testselectCheckbox}
-                /*update={(event) => {
-                    const newSigners = [...testselectCheckbox];
-                    const idx = newSigners.findIndex(item => item.id === event.id)
-                    newSigners[idx] = {
-                        ...newSigners[idx],
-                        checked: event.checked
-                    };
-                    setTestselectCheckbox(newSigners)}}*/
-                update={(event) => console.log(event)}
+
+                update = {(event) => console.log(event)}
+                    />
+            <CheckboxKit
+                checked={checkTest}
+                onClick={() => setCheckTest(prev => !prev)}
             />
+            */}
         </div>
-        
+
     );
 }
 

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Providers } from "./providers";
-import { PreparingPage } from "@/features/preparing-page";
+//import { PreparingPage } from "@/features/preparing-page";
 
 export function App() {
   return (

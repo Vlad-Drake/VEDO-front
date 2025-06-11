@@ -1,4 +1,3 @@
-import { useLoadingPage } from "@/shared/model/loadingPage";
 import { useDocTypesWithState } from "./use-doc-types";
 import { SelectRadioKit } from "@/shared/ui/selectRadioKit/selectRadioKit";
 import { href, useNavigate, useParams } from "react-router-dom";
@@ -55,19 +54,19 @@ function DocInfo() {
 
 					<div>
 						{!docInfo.isPending ? docInfo.data?.list.map((item, index) => (
-								<div className={classes["content-row"]} key={index}>
-									<div className={classes["question"]}>
-										<p>{item.question}</p>
-									</div>
-
-									<div className={classes["answer"]}>
-										<p>{item.answer}</p>
-									</div>
+							<div className={classes["content-row"]} key={index}>
+								<div className={classes["question"]}>
+									<p>{item.question}</p>
 								</div>
-							))
-						: (
-							<LoaderKit/>
-						)
+
+								<div className={classes["answer"]}>
+									<p>{item.answer}</p>
+								</div>
+							</div>
+						))
+							: (
+								<LoaderKit />
+							)
 						}
 
 					</div>

@@ -1,23 +1,38 @@
 @import "tailwindcss";
+
 * {
   box-sizing: border-box;
 }
+
 :root {
   --font-size: 16px;
   --line-height: 1.5;
 
   /* Primary Colors */
-  --color-primary: #61892f; /*--my-green-color*/ /* основной (основной элемент, акцент) */
-  --color-secondary: #86c232; /*--my-light-green-color*/ /* дополнительный (hover, акценты) */
+  --color-primary: #61892f;
+  /*--my-green-color*/
+  /* основной (основной элемент, акцент) */
+  --color-secondary: #86c232;
+  /*--my-light-green-color*/
+  /* дополнительный (hover, акценты) */
   --color-additional-dark: #3e5b31;
   --color-additional-light: #6a8e3c;
-  --color-canvas: #edf0d3; /*E7EBC5*/
+  --color-canvas: #edf0d3;
+  /*E7EBC5*/
   /* Neutrals / Grayscale */
-  --color-black: #222629; /*--my-black-color*/ /* фон, тёмный основной фон */
-  --color-dark-gray: #474b4f; /*--my-gray-color*/ /* второй уровень серого */
-  --color-gray: #6b6e70; /*--my-light-gray-color*/ /* текст второстепенный, бордеры */
+  --color-black: #222629;
+  /*--my-black-color*/
+  /* фон, тёмный основной фон */
+  --color-dark-gray: #474b4f;
+  /*--my-gray-color*/
+  /* второй уровень серого */
+  --color-gray: #6b6e70;
+  /*--my-light-gray-color*/
+  /* текст второстепенный, бордеры */
   --color-gray-light: #e7e7e7;
-  --color-white: #ffffff; /*--my-white-color*/ /* текст, фон светлый */
+  --color-white: #ffffff;
+  /*--my-white-color*/
+  /* текст, фон светлый */
   /*#3E5B31, #6A8E3C ????????*/
 
   /*
@@ -46,21 +61,24 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .content {
   display: flex;
   flex-direction: column;
-  width: 100%; 
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto 0 auto;
   min-height: calc(100vh - 50px - 67px);
   background: linear-gradient(75deg, #e7ebc5, var(--color-canvas));
   padding: 60px 20px;
 }
+
 a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -90,24 +108,31 @@ h6 {
   margin: 0;
   padding: 0;
 }
+
 h1 {
   font-size: 2.25rem;
 }
+
 h2 {
   font-size: 1.875rem;
 }
+
 h3 {
   font-size: 1.5rem;
 }
+
 h4 {
   font-size: 1.25rem;
 }
+
 p {
-  font-size: 	1.125rem;
+  font-size: 1.125rem;
 }
+
 .z-index-selector-list {
   z-index: 2;
 }
+
 input {
   font-family:
     /*Cascadia Code,
@@ -115,15 +140,24 @@ input {
     monospace*/
     sans-serif;
   line-height: var(--line-height);
-  font-size: var(--font-size);
+  font-size: 1.125rem;
   caret-color: var(--color-gray);
 }
+
+input::placeholder {
+  font-family:
+    /*Cascadia Code,
+    Courier New,
+    monospace*/
+    sans-serif;
+  line-height: var(--line-height);
+  font-size: 1.125rem;
+}
+
 body {
-  background: linear-gradient(
-    165deg,
-    var(--color-additional-light),
-    var(--color-additional-dark)
-  );
+  background: linear-gradient(165deg,
+      var(--color-additional-light),
+      var(--color-additional-dark));
   color: var(--color-black);
   overflow-y: scroll;
   margin: 0;
@@ -131,6 +165,7 @@ body {
   min-height: 100vh;
   min-width: 1280px;
 }
+
 button {
   border-radius: 10px;
   font-family:

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import classes from "./selectRadioKit.module.scss";
 import ArrowIco from "./assets/arrow.svg";
 import { useGlobalClickOutside } from "@/shared/helper/useGlobalClickOutside";
+import { useDebounceInput } from "@/shared/helper/debounceInput";
 
 export interface SelectRadioModel {
   id: string | number;
@@ -29,22 +30,19 @@ export function SelectRadioKit({
   updateId?: (id: string | number) => void;
   updateName?: (name: string) => void;
 }) {
-    const selectorContainer = useRef<HTMLDivElement | null>(null);
-    const dropdownBody = useRef<HTMLDivElement | null>(null);
-    const searcherInput = useRef<HTMLInputElement | null>(null);
-    const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+  const selectorContainer = useRef<HTMLDivElement | null>(null);
+  const dropdownBody = useRef<HTMLDivElement | null>(null);
+  const searcherInput = useRef<HTMLInputElement | null>(null);
 
   const [isSelection, setIsSelection] = useState(false);
   const [dropdownListHeight, setDropdownListHeight] = useState(550);
   const [searchText, setSearchText] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState(options);
+  const [laggingSearchText, setLaggingSearchText] = useState("");
   const [isAbove, setIsAbove] = useState(false);
   const localSelectedIdRef = useRef<string | number | null>(selectedId);
   const { registerComponent, unregisterComponent } = useGlobalClickOutside();
 
-  useEffect(() => {
-    setFilteredOptions(options);
-  }, [options]);
+  const debounceInput = useDebounceInput();
 
   const ToggleDropdown = () => {
     const newIsSelection = !isSelection;
@@ -79,7 +77,7 @@ export function SelectRadioKit({
       }
     };
   }, []);
-  
+
   const adjustDropdownPosition = () => {
     //const container = document.querySelector('.selector-body');
     //const container = $refs.dropdownBody as HTMLElement;
@@ -117,27 +115,12 @@ export function SelectRadioKit({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
     setSearchText(e.target.value);
-    if(debounceTimer.current) {
-        clearTimeout(debounceTimer.current);
-    }
 
-    debounceTimer.current = setTimeout(() => {
-        
-        setFilteredOptions(options.filter(option =>
-            option.name.toLowerCase().includes(e.target.value.toLowerCase())
-        ));
-    }, 600);
+    debounceInput(() => {
+      setLaggingSearchText(searchText);
+    });
   };
-
-  useEffect(() => {
-    return (() => {
-      if (debounceTimer.current) {
-        clearTimeout(debounceTimer.current);
-      }
-    }) as () => void;
-  }, []);
 
   return (
     <div className={classes["input-block"]}>
@@ -190,15 +173,19 @@ export function SelectRadioKit({
                       `}
               style={{ width, maxHeight: dropdownListHeight + "px" }}
             >
-              {filteredOptions.map((option, index) => (
-                <p
-                  onClick={() => SelectOption(option)}
-                  key={`${option.id}-${index}`}
-                >
-                  {option.name}
-                </p>
-              ))}
-              {filteredOptions.length === 0 && 
+              {options
+                .filter(option =>
+                  option.name.toLowerCase().includes(laggingSearchText.toLowerCase())
+                )
+                .map((option, index) => (
+                  <p
+                    onClick={() => SelectOption(option)}
+                    key={`${option.id}-${index}`}
+                  >
+                    {option.name}
+                  </p>
+                ))}
+              {options.length === 0 &&
                 <p>
                   здесь пусто
                 </p>

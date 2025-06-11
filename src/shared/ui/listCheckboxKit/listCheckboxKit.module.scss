@@ -1,41 +1,55 @@
-.list {
-    overflow-y: scroll;
-    height: 100%;
+.list_wrapper {
+    background-color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--color-dark-gray);
+    border-radius: 4px;
 
-    &__row {
+    .searcher {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        gap: 10px;
+
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background-color: var(--base-bg-primary);
+        text-align: left;
+
+        padding: 10px 10px 10px 12px;
+        height: 80px;
+
+        .input {
+            background-color: var(--base-bg-primary);
+            color: var(--my-white-color);
+            border: 1px solid var(--line-primary);
+            border-radius: 4px;
+            padding: 0 10px;
+        }
+
+        .selector-all {
+            display: flex;
+            gap: 10px;
+        }
+    }
+
+    .list {
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        border-top: 2px dashed var(--color-dark-gray);
+        padding: 10px 0;
+        height: 100%;
+
+        &__row {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            padding: 5px 0 5px 14px;
+        }
     }
 }
 
-.checkbox-wrapper {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.checkbox {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.checkbox-wrapper.checked .checkbox {
-    background-color: var(--color-additional-dark);
-    border-color: var(--color-additional-dark);
-}
-
-.checkmark {
-    width: 20px;
-    height: 20px;
-}
-.list-checkbox-wrapper{
+.list-checkbox-wrapper {
     background-color: var(--color-gray-light);
 
     .searcher {
@@ -58,6 +72,7 @@
             border-radius: 4px;
             padding: 0 10px;
         }
+
         .selector-all {
             display: flex;
             gap: 10px;

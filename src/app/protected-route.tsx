@@ -1,6 +1,6 @@
 //import { ROUTES } from "@/shared/model/routers";
 //import { useSession } from "@/shared/model/session";
-import { useLoadingPage } from "@/shared/model/loadingPage";
+//import { useLoadingPage } from "@/shared/model/loadingPage";
 import { /*Navigate, */Outlet } from "react-router-dom";
 
 export function ProtectedRoute() {
@@ -9,8 +9,8 @@ export function ProtectedRoute() {
     /*if(!session) {
             return <Navigate to={ROUTES.LOGIN}/>
     }*/
-    
-    
+
+
     //reset();
     return <Outlet />;
 }

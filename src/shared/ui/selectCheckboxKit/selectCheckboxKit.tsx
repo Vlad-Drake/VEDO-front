@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import classes from "./selectCheckboxKit.module.scss";
 import ArrowIco from "./assets/arrow.svg";
 import { useGlobalClickOutside } from "@/shared/helper/useGlobalClickOutside";
-import Checkbox_ico from './assets/checkbox.svg';
+import { CheckboxKit } from '@/shared/ui/checkboxKit/checkboxKit';
+import { useDebounceInput } from "@/shared/helper/debounceInput";
 
 export interface SelectCheckboxModel {
   id: string | number;
@@ -30,23 +31,18 @@ export function SelectCheckboxKit({
   const selectorContainer = useRef<HTMLDivElement | null>(null);
   const dropdownBody = useRef<HTMLDivElement | null>(null);
   const searcherInput = useRef<HTMLInputElement | null>(null);
-  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   const [isSelection, setIsSelection] = useState(false);
   const [dropdownListHeight, setDropdownListHeight] = useState(550);
   const [searchText, setSearchText] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState(options);
+  const [laggingSearchText, setLaggingSearchText] = useState("");
   const [isAbove, setIsAbove] = useState(false);
   const [placeholder, setPlaceholder] = useState<string>('Ничего');
-  
+
   const [isCheckedAll, setIsCheckedAll] = useState(false);
 
   const { registerComponent, unregisterComponent } = useGlobalClickOutside();
-
-  useEffect(() => {
-    setFilteredOptions(options);
-    setPlaceholder(getSelectionStatus(options));
-  }, [options]);
+  const debounceInput = useDebounceInput();
 
   function getSelectionStatus(arr: SelectCheckboxModel[]): "Все" | "Ничего" | "Частично" {
     if (arr.every(v => v.checked)) return "Все";
@@ -120,41 +116,25 @@ export function SelectCheckboxKit({
   const toggleOption = (option: SelectCheckboxModel) => {
     //update({...option, checked: !option.checked})
     const newSigners = [...options];
-      const idx = newSigners.findIndex(item => item.id === option.id)
-      newSigners[idx] = {
-          ...newSigners[idx],
-          checked: !option.checked
+    const idx = newSigners.findIndex(item => item.id === option.id)
+    newSigners[idx] = {
+      ...newSigners[idx],
+      checked: !option.checked
     };
     update(newSigners);
     setPlaceholder(getSelectionStatus(options));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
     setSearchText(e.target.value);
-    if(debounceTimer.current) {
-        clearTimeout(debounceTimer.current);
-    }
-
-    debounceTimer.current = setTimeout(() => {
-        
-        setFilteredOptions(options.filter(option =>
-            option.name.toLowerCase().includes(e.target.value.toLowerCase())
-        ));
-    }, 600);
+    debounceInput(() => {
+      setLaggingSearchText(searchText);
+    });
   };
-
-  useEffect(() => {
-    return (() => {
-      if (debounceTimer.current) {
-        clearTimeout(debounceTimer.current);
-      }
-    }) as () => void;
-  }, []);
 
   const toggleCheckAll = () => {
     setIsCheckedAll(!isCheckedAll);
-    if(!isCheckedAll) {
+    if (!isCheckedAll) {
       const newSigners = options.map(item => ({
         ...item,
         checked: true,
@@ -187,7 +167,7 @@ export function SelectCheckboxKit({
           ref={dropdownBody}
         >
           {/*TODO использовать семинтически верный html, случай когда нет options*/}
-          
+
           <p className={classes["placeholder"]}>Выбрано: {placeholder}</p>
           <p>
             <img src={ArrowIco} alt="" />
@@ -210,15 +190,11 @@ export function SelectCheckboxKit({
                 ref={searcherInput}
               />
               <div className={classes["selector-all"]}>
-                <div
-                  className={`${classes["checkbox-wrapper"]} ${isCheckedAll ? classes['checked'] : ''}`}
+                <CheckboxKit
+                  checked={isCheckedAll}
                   onClick={toggleCheckAll}
-                >
-                  <div className={classes["checkbox"]}>
-                      {isCheckedAll && (<img src={Checkbox_ico} alt="" className={classes["checkmark"]} />)}
-                  </div>
-                </div>
-                <p>Выбрать всё</p> 
+                />
+                <p>Выбрать всё</p>
               </div>
             </div>
             <div
@@ -229,21 +205,21 @@ export function SelectCheckboxKit({
                         `}
               style={{ width, maxHeight: dropdownListHeight + "px" }}
             >
-              {filteredOptions.map((option, index) => (
-                <div className={classes['selector-row']} key={`${option.id}-${index}`}>
-                  <div
-                    className={`${classes["checkbox-wrapper"]} ${option.checked ? classes['checked'] : ''}`}
-                    onClick={() => toggleOption(option)}
-                  >
-                    <div className={classes["checkbox"]}>
-                        {option.checked && (<img src={Checkbox_ico} alt="" className={classes["checkmark"]} />)}
-                    </div>
+              {options
+                .filter(option =>
+                  option.name.toLowerCase().includes(laggingSearchText.toLowerCase())
+                )
+                .map((option, index) => (
+                  <div className={classes['selector-row']} key={`${option.id}-${index}`}>
+                    <CheckboxKit
+                      checked={option.checked}
+                      onClick={() => toggleOption(option)}
+                    />
+                    <p>{option.name}</p>
                   </div>
-                  <p>{ option.name }</p> 
-                </div>
-                   
-              ))}
-              {filteredOptions.length === 0 && 
+
+                ))}
+              {options.length === 0 &&
                 <p className={classes['selector-row']}>
                   здесь пусто
                 </p>

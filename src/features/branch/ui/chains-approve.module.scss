@@ -1,0 +1,44 @@
+.chain_wrapper {
+    width: 100%;
+
+    background-color: var(--color-white);
+    border-radius: 4px;
+    border: 2px solid var(--color-dark-gray);
+    height: 600px;
+    overflow-y: scroll;
+
+    .title {
+        padding: 4px 20px;
+        display: flex;
+        gap: 30px;
+    }
+
+    .chain {
+        padding: 50px 10px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__source {
+            border-radius: 4px;
+            border: 2px solid var(--color-dark-gray);
+            padding: 10px;
+            height: fit-content;
+        }
+
+        &__block_approver {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            p {
+                width: 200px;
+                padding: 4px;
+                border-radius: 4px;
+                border: 2px solid var(--color-dark-gray);
+            }
+        }
+    }
+
+}

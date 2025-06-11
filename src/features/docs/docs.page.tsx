@@ -1,7 +1,6 @@
-import { useLoadingPage } from "@/shared/model/loadingPage";
+
 import { SelectRadioKit } from "@/shared/ui/selectRadioKit/selectRadioKit";
-import { useEffect, useRef, useState } from "react";
-import { useDocTypes } from "@/shared/model/use-doc-types";
+import { useState } from "react";
 import { href, useNavigate, useParams } from "react-router-dom";
 import { CalendarKit } from "@/shared/ui/calendarKit/calendarKit";
 import { ButtonKit } from "@/shared/ui/buttonKit/buttonKit";
@@ -9,11 +8,11 @@ import { useDocs } from "./use-docs";
 import { useDocTypesWithState } from "./use-doc-types";
 import { useBranches } from "@/shared/model/use-branches";
 
-interface DocsModel {
+/*interface DocsModel {
     docName: string,
     date: string
     approved: boolean,
-}
+}*/
 
 function Docs() {
     const navigate = useNavigate();
@@ -150,7 +149,7 @@ function Docs() {
                         </div>
 
                     </div>
-                    {selectedBranchId !== null && 
+                    {selectedBranchId !== null &&
                         <div>
                             <div>Кнопки</div>
                             <table className="min-w-full border border-[var(--color-gray)] divide-y divide-[var(--color-gray)]">
@@ -176,7 +175,7 @@ function Docs() {
                             </table>
                         </div>
                     }
-                    
+
                 </>
             }
         </div>

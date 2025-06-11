@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import { useLoadingPage } from '@/shared/model/loadingPage';
 import { SelectRadioKit } from '@/shared/ui/selectRadioKit/selectRadioKit';
 import { useJobTitles } from "@/shared/model/use-job-titles";
 import classes from './branch.module.scss';
@@ -12,6 +10,8 @@ import { useBranchCode } from '@/shared/model/use-branch-codes';
 import { useDocTypes } from '@/shared/model/use-doc-types';
 import { useBranchSettings, type DocTypeModel } from './model/use-branch-settings';
 import { moveRowUp, moveRowDown, deleteRow, addRow } from './helper/sortingRow';
+import { TablesButtons } from './ui/tables-btns';
+import { ChainsApprove } from './ui/chains-approve';
 
 function Branch() {
     const navigate = useNavigate();
@@ -124,23 +124,11 @@ function Branch() {
                                             );
                                         }}
                                     />
-                                    <div className={classes["list-content__control-row"]}>
-                                        <button
-                                            onClick={() => branchSettings.setSigners(moveRowUp(item.row, branchSettings.signers))}
-                                        >
-                                            ▲
-                                        </button>
-                                        <button
-                                            onClick={() => branchSettings.setSigners(moveRowDown(item.row, branchSettings.signers))}
-                                        >
-                                            ▼
-                                        </button>
-                                        <button
-                                            onClick={() => branchSettings.setSigners(deleteRow(item.row, branchSettings.signers))}
-                                        >
-                                            ✖
-                                        </button>
-                                    </div>
+                                    <TablesButtons
+                                        clickTop={() => branchSettings.setSigners(moveRowUp(item.row, branchSettings.signers))}
+                                        clickDown={() => branchSettings.setSigners(moveRowDown(item.row, branchSettings.signers))}
+                                        clickDelete={() => branchSettings.setSigners(deleteRow(item.row, branchSettings.signers))}
+                                    />
                                     {item.row}
                                 </motion.div>
                             )
@@ -208,7 +196,6 @@ function Branch() {
                                         }))}
                                     />
                                     <TextInputKit
-                                        name="email"
                                         width='330px'
                                         value={item.code}
                                         updateValue={(event) => {
@@ -221,23 +208,11 @@ function Branch() {
                                         }}
                                         placeholder="Введите значение"
                                     />
-                                    <div className={classes["list-content__control-row"]}>
-                                        <button
-                                            onClick={() => branchSettings.setSettings(moveRowUp(item.row, branchSettings.settings))}
-                                        >
-                                            ▲
-                                        </button>
-                                        <button
-                                            onClick={() => branchSettings.setSettings(moveRowDown(item.row, branchSettings.settings))}
-                                        >
-                                            ▼
-                                        </button>
-                                        <button
-                                            onClick={() => branchSettings.setSettings(deleteRow(item.row, branchSettings.settings))}
-                                        >
-                                            ✖
-                                        </button>
-                                    </div>
+                                    <TablesButtons
+                                        clickTop={() => branchSettings.setSettings(moveRowUp(item.row, branchSettings.settings))}
+                                        clickDown={() => branchSettings.setSettings(moveRowDown(item.row, branchSettings.settings))}
+                                        clickDelete={() => branchSettings.setSettings(deleteRow(item.row, branchSettings.settings))}
+                                    />
                                     {item.row}
                                 </motion.div>
                             )
@@ -256,6 +231,7 @@ function Branch() {
             <div className='border-t-2 border-dashed'></div>
             <div className='flex flex-col gap-[10px]'>
                 <h2 className="text-left">Цепочки согласований</h2>
+                <ChainsApprove />
             </div>
 
             <div className='border-t-2 border-dashed'></div>
