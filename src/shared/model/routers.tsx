@@ -6,11 +6,13 @@ export const ROUTES = {
   REGISTATIONUSER: "/registation-user",
   LOGIN: "/login",
   DOCINFO: "/doc-info/:doctype",
+  _DOCINFO: "/doc-info",
   ADMINPANEL: "/admin-panel",
   BRANCHES: "/branches/:branch",
   TEMPLATESIGN: "template-sign",
   TASKS: "/tasks",
   DOCS: "/docs/:docstype",
+  _DOCS: "/docs",
   GROUPCHANGEAPPROVER: "/group-change-approver",
 } as const;
 

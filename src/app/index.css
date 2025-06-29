@@ -17,7 +17,8 @@
   /* дополнительный (hover, акценты) */
   --color-additional-dark: #3e5b31;
   --color-additional-light: #6a8e3c;
-  --color-canvas: #edf0d3;
+  --color-canvas: #f7f3f3;
+  /*#edf0d3*/
   /*E7EBC5*/
   /* Neutrals / Grayscale */
   --color-black: #222629;
@@ -69,7 +70,7 @@
   max-width: 1280px;
   margin: 0 auto 0 auto;
   min-height: calc(100vh - 50px - 67px);
-  background: linear-gradient(75deg, #e7ebc5, var(--color-canvas));
+  background: linear-gradient(75deg, rgb(238, 238, 238), var(--color-canvas));
   padding: 60px 20px;
 }
 

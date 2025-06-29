@@ -1,0 +1,1 @@
+export { SkeletonKit } from './skeleton-kit';

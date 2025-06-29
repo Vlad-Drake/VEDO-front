@@ -1,0 +1,54 @@
+schemas:
+  ChainsResponse:
+    type: object
+    required: 
+      - list
+    additionalProperties: false
+    properties:
+      list:
+        type: array
+        items:
+          type: object
+          required:
+            - docType
+            - docSource
+            - approvers
+          properties:
+            docType:
+              type: string
+            docSource:
+              type: string
+            approvers:
+              type: array
+              items:
+                type: object
+                required:
+                  - queueId
+                  - jobTitleId
+                  - email
+                properties:
+                  queueId:
+                    type: integer
+                  jobTitleId:
+                    type: integer
+                  email:
+                    type: string
+chains:
+  summary: Get chains
+  parameters:
+    - name: branchId
+      in: query
+      required: true
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: chains successful
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/ChainsResponse"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"

@@ -19,7 +19,7 @@ export function useRegisterUser(resetForm: () => void) {
         }*/
   });
 
-  const registerUser = (data: ApiSchemas["RegistrationRequest"]) => {
+  const registerUserQuery = (data: ApiSchemas["RegistrationRequest"]) => {
     registerUserMutation.mutate({ body: data });
   };
 
@@ -28,7 +28,7 @@ export function useRegisterUser(resetForm: () => void) {
     : undefined;
 
   return {
-    registerUser,
+    registerUserQuery,
     isPending: registerUserMutation.isPending,
     errorMessage,
   };

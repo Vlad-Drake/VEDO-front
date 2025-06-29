@@ -1,24 +1,26 @@
 import { rqClient } from "@/shared/api/instance";
 
-export function useDocs() {
+export function useDocs(docId: number | null) {
     const docsMutation = rqClient.useMutation('get', '/docs', {
         onSuccess(data) {
             console.log(data)
         }
     });
 
-    const getDocs = (docId: number, branchId: number, dateStart: string, dateEnd: string) => {
+    const getDocs = (formDocs: { branchId: number, dateStart: string, dateEnd: string }) => {
+        if (!(docId)) return;
         docsMutation.mutate({
             params: {
                 query: {
                     docId,
-                    branchId,
-                    dateStart,
-                    dateEnd,
+                    branchId: formDocs.branchId,
+                    dateStart: formDocs.dateStart,
+                    dateEnd: formDocs.dateEnd,
                 }
             }
         });
     }
+
     return {
         getDocs,
         docsMutation

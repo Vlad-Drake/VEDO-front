@@ -31,3 +31,7 @@ paths:
   /docs:
     get:
       $ref: "./endpoints/docs.yaml#/docs"
+
+  /chains:
+    get:
+      $ref: "./endpoints/chains.yaml#/chains"

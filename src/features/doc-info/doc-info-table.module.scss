@@ -1,32 +1,35 @@
-.content-row{
+.content-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     border-bottom: 2px solid var(--color-gray);
     margin-bottom: 2px;
 }
+
 .question {
-    p{
+    p {
         text-align: left;
         margin-left: 20px;
         padding: 10px 0;
 
     }
+
     margin-bottom: 2px;
 }
+
 .answer {
     border-left: 2px dashed var(--color-gray);
     margin-bottom: 2px;
 
-    p{
+    p {
         text-align: left;
         padding: 10px 0 10px 10px;
-        
+
         cursor: pointer;
     }
-    
 
-    textarea{
+
+    textarea {
         display: flex;
         justify-content: start;
         margin: 5px;

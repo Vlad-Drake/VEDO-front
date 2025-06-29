@@ -16,7 +16,7 @@ const branches: ApiSchemas["BranchesListResponse"] = {
 
 export const branchesHandler = [
     http.get('/branches', async (_) => {
-        await delay(1500);
+        await delay(2000);
         return HttpResponse.json(branches);
         /*return HttpResponse.json(
             {

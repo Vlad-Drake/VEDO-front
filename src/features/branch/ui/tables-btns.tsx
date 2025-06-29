@@ -1,4 +1,4 @@
-import classes from '../branch.module.scss';
+import styles from './tables-btns.module.scss';
 
 export function TablesButtons({
     clickTop,
@@ -10,7 +10,7 @@ export function TablesButtons({
     clickDelete: () => void,
 }) {
     return (
-        <div className={classes["list-content__control-row"]}>
+        <div className={styles["control-row"]}>
             <button
                 onClick={clickTop}
             >

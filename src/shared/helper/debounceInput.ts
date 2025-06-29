@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
 export function useDebounceInput() {
-    const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+    const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     function debounceInput(callback: () => void) {
 

@@ -1,25 +1,24 @@
 import { rqClient } from "@/shared/api/instance";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 
 /*interface BranchesModel {
     id: number;
     branch: string;
 }*/
 
-export function useBranchesWithState(branchParam: string | undefined) {
-    const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null);
+export function useBranchesWithState() {
+    const { branch: branchParam } = useParams<"branch">();
+    const [selectedBranchIdState, setSelectedBranchId] = useState<number | null>(null);
 
     const branches = rqClient.useQuery('get', '/branches');
 
-    if (branches.data) {
-        if (branchParam && branchParam !== 'all' && selectedBranchId === null) {
-            const item = branches.data?.list.find(item => item.branch === branchParam)
-            setSelectedBranchId(item?.id ?? null);
-        }
-    }
+    const branch = useMemo(() => branches.data?.list.find(item => item.branch === branchParam), [branches.data])
+    const selectedBranchId = selectedBranchIdState ?? branch?.id ?? null;
 
     return {
         branches,
+        isPendingBranch: branches.isPending,
         selectedBranchId,
         setSelectedBranchId
     };

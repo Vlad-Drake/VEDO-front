@@ -36,8 +36,16 @@ export const router = createBrowserRouter([
                 lazy: () => import("@/features/docs/docs.page"),
               },
               {
+                path: ROUTES._DOCS,
+                loader: () => redirect(ROUTES._DOCS + '/all'),
+              },
+              {
                 path: ROUTES.DOCINFO,
                 lazy: () => import("@/features/doc-info/doc-into.page"),
+              },
+              {
+                path: ROUTES._DOCINFO,
+                loader: () => redirect(ROUTES._DOCINFO + '/all'),
               },
               {
                 path: ROUTES.ADMINPANEL,
