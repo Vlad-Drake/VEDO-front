@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classes from './listCheckboxKit.module.scss';
 import { CheckboxKit } from '@/shared/ui/checkboxKit/checkboxKit';
-import { useDebounceInput } from '@/shared/helper/debounceInput';
+import { SkeletonKit } from '../skeleton-kit';
 
 export interface ListCheckboxModel {
     id: string | number;
@@ -9,33 +9,36 @@ export interface ListCheckboxModel {
     checked: boolean;
 }
 
-export function ListCheckboxKit({
+export function ListCheckboxKit<T>({
     width = 'auto',
     height = 'auto',
     options,
     update,
+    isLoading,
+    getId,
+    getValue,
+    getCheck,
 }: {
     width?: string,
     height?: string,
-    options: ListCheckboxModel[],
-    update: (item: ListCheckboxModel[]) => void,
+    options: T[],
+    update: (item: T[]) => void,
+    isLoading: boolean,
+    getId: (val: T) => number | string,
+    getValue: (val: T) => number | string,
+    getCheck: (val: T) => boolean,
 }) {
     const [searchText, setSearchText] = useState("");
-    const [laggingSearchText, setLaggingSearchText] = useState("");
     const [isCheckedAll, setIsCheckedAll] = useState(false);
 
-    const debounceInput = useDebounceInput();
-
-    const toggleOption = (option: ListCheckboxModel) => {
-        //update({...option, checked: !option.checked})
+    const toggleOption = (option: T) => {
         const newSigners = [...options];
-        const idx = newSigners.findIndex(item => item.id === option.id)
+        const idx = newSigners.findIndex(item => getId(item) === getId(option))
         newSigners[idx] = {
             ...newSigners[idx],
-            checked: !option.checked
+            checked: !getCheck(option)
         };
         update(newSigners);
-        //setPlaceholder(getSelectionStatus(options));
     };
 
     const toggleCheckAll = () => {
@@ -54,21 +57,17 @@ export function ListCheckboxKit({
             update(newSigners);
         }
     }
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchText(e.target.value);
-        debounceInput(() => {
-            setLaggingSearchText(searchText);
-        });
-    };
+
+    const filteredOptions = options.filter(option => String(getValue(option)).toLowerCase().includes(searchText.toLowerCase()));
 
     return (
         <div style={{ width, height }} className={classes['list_wrapper']}>
-            <div className={classes["searcher"]}>
+            {!isLoading && <div className={classes["searcher"]}>
                 <input
                     className={classes["input"]}
                     type="text"
                     placeholder="поиск"
-                    onChange={handleChange}
+                    onChange={e => setSearchText(e.target.value)}
                     value={searchText}
                 />
                 <div className={classes["selector-all"]}>
@@ -78,22 +77,28 @@ export function ListCheckboxKit({
                     />
                     <p>Выбрать всё</p>
                 </div>
-            </div>
+            </div>}
 
             <div className={`${classes["list"]} ${classes["scrollable"]}`}>
-                {options && options
-                    .filter(option =>
-                        option.name.toLowerCase().includes(laggingSearchText.toLowerCase())
-                    )
+                {!isLoading && filteredOptions
                     .map(option => (
-                        <div className={classes["list__row"]} key={option.id}>
+                        <div className={classes["list__row"]} key={getId(option)}>
                             <CheckboxKit
-                                checked={option.checked}
+                                checked={getCheck(option)}
                                 onClick={() => toggleOption(option)}
                             />
-                            <p>{option.name}</p>
+                            <p>{getValue(option)}</p>
                         </div>
                     ))}
+                {isLoading &&
+                    <div>
+                        {[...Array(3)].map((_, index) =>
+                            <div key={index} className={classes["list__row"]}>
+                                <SkeletonKit type='text' />
+                            </div>)
+                        }
+                    </div>
+                }
             </div>
         </div >
     );

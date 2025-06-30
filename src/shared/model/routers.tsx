@@ -9,6 +9,7 @@ export const ROUTES = {
   _DOCINFO: "/doc-info",
   ADMINPANEL: "/admin-panel",
   BRANCHES: "/branches/:branch",
+  _BRANCHES: "/branches",
   TEMPLATESIGN: "template-sign",
   TASKS: "/tasks",
   DOCS: "/docs/:docstype",

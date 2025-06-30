@@ -56,6 +56,10 @@ export const router = createBrowserRouter([
                 lazy: () => import("@/features/branch/branch.page"),
               },
               {
+                path: ROUTES._BRANCHES,
+                loader: () => redirect(ROUTES._BRANCHES + '/all'),
+              },
+              {
                 path: ROUTES.GROUPCHANGEAPPROVER,
                 lazy: () => import("@/features/group-change-approver/group-change-approver.page"),
               },

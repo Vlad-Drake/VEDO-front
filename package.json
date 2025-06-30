@@ -41,7 +41,7 @@
     "msw": "^2.8.4",
     "openapi-msw": "^1.2.0",
     "openapi-typescript": "^7.8.0",
-    "prettier": "^3.5.3",
+    "prettier": "^3.6.2",
     "sass-embedded": "^1.88.0",
     "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3",
