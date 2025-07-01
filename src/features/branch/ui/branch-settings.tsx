@@ -14,7 +14,7 @@ export function BranchSettings({
     branchCodes,
     deleteSetting,
     setSettings,
-    Setting,
+    createSetting,
 }: {
     settings: SettingsRecord,
     selectedBranchId: number | null,
@@ -24,7 +24,7 @@ export function BranchSettings({
         code: string;
     }[],
     setSettings: (settings?: SettingsRecord) => void,
-    Setting: (settings?: SettingsRecord) => void,
+    createSetting: (settings?: SettingsRecord) => void,
     deleteSetting: (currentRow: number, settings?: SettingsRecord) => void,
 }) {
     return (
@@ -74,7 +74,7 @@ export function BranchSettings({
                     }
                     <motion.div layout className={styles["add-row"]} key="plus">
                         <p>Добавить код</p>
-                        <button onClick={() => Setting(settings)}>
+                        <button onClick={() => createSetting(settings)}>
                             ✚
                         </button>
                     </motion.div>

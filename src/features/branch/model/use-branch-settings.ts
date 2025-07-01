@@ -34,13 +34,29 @@ export type DocsSignerRecord = Record<SignerId, DocTypeModel[]>;
 
 export type SettingsRecord = Record<RowSetting, SettingsModel>;
 
+const removeRecord = <T>(signer: Record<string | number, T>, currentRow: string | number): Record<string | number, T> => {
+    const copy = { ...signer };
+
+    if (!copy[currentRow]) {
+        return signer;
+    }
+
+    delete copy[currentRow];
+
+    return copy;
+};
+
 export function useBranchSettings(
     docTypesRecord: DocTypesRecord | undefined,
     docTypes: { id: number, docType: string }[] | undefined,
     branchId: number | null
 ) {
     const [signersState, setSignersState] = useState<SignersRecord>({});
+    const [removedSigners, setRemovedSigners] = useState<RowSigner[]>([]);
+
     const [docsSignersState, setDocsSignersState] = useState<DocsSignerRecord>({});
+    const [removedDocSigners, setRemovedDocSigners] = useState<SignerId[]>([]);
+
     const [settingsState, setSettingsState] = useState<SettingsRecord>({});
 
     const branchSettings = rqClient.useQuery('get', '/branch-settings', {
@@ -68,7 +84,13 @@ export function useBranchSettings(
         }, {} as SignersRecord);
     }, [processedBranchSettings]);
 
-    const signers = { ...signersCache, ...signersState };
+    //const signers = { ...signersCache, ...signersState };
+    const signers = useMemo(() => {
+        return removedSigners.reduce(removeRecord, {
+            ...signersCache,
+            ...signersState,
+        });
+    }, [signersCache, signersState, removedSigners]);
 
     const docsSignersCache = useMemo(() => {
         return processedBranchSettings.signers?.reduce((acc, signer) => {
@@ -81,7 +103,13 @@ export function useBranchSettings(
         }, {} as DocsSignerRecord)
     }, [processedBranchSettings]);
 
-    const docsSigners = { ...docsSignersCache, ...docsSignersState };
+    //const docsSigners = { ...docsSignersCache, ...docsSignersState };
+    const docsSigners = useMemo(() => {
+        return removedDocSigners.reduce(removeRecord, {
+            ...docsSignersCache,
+            ...docsSignersState,
+        });
+    }, [docsSignersCache, docsSignersState, removedDocSigners]);
 
     /*const signersSettings = useMemo(() => (branchSettings.data?.signers ?? [])
         .map(signer => ({
@@ -173,48 +201,36 @@ export function useBranchSettings(
 
     const deleteSigner = (currentRow: number, signer?: SignersRecord): void => {
         if (!signer) return;
-        /*setSignersState(prev => {
-            const keys = Object.keys(signer);
-            const key = keys[currentRow];
-            if (!key) return signer;
-            const { [key]: _, ...rest } = signer;
-            return rest;
-        });*/
-        /*setDocsSignersState(prev => ({
-            ...prev,
-            ...docsSigner
-        }))*/
+        setRemovedSigners((lastState) => [...lastState, currentRow]);
     };
 
-    const createSetting = (settings?: SettingsRecord) => {
-        if (!settings || !docCode) return;
 
-        const signersSortArr = Object.values(signers).sort((a, b) => a.row - b.row);
-        const newRow = signersSortArr[signersSortArr.length - 1].row + 1;
-        const newId = nanoid();
-        setSigners({
+    function setSettings(settings?: SettingsRecord) {
+        if (!settings) return;
+
+        setDocsSignersState(prev => ({
+            ...prev,
+            ...settings
+        }))
+    }
+
+    const createSetting = (settings?: SettingsRecord) => {
+        if (!settings) return;
+
+        const settingsSortArr = Object.values(settings).sort((a, b) => a.row - b.row);
+        const newRow = settingsSortArr[settingsSortArr.length - 1].row + 1;
+        setSettings({
             [newRow]: {
-                id: newId,
                 row: newRow,
-                jobTitleId: null,
-                email: '',
+                typeId: null,
+                code: '',
             }
-        });
-        setDocsSigner({
-            [newId]:
-                docTypes.map(docType => ({
-                    docId: docType.id,
-                    name: docType.docType,
-                    checked: true,
-                })) as DocTypeModel[]
         });
     }
 
     const deleteSetting = (currentRow: number, setting?: SettingsRecord): void => {
         if (!setting) return;
-        /*setSettingsState(prev => {
-            ///
-        });*/
+        setRemovedDocSigners((lastState) => [...lastState, signers[currentRow].id]);
     }
 
     return {
@@ -225,6 +241,8 @@ export function useBranchSettings(
         setSigners,
         settings,
         createSigner,
-        deleteSigner
+        deleteSigner,
+        deleteSetting,
+        createSetting,
     }
 }

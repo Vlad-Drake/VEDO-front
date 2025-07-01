@@ -37,8 +37,8 @@ function Branch() {
                 docTypes={docTypes.docTypes}
                 docTypesRecord={docTypes.docTypesRecord}
                 setSigners={branchSettings.setSigners}
-                createRow={branchSettings.createRow}
-                deleteRow={branchSettings.deleteRow}
+                createRow={branchSettings.createSigner}
+                deleteRow={branchSettings.deleteSigner}
             />
             <div className='border-t-2 border-dashed'></div>
             <BranchSettings
