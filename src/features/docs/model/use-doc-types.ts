@@ -31,6 +31,7 @@ export function useDocTypesWithState() {
     return {
         data: types.docTypes.data,
         isPending: types.docTypes.isPending,
+        error: types.docTypes.error,
         selectedDocId,
         setSelectedDocId,
         docName,

@@ -1,4 +1,15 @@
 schemas:
+  DocTypeItem:
+    type: object
+    required:
+      - id
+      - docType
+    properties:
+      id:
+        type: integer
+      docType:
+        type: string
+
   DocTypeListResponse:
     type: object
     required:
@@ -8,16 +19,8 @@ schemas:
       list:
         type: array
         items:
-          type: object
-          required:
-            - id
-            - docType
-          properties:
-            id:
-              type: integer
-            docType:
-              type: string
-
+          $ref: '#/schemas/DocTypeItem'
+          
 docTypes:
   summary: Get doc types
   responses:

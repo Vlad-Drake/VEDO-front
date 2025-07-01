@@ -1,4 +1,17 @@
 schemas:
+  DocsItem:
+    type: object
+    required:
+      - docName
+      - date
+      - approved
+    properties:
+      docName:
+        type: string
+      date:
+        type: string
+      approved:
+        type: boolean
   DocsResponse:
     type: object
     required:
@@ -8,18 +21,7 @@ schemas:
       list:
         type: array
         items:
-          type: object
-          required:
-            - docName
-            - date
-            - approved
-          properties:
-            docName:
-              type: string
-            date:
-              type: string
-            approved:
-              type: boolean
+          $ref: '#/schemas/DocsItem'
 
 docs:
   summary: Get docs

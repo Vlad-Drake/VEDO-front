@@ -1,4 +1,32 @@
 schemas:
+  ApproverItem:
+    type: object
+    required:
+      - queueId
+      - jobTitleId
+      - email
+    properties:
+      queueId:
+        type: integer
+      jobTitleId:
+        type: integer
+      email:
+        type: string
+  ChainsItem:
+    type: object
+    required:
+      - docType
+      - docSource
+      - approvers
+    properties:
+      docType:
+        type: string
+      docSource:
+        type: string
+      approvers:
+        type: array
+        items:
+          $ref: '#/schemas/ApproverItem'
   ChainsResponse:
     type: object
     required: 
@@ -8,31 +36,7 @@ schemas:
       list:
         type: array
         items:
-          type: object
-          required:
-            - docType
-            - docSource
-            - approvers
-          properties:
-            docType:
-              type: string
-            docSource:
-              type: string
-            approvers:
-              type: array
-              items:
-                type: object
-                required:
-                  - queueId
-                  - jobTitleId
-                  - email
-                properties:
-                  queueId:
-                    type: integer
-                  jobTitleId:
-                    type: integer
-                  email:
-                    type: string
+          $ref: '#/schemas/ChainsItem'
 chains:
   summary: Get chains
   parameters:

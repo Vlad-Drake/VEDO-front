@@ -1,4 +1,14 @@
 schemas:
+  DocTypesItem:
+    type: object
+    required:
+      - docId
+      - checked
+    properties:
+      docId:
+        type: integer
+      checked:
+        type: boolean
   Signer:
     type: object
     required:
@@ -16,15 +26,7 @@ schemas:
       docTypes:
         type: array
         items:
-          type: object
-          required:
-            - docId
-            - checked
-          properties:
-            docId:
-              type: integer
-            checked:
-              type: boolean
+          $ref: '#/schemas/DocTypesItem'
           
   Setting:
     type: object

@@ -1,4 +1,14 @@
 schemas:
+  BranchItem:
+    type: object
+    required:
+      - id
+      - branch
+    properties:
+      id:
+        type: integer
+      branch:
+        type: string
   BranchesListResponse:
     type: object
     required:
@@ -8,15 +18,7 @@ schemas:
       list:
         type: array
         items:
-          type: object
-          required:
-            - id
-            - branch
-          properties:
-            id:
-              type: integer
-            branch:
-              type: string
+          $ref: '#/schemas/BranchItem'
 
 branches:
   summary: Get branches

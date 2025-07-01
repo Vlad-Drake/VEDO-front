@@ -225,7 +225,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["CodeListResponse"];
+                        "application/json": components["schemas"]["BranchCodeListResponse"];
                     };
                 };
                 401: components["responses"]["UnauthorizedError"];
@@ -451,26 +451,29 @@ export interface components {
             code: string;
             message: string;
         };
+        JobTitleItem: {
+            id: number;
+            jobTitle: string;
+        };
         JobTitlesResponse: {
-            list: {
-                id: number;
-                jobTitle: string;
-            }[];
+            list: components["schemas"]["JobTitleItem"][];
+        };
+        BranchItem: {
+            id: number;
+            branch: string;
         };
         BranchesListResponse: {
-            list: {
-                id: number;
-                branch: string;
-            }[];
+            list: components["schemas"]["BranchItem"][];
+        };
+        DocTypesItem: {
+            docId: number;
+            checked: boolean;
         };
         Signer: {
             row: number;
             jobTitleId: number;
             email: string;
-            docTypes: {
-                docId: number;
-                checked: boolean;
-            }[];
+            docTypes: components["schemas"]["DocTypesItem"][];
         };
         Setting: {
             row: number;
@@ -481,41 +484,47 @@ export interface components {
             signers: components["schemas"]["Signer"][];
             settings: components["schemas"]["Setting"][];
         };
-        CodeListResponse: {
-            list: {
-                id: number;
-                code: string;
-            }[];
+        BranchCodeItem: {
+            id: number;
+            code: string;
+        };
+        BranchCodeListResponse: {
+            list: components["schemas"]["BranchCodeItem"][];
+        };
+        DocTypeItem: {
+            id: number;
+            docType: string;
         };
         DocTypeListResponse: {
-            list: {
-                id: number;
-                docType: string;
-            }[];
+            list: components["schemas"]["DocTypeItem"][];
+        };
+        DocInfoItem: {
+            question: string;
+            answer: string;
         };
         DocInfoResponse: {
-            list: {
-                question: string;
-                answer: string;
-            }[];
+            list: components["schemas"]["DocInfoItem"][];
+        };
+        DocsItem: {
+            docName: string;
+            date: string;
+            approved: boolean;
         };
         DocsResponse: {
-            list: {
-                docName: string;
-                date: string;
-                approved: boolean;
-            }[];
+            list: components["schemas"]["DocsItem"][];
+        };
+        ApproverItem: {
+            queueId: number;
+            jobTitleId: number;
+            email: string;
+        };
+        ChainsItem: {
+            docType: string;
+            docSource: string;
+            approvers: components["schemas"]["ApproverItem"][];
         };
         ChainsResponse: {
-            list: {
-                docType: string;
-                docSource: string;
-                approvers: {
-                    queueId: number;
-                    jobTitleId: number;
-                    email: string;
-                }[];
-            }[];
+            list: components["schemas"]["ChainsItem"][];
         };
     };
     responses: {

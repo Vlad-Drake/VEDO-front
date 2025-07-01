@@ -28,6 +28,7 @@ function Branch() {
             />
             <div className='border-t-2 border-dashed'></div>
             <SignersSettings
+                rowSigners={branchSettings.rowSigners}
                 selectedBranchId={branches.selectedBranchId}
                 isPending={branchSettings.isPending}
                 jobTitles={jobTitles.jobTitles.data?.list}
@@ -39,6 +40,8 @@ function Branch() {
                 setSigners={branchSettings.setSigners}
                 createRow={branchSettings.createSigner}
                 deleteRow={branchSettings.deleteSigner}
+                moveRowUp={branchSettings.moveRowUp}
+                moveRowDown={branchSettings.moveRowDown}
             />
             <div className='border-t-2 border-dashed'></div>
             <BranchSettings

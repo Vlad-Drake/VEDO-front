@@ -1,4 +1,14 @@
 schemas:
+  DocInfoItem:
+    type: object
+    required:
+      - question
+      - answer
+    properties:
+      question:
+        type: string
+      answer:
+        type: string
   DocInfoResponse:
     type: object
     required:
@@ -8,15 +18,7 @@ schemas:
       list:
         type: array
         items:
-          type: object
-          required:
-            - question
-            - answer
-          properties:
-            question:
-              type: string
-            answer:
-              type: string
+          $ref: '#/schemas/DocInfoItem'
 
 docInfo:
   summary: Get a doc info

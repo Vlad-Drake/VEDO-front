@@ -41,14 +41,8 @@ paths:
         '401':
           $ref: '#/components/responses/UnauthorizedError'
   /jobTitle:
-    post:
+    get:
       summary: Get job titles
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/JobTitlesRequest'
       responses:
         '200':
           description: job titles successful
@@ -78,11 +72,11 @@ paths:
     get:
       summary: Get signers of branch
       parameters:
-        - name: branch
+        - name: branchId
           in: query
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           description: signers successful
@@ -103,7 +97,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CodeListResponse'
+                $ref: '#/components/schemas/BranchCodeListResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
@@ -118,6 +112,81 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DocTypeListResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+  /doc-info:
+    get:
+      summary: Get a doc info
+      parameters:
+        - name: docId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: docInfo successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocInfoResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+  /docs:
+    get:
+      summary: Get docs
+      parameters:
+        - name: docId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: branchId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: dateStart
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: dateEnd
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: docs successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocsResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+  /chains:
+    get:
+      summary: Get chains
+      parameters:
+        - name: branchId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: chains successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChainsResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
@@ -215,22 +284,36 @@ components:
           type: string
         message:
           type: string
-    JobTitlesRequest:
+    JobTitleItem:
       type: object
-      additionalProperties: false
+      required:
+        - id
+        - jobTitle
       properties:
-        dummy:
+        id:
+          type: integer
+        jobTitle:
           type: string
     JobTitlesResponse:
       type: object
       required:
-        - data
+        - list
       additionalProperties: false
       properties:
-        data:
+        list:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/JobTitleItem'
+    BranchItem:
+      type: object
+      required:
+        - id
+        - branch
+      properties:
+        id:
+          type: integer
+        branch:
+          type: string
     BranchesListResponse:
       type: object
       required:
@@ -240,44 +323,46 @@ components:
         list:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/BranchItem'
+    DocTypesItem:
+      type: object
+      required:
+        - docId
+        - checked
+      properties:
+        docId:
+          type: integer
+        checked:
+          type: boolean
     Signer:
       type: object
       required:
         - row
-        - signer
+        - jobTitleId
         - email
         - docTypes
       properties:
         row:
           type: integer
-        signer:
-          type: string
+        jobTitleId:
+          type: integer
         email:
           type: string
         docTypes:
           type: array
           items:
-            type: object
-            required:
-              - doc
-              - checked
-            properties:
-              doc:
-                type: string
-              checked:
-                type: boolean
+            $ref: '#/components/schemas/DocTypesItem'
     Setting:
       type: object
       required:
         - row
-        - type
+        - typeId
         - code
       properties:
         row:
           type: integer
-        type:
-          type: string
+        typeId:
+          type: integer
         code:
           type: string
     BranchSettingsResponse:
@@ -295,7 +380,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Setting'
-    CodeListResponse:
+    BranchCodeItem:
+      type: object
+      required:
+        - id
+        - code
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+    BranchCodeListResponse:
       type: object
       required:
         - list
@@ -304,7 +399,17 @@ components:
         list:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/BranchCodeItem'
+    DocTypeItem:
+      type: object
+      required:
+        - id
+        - docType
+      properties:
+        id:
+          type: integer
+        docType:
+          type: string
     DocTypeListResponse:
       type: object
       required:
@@ -314,7 +419,88 @@ components:
         list:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/DocTypeItem'
+    DocInfoItem:
+      type: object
+      required:
+        - question
+        - answer
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+    DocInfoResponse:
+      type: object
+      required:
+        - list
+      additionalProperties: false
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocInfoItem'
+    DocsItem:
+      type: object
+      required:
+        - docName
+        - date
+        - approved
+      properties:
+        docName:
+          type: string
+        date:
+          type: string
+        approved:
+          type: boolean
+    DocsResponse:
+      type: object
+      required:
+        - list
+      additionalProperties: false
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocsItem'
+    ApproverItem:
+      type: object
+      required:
+        - queueId
+        - jobTitleId
+        - email
+      properties:
+        queueId:
+          type: integer
+        jobTitleId:
+          type: integer
+        email:
+          type: string
+    ChainsItem:
+      type: object
+      required:
+        - docType
+        - docSource
+        - approvers
+      properties:
+        docType:
+          type: string
+        docSource:
+          type: string
+        approvers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApproverItem'
+    ChainsResponse:
+      type: object
+      required:
+        - list
+      additionalProperties: false
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChainsItem'
   responses:
     UnauthorizedError:
       description: Unauthorized

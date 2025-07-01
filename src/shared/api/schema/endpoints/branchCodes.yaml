@@ -1,5 +1,15 @@
 schemas:
-  CodeListResponse:
+  BranchCodeItem:
+    type: object
+    required:
+      - id
+      - code
+    properties:
+      id:
+        type: integer
+      code:
+        type: string
+  BranchCodeListResponse:
     type: object
     required:
       - list
@@ -8,15 +18,7 @@ schemas:
       list:
         type: array
         items:
-          type: object
-          required:
-            - id
-            - code
-          properties:
-            id:
-              type: integer
-            code:
-              type: string
+          $ref: '#/schemas/BranchCodeItem'
 
 branchCodes:
   summary: Get codes branch
@@ -26,7 +28,7 @@ branchCodes:
       content:
         application/json:
           schema:
-            $ref: "#/schemas/CodeListResponse"
+            $ref: "#/schemas/BranchCodeListResponse"
     "401":
       $ref: "../shared/responses.yaml#/UnauthorizedError"
     "404":

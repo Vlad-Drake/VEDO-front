@@ -3,14 +3,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 import styles from './signers-settings.module.scss';
 import { SelectKit } from '@/shared/ui/selectKit';
 import { TextInputKit } from '@/shared/ui/textInputKit/textInputKit';
-import type { DocsSignerRecord, DocTypeModel, SignerModel, SignersRecord } from '../model/use-branch-settings';
+import type { DocsSignerRecord, DocTypeModel, RowSignersRecord, SignerModel, SignersRecord } from '../model/use-branch-settings';
 import { TablesButtons } from './tables-btns';
-import { moveRowDown, moveRowUp } from '../lib/sortingRow';
 import React from 'react';
 import type { DocTypesRecord } from '../model/use-doc-types';
 import { ListCheckboxesKit } from '@/shared/ui/listCheckboxesKit';
 
 export function SignersSettings({
+    rowSigners,
     selectedBranchId,
     isPending,
     jobTitles,
@@ -22,7 +22,10 @@ export function SignersSettings({
     setDocsSigner,
     createRow,
     deleteRow,
+    moveRowUp,
+    moveRowDown,
 }: {
+    rowSigners?: RowSignersRecord,
     selectedBranchId: number | null,
     isPending: boolean,
     jobTitles?: {
@@ -38,8 +41,10 @@ export function SignersSettings({
     docTypesRecord?: DocTypesRecord,
     setSigners: (signers?: SignersRecord) => void,
     setDocsSigner: (docsSigners: DocsSignerRecord) => void,
-    createRow: (signers?: SignersRecord) => void,
-    deleteRow: (currentRow: number, signers?: SignersRecord) => void,
+    createRow: () => void,
+    deleteRow: (row: number) => void,
+    moveRowUp: (row: number) => void,
+    moveRowDown: (row: number) => void,
 }) {
     return (
         <div className='flex flex-col gap-[10px]'>
@@ -51,59 +56,61 @@ export function SignersSettings({
             </div>
             {selectedBranchId && !isPending &&
                 <AnimatePresence>
-                    {signers && Object.values(signers)
-                    .sort((a,b) => a.row - b.row)
-                    .map((signer) => 
-                        <React.Fragment key={signer.id}>
-                            <motion.div
-                                
-                                layout
-                                initial={{ opacity: 0, x: 0 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, x: 50 }}
-                                transition={{ duration: 0.3 }}
-                                className={styles["list"]}
-                            >
+                    {signers && rowSigners && Object.entries(rowSigners)
+                        //.sort((a, b) => +a[0] - +b[0])
+                        .map((row, index) =>
+                            <React.Fragment key={signers[row[1].objId].id}>
+                                <motion.div
 
-                                <SelectKit
-                                    placeholder='Выберите должность'
-                                    width="340px"
-                                    selectedId={signer.jobTitleId}
-                                    updateId={(event) =>
-                                        setSigners({ [signer.row]: { ...signer, jobTitleId: event as number } })}
-                                    options={(jobTitles ?? [])}
-                                    getValue={val => val.jobTitle}
-                                />
-                                <TextInputKit
-                                    name="email"
-                                    width='330px'
-                                    value={signer.email}
-                                    updateValue={(event) => setSigners({[signer.row]: { ...signer, email: event }})}
-                                    placeholder="login@slata.com"
-                                />
-                                <ListCheckboxesKit
-                                    width='340px'
-                                    options={docsSigners?.[signer.id] ?? []}
-                                    update={(event) => setDocsSigner({ [signer.id]: event })
-                                    }
-                                    getValue={val => val.name}
-                                    getId={val => val.docId}
-                                    getCheck={val => val.checked}
-                                />
-                                <TablesButtons
-                                    clickTop={() => setSigners( moveRowUp(signer.row, signers) )}
-                                    clickDown={() => setSigners( moveRowDown(signer.row, signers) )}
-                                    clickDelete={() => deleteRow(signer.row, signers) }
-                                />
-                                
-                                {signer.row}
-                            </motion.div>
-                        </React.Fragment>
-                    )}
+                                    layout
+                                    initial={{ opacity: 0, x: 0 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, x: 50 }}
+                                    transition={{ duration: 0.3 }}
+                                    className={styles["list"]}
+                                >
+
+                                    <SelectKit
+                                        placeholder='Выберите должность'
+                                        width="340px"
+                                        selectedId={signers[row[1].objId].jobTitleId}
+                                        updateId={(event) =>
+                                            setSigners({ [signers[row[1].objId].id]: { ...signers[row[1].objId], jobTitleId: event as number } })}
+                                        options={(jobTitles ?? [])}
+                                        getValue={val => val.jobTitle}
+                                    />
+                                    <TextInputKit
+                                        name="email"
+                                        width='330px'
+                                        value={signers[row[1].objId].email}
+                                        updateValue={(event) => setSigners({ [signers[row[1].objId].id]: { ...signers[row[1].objId], email: event } })}
+                                        placeholder="login@slata.com"
+                                    />
+                                    {/*<ListCheckboxesKit
+                                        width='340px'
+                                        options={docsSigners?.[signers[id].id] ?? []}
+                                        update={(event) => setDocsSigner({ [signers[id].id]: event })
+                                        }
+                                        getValue={val => val.name}
+                                        getId={val => val.docId}
+                                        getCheck={val => val.checked}
+                                    />*/}
+                                    <TablesButtons
+                                        clickTop={() => moveRowUp(+row[0])}
+                                        clickDown={() => moveRowDown(+row[0])}
+                                        clickDelete={() => deleteRow(+row[0])}
+                                    />
+                                    {row[1].objId}
+                                    {signers[row[1].objId].id}
+
+                                </motion.div>
+                            </React.Fragment>
+
+                        )}
                     <motion.div layout className={styles["add-row"]} key="plus">
                         <p>Добавить подписанта</p>
                         <button
-                            onClick={() => createRow(signers)}
+                            onClick={createRow}
                         >
                             ✚
                         </button>

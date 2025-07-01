@@ -23,9 +23,12 @@ function Docs() {
                 docName={docTypes.docName}
                 changeDoc={docTypes.changeDocType}
             />
+            {branches.branches.error?.code}
+            {branches.branches.error?.message}
             <div className='border-t-2 border-dashed'></div>
             {docTypes.selectedDocId &&
                 <>
+                    {docsRequest.docsMutation.error?.message}
                     <FormBranchNDates
                         docName={docTypes.docName.current}
                         branches={branches.branches.data?.list}
