@@ -156,9 +156,10 @@ input::placeholder {
 }
 
 body {
-  background: linear-gradient(165deg,
+  /*background: linear-gradient(165deg,
       var(--color-additional-light),
-      var(--color-additional-dark));
+      var(--color-additional-dark));*/
+  background: white;
   color: var(--color-black);
   overflow-y: scroll;
   margin: 0;

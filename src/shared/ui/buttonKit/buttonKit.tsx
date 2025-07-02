@@ -15,8 +15,6 @@ export const BTN_TYPES = {
   Secondary: "secondary",
   Outline: "outline",
   Soft: "soft",
-  Mb: "mb",
-  Sber: "sber",
 } as const;
 
 export type BtnTypes = (typeof BTN_TYPES)[keyof typeof BTN_TYPES];
