@@ -15,6 +15,7 @@ export const ROUTES = {
   DOCS: "/docs/:docstype",
   _DOCS: "/docs",
   GROUPCHANGEAPPROVER: "/group-change-approver",
+  REGULARAPPROVERS: "/regular-approvers",
 } as const;
 
 export type PathParams = {

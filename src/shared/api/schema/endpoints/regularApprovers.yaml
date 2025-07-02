@@ -1,0 +1,37 @@
+schemas:
+  RegularApproversItem:
+    type: object
+    required:
+      - pref
+      - docId
+      - email
+    properties:
+      pref:
+        type: string
+      docId:
+        type: integer
+      email:
+        type: string
+  RegularApproversResponse:
+    type: object
+    required:
+      - list
+    additionalProperties: false
+    properties:
+      list:
+        type: array
+        items:
+          $ref: '#/schemas/RegularApproversItem'
+regularApprovers:
+  summary: Get regular approvers
+  responses:
+    "200":
+      description: regular approvers successful
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/RegularApproversResponse"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"

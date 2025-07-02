@@ -401,6 +401,44 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/regular-approvers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get regular approvers */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description regular approvers successful */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["RegularApproversResponse"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -525,6 +563,14 @@ export interface components {
         };
         ChainsResponse: {
             list: components["schemas"]["ChainsItem"][];
+        };
+        RegularApproversItem: {
+            pref: string;
+            docId: number;
+            email: string;
+        };
+        RegularApproversResponse: {
+            list: components["schemas"]["RegularApproversItem"][];
         };
     };
     responses: {

@@ -68,6 +68,10 @@ export const router = createBrowserRouter([
                 lazy: () =>
                   import("@/features/template-sign/template-sign.page"),
               },
+              {
+                path: ROUTES.REGULARAPPROVERS,
+                lazy: () => import("@/features/regular-approvers/regular-approvers.page"),
+              }
             ],
           },
         ],

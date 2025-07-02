@@ -12,12 +12,12 @@ const loginSchema = z.object({
 
 type User = z.infer<typeof loginSchema>;
 
+type ErrorForm = Record<keyof User, string>
+
 function Login() {
     const [user, setUser] = useState<User>({ user: "", password: "" });
-    //const [errors, setErrors] = useState<User>({ user: "", password: "" });
-    const [errors, setErrors] = useState<Partial<Record<keyof User, string>>>({});
-    //const { done } = useLoadingPage();
-    //done();
+    const [errors, setErrors] = useState<Partial<ErrorForm>>({});
+
     const { login, isPending, errorMessage } = useLogin();
 
     const validateField = (field: keyof User, value: unknown) => {
@@ -26,7 +26,7 @@ function Login() {
           ...prev,
           [field]: result.success ? "" : result.error.issues[0].message,
         }));*/
-        const newErrors: Partial<Record<keyof User, string>> = { ...errors };
+        const newErrors: Partial<ErrorForm> = { ...errors };
         if (!result.success) {
             result.error.issues.forEach((issue) => {
                 newErrors[field] = issue.message;
@@ -41,7 +41,7 @@ function Login() {
     const validateForm = (): boolean => {
         const result = loginSchema.safeParse(user);
         if (!result.success) {
-            const newErrors: Partial<Record<keyof User, string>> = {};
+            const newErrors: Partial<ErrorForm> = {};
 
             result.error.issues.forEach((issue) => {
                 const field = issue.path[0] as keyof User;
@@ -64,7 +64,6 @@ function Login() {
 
     return (
         <div className="flex flex-col justify-center">
-            {/*min-h-screen */}
             <div className="flex justify-center items-center text-[#F4F4F4]">
                 <div className="flex w-[800px] min-h-[450px]">
                     <div
@@ -74,7 +73,7 @@ function Login() {
                         }}
                     >
                         <form
-                            className="right-side__block flex flex-col gap-[15px] w-[50%] p-[10px] bg-[#3e5b31e7] rounded-[4px]"
+                            className="right-side__block flex flex-col gap-[15px] w-[50%] p-[10px] bg-[#4358393f] rounded-[4px]"
                             onSubmit={handleSubmit}
                         >
                             <div className="right-side__item">
@@ -111,7 +110,7 @@ function Login() {
                                     type="submit"
                                     btnType="primary"
                                     btnWidth="80%"
-                                />{" "}
+                                />
                                 {/*className="btn"*/}
                             </div>
                             <div className="right-side__item">

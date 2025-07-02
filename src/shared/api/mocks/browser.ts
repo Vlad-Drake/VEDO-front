@@ -8,6 +8,7 @@ import { docInfoHandler } from "./handlers/docInfo";
 import { docsHandler } from "./handlers/docs";
 import { registrationUserHandlers } from "./handlers/registrationUser";
 import { chainsHandlers } from './handlers/chains';
+import { regularApproversHandlers } from "./handlers/regularApprovers";
 
 export const worker = setupWorker(
     ...jobTitlesHandlers,
@@ -19,4 +20,5 @@ export const worker = setupWorker(
     ...docsHandler,
     ...registrationUserHandlers,
     ...chainsHandlers,
+    ...regularApproversHandlers,
 );

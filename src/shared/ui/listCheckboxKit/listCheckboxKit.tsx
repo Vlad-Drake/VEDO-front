@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import classes from './listCheckboxKit.module.scss';
+import styles from './listCheckboxKit.module.scss';
 import { CheckboxKit } from '@/shared/ui/checkboxKit/checkboxKit';
 import { SkeletonKit } from '../skeleton-kit';
+import clsx from 'clsx';
 
 export interface ListCheckboxModel {
     id: string | number;
@@ -61,16 +62,16 @@ export function ListCheckboxKit<T>({
     const filteredOptions = options.filter(option => String(getValue(option)).toLowerCase().includes(searchText.toLowerCase()));
 
     return (
-        <div style={{ width, height }} className={classes['list_wrapper']}>
-            {!isLoading && <div className={classes["searcher"]}>
+        <div style={{ width, height }} className={styles['list_wrapper']}>
+            {!isLoading && <div className={styles["searcher"]}>
                 <input
-                    className={classes["input"]}
+                    className={styles["input"]}
                     type="text"
                     placeholder="поиск"
                     onChange={e => setSearchText(e.target.value)}
                     value={searchText}
                 />
-                <div className={classes["selector-all"]}>
+                <div className={styles["selector-all"]}>
                     <CheckboxKit
                         checked={isCheckedAll}
                         onClick={toggleCheckAll}
@@ -79,10 +80,10 @@ export function ListCheckboxKit<T>({
                 </div>
             </div>}
 
-            <div className={`${classes["list"]} ${classes["scrollable"]}`}>
+            <div className={clsx(styles["list"], styles["scrollable"])}>
                 {!isLoading && filteredOptions
                     .map(option => (
-                        <div className={classes["list__row"]} key={getId(option)}>
+                        <div className={styles["list__row"]} key={getId(option)}>
                             <CheckboxKit
                                 checked={getCheck(option)}
                                 onClick={() => toggleOption(option)}
@@ -93,7 +94,7 @@ export function ListCheckboxKit<T>({
                 {isLoading &&
                     <div>
                         {[...Array(3)].map((_, index) =>
-                            <div key={index} className={classes["list__row"]}>
+                            <div key={index} className={styles["list__row"]}>
                                 <SkeletonKit type='text' />
                             </div>)
                         }

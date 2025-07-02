@@ -7,7 +7,7 @@ import { useGroupChangeForm } from './use-group-change-form';
 import { useBranchProcess } from './use-branch-process';
 import { SkeletonKit } from '@/shared/ui/skeleton-kit';
 
-function groupChangeApprover() {
+function GroupChangeApprover() {
     const jobTitles = useJobTitles();
     const branchesCache = useBranchProcess();
     const form = useGroupChangeForm(branchesCache.branches);
@@ -75,4 +75,4 @@ function groupChangeApprover() {
     );
 }
 
-export const Component = groupChangeApprover
+export const Component = GroupChangeApprover
