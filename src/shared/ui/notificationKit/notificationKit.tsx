@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import classes from "./notification.module.scss";
 
 export const NOTIFICATION_TYPES = {
@@ -19,20 +20,19 @@ export function NotificationKit({
   type: NotificationTypes;
   width?: string;
 }) {
-    if(children === null || children === undefined) return;
-    //console.log(type)
-    return (
-        <div className={classes["notification-shadow"]} style={{ width }}>
-            <div
-                className={`
-                    ${classes["notification-block"]}
-                    ${type === "success" && classes[type]}
-                    ${type === "info" && classes[type]}
-                    ${type === "error" && classes[type]}
-                    ${type === "alert" && classes[type]}
-                `}
+  if (children === null || children === undefined) return;
+  return (
+    <div className={classes["notification-shadow"]} style={{ width }}>
+      <div
+        className={clsx(
+          classes["notification-block"],
+          type === "success" && classes[type],
+          type === "info" && classes[type],
+          type === "error" && classes[type],
+          type === "alert" && classes[type]
+        )}
       >
-        <p>{children}</p>
+        {children}
       </div>
     </div>
   );

@@ -1,17 +1,18 @@
 import { useRegularApprovers } from "./use-regular-approvers";
 import { SkeletonKit } from "@/shared/ui/skeleton-kit";
 import { RegularApproversForm } from "./regular-approvers-form";
+import { NotificationKit } from "@/shared/ui/notificationKit";
 
 function RegularApprovers() {
 
-    const { regularApprovers, isPending, createRegularApprover } = useRegularApprovers();
+    const { regularApprovers, isPending, createRegularApprover, error: errorGet } = useRegularApprovers();
 
     return (
         <div className="gap-[35px] content">
             <h2 className="text-center">Постоянные подписанты</h2>
             <div className='flex gap-[50px] justify-center'>
 
-                <div>
+                <div className='flex flex-col gap-[20px]'>
                     <table className="w-[500px] border border-[var(--color-gray)] divide-y divide-[var(--color-gray)]">
                         <thead>
                             <tr className="bg-[var(--color-gray-light)] divide-x divide-[var(--color-gray)]">
@@ -23,7 +24,7 @@ function RegularApprovers() {
                         <tbody className="divide-y divide-[var(--color-gray)]">
                             {regularApprovers && !isPending &&
                                 regularApprovers.map(approver =>
-                                    <tr className="odd:bg-[var(--color-gray-light)] divide-x divide-[var(--color-gray)]">
+                                    <tr key={approver.pref} className="odd:bg-[var(--color-gray-light)] divide-x divide-[var(--color-gray)]">
                                         <td className="px-4 py-2 text-left">{approver.pref}</td>
                                         <td className="px-4 py-2 text-left">{approver.docId}</td>
                                         <td className="px-4 py-2 text-left">{approver.email}</td>
@@ -39,8 +40,22 @@ function RegularApprovers() {
                                     </tr>
                                 )
                             }
+                            {regularApprovers && regularApprovers?.length === 0 &&
+                                <h3>Здесь пусто</h3>
+                            }
                         </tbody>
                     </table>
+                    <div>
+                        {errorGet.isError &&
+                            <NotificationKit
+                                type='error'
+                            >
+                                <h3>Ошибка</h3>
+                                {errorGet.error?.message}
+                            </NotificationKit>
+                        }
+                    </div>
+
                 </div>
 
                 <RegularApproversForm
@@ -49,7 +64,7 @@ function RegularApprovers() {
 
             </div>
 
-        </div>
+        </div >
     )
 }
 

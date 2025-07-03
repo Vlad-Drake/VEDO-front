@@ -15,7 +15,10 @@ const initialRegularApprovers = {
 export function RegularApproversForm({
     createRegularApprover,
 }: {
-    createRegularApprover: (pref: string, email: string,) => void,
+    createRegularApprover: (data: {
+        pref: string,
+        email: string,
+    }) => void,
 }) {
 
     const [form, setForm] = useState<RegularApproversForm>(initialRegularApprovers);
@@ -24,10 +27,11 @@ export function RegularApproversForm({
         <form onSubmit={(e) => {
             e.preventDefault();
             if (form) {
-                createRegularApprover(
-                    form.pref,
-                    form.email
-                );
+                createRegularApprover({
+                    pref: form.pref,
+                    email: form.email
+                });
+                setForm(initialRegularApprovers);
             }
         }} className='flex flex-col gap-[15px]'>
             <TextInputKit

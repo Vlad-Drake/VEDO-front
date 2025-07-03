@@ -1,11 +1,7 @@
 import { rqClient } from "@/shared/api/instance";
 
 export function useDocs(docId: number | null) {
-    const docsMutation = rqClient.useMutation('get', '/docs', {
-        onSuccess(data) {
-            console.log(data)
-        }
-    });
+    const docsMutation = rqClient.useMutation('get', '/docs');
 
     const getDocs = (formDocs: { branchId: number, dateStart: string, dateEnd: string }) => {
         if (!(docId)) return;
@@ -23,6 +19,12 @@ export function useDocs(docId: number | null) {
 
     return {
         getDocs,
-        docsMutation
+        data: docsMutation.data,
+        isPending: docsMutation.isPending,
+        error: {
+            code: docsMutation.error?.code,
+            isError: docsMutation.isError,
+            message: docsMutation.error?.message
+        },
     }
 }

@@ -37,3 +37,7 @@ paths:
   /regular-approvers:
     get:
       $ref: "./endpoints/regularApprovers.yaml#/regularApprovers"
+
+  /create-regular-approver:
+    post:
+      $ref: "./endpoints/regularApprovers.yaml#/createRegularApprover"  

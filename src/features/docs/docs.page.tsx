@@ -6,6 +6,8 @@ import { FormBranchNDates } from "./ui/form-branch-n-dates";
 import { FormDocType } from "./ui/form-doc-type";
 import { Page } from "./ui/docs-page";
 import { FormBranchNDatesProvider } from "./ui/form-branch-n-dates-context";
+import { BorderDashed } from "@/shared/ui/border-dashed";
+import { NotificationKit } from "@/shared/ui/notificationKit";
 
 function Docs() {
     const docTypes = useDocTypesWithState();
@@ -25,25 +27,33 @@ function Docs() {
             />
             {branches.branches.error?.code}
             {branches.branches.error?.message}
-            <div className='border-t-2 border-dashed'></div>
+            <BorderDashed />
             {docTypes.selectedDocId &&
                 <>
-                    {docsRequest.docsMutation.error?.message}
                     <FormBranchNDates
                         docName={docTypes.docName.current}
                         branches={branches.branches.data?.list}
-                        isPending={docsRequest.docsMutation.isPending}
+                        isPending={docsRequest.isPending}
                         getDocs={docsRequest.getDocs}
                     >
                         <DocsTable
-                            docsList={docsRequest.docsMutation.data?.list}
-                            isPending={docsRequest.docsMutation.isPending}
+                            docsList={docsRequest.data?.list}
+                            isPending={docsRequest.isPending}
                             management={
                                 <>
                                     <div>Кнопки</div>
                                 </>
                             }
                         />
+                        {docsRequest.error.isError &&
+                            <NotificationKit
+                                type='error'
+                            >
+                                <h3>Ошибка</h3>
+                                {docsRequest.error.message}
+                            </NotificationKit>
+                        }
+
                     </FormBranchNDates>
                 </>
             }

@@ -439,6 +439,47 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/create-regular-approver": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create regular approver */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["CreateRegularApproverRequest"];
+                };
+            };
+            responses: {
+                /** @description Create regular approver successful */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CreateRegularApproverResponse"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -571,6 +612,16 @@ export interface components {
         };
         RegularApproversResponse: {
             list: components["schemas"]["RegularApproversItem"][];
+        };
+        CreateRegularApproverRequest: {
+            /** @description Префикс документа */
+            pref: string;
+            /** @description Почта подписанта */
+            email: string;
+        };
+        CreateRegularApproverResponse: {
+            code: string;
+            message: string;
         };
     };
     responses: {

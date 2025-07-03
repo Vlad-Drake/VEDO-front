@@ -191,6 +191,38 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
         '404':
           $ref: '#/components/responses/NotFoundError'
+  /regular-approvers:
+    get:
+      summary: Get regular approvers
+      responses:
+        '200':
+          description: regular approvers successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegularApproversResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+  /create-regular-approver:
+    post:
+      summary: Create regular approver
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRegularApproverRequest'
+      responses:
+        '200':
+          description: Create regular approver successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateRegularApproverResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
 components:
   schemas:
     LoginRequest:
@@ -501,6 +533,53 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ChainsItem'
+    RegularApproversItem:
+      type: object
+      required:
+        - pref
+        - docId
+        - email
+      properties:
+        pref:
+          type: string
+        docId:
+          type: integer
+        email:
+          type: string
+    RegularApproversResponse:
+      type: object
+      required:
+        - list
+      additionalProperties: false
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegularApproversItem'
+    CreateRegularApproverRequest:
+      type: object
+      required:
+        - pref
+        - email
+      additionalProperties: false
+      properties:
+        pref:
+          type: string
+          description: Префикс документа
+        email:
+          type: string
+          description: Почта подписанта
+    CreateRegularApproverResponse:
+      type: object
+      required:
+        - code
+        - message
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+        message:
+          type: string
   responses:
     UnauthorizedError:
       description: Unauthorized
