@@ -3,6 +3,23 @@ import styles from "./tutor.module.css";
 import clsx from "clsx";
 import { createPortal } from "react-dom";
 import { mergeRefs } from "react-merge-refs";
+import { ButtonKit } from "@/shared/ui/buttonKit/buttonKit";
+
+export function TutorWrapper({
+    children,
+    ref,
+    className,
+}: {
+    children: React.ReactNode;
+    ref?: React.Ref<HTMLDivElement>;
+    className?: string;
+}) {
+    return (
+        <div className={className} ref={ref}>
+            {children}
+        </div>
+    );
+}
 
 export function TutorStep({
     children,
@@ -15,7 +32,6 @@ export function TutorStep({
     content: React.ReactNode;
     index: number;
 }) {
-    const refParent = useRef<HTMLDivElement>(null);
     const { currentStep, handleNext, handleSkip } = useTutor();
     const tooltip = useTooltip({
         content,
@@ -23,12 +39,10 @@ export function TutorStep({
         handleNext,
         handleSkip,
         showTooltip: index === currentStep,
-        refParent,
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const anyProps = children.props as unknown as any;
-
     return (
         <>
             {React.cloneElement(children, {
@@ -36,10 +50,7 @@ export function TutorStep({
                 className: clsx(tooltip.target.className, anyProps.className),
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any)}
-            <div ref={refParent}>
-                {tooltip.tooltip}
-            </div>
-
+            {tooltip.tooltip}
         </>
     );
 }
@@ -70,7 +81,7 @@ export function TutorProvider({ children }: { children: React.ReactNode }) {
     };
 
     const handleSkip = () => {
-        setStepIndex(-1);
+        setStepIndex(3);
     };
 
     return (
@@ -104,7 +115,6 @@ function useTooltip({
     handleNext,
     handleSkip,
     isLastStep = false,
-    refParent,
 }: {
     position: "top" | "bottom" | "left" | "right";
     content: React.ReactNode;
@@ -112,10 +122,8 @@ function useTooltip({
     handleNext: () => void;
     handleSkip: () => void;
     isLastStep?: boolean;
-    refParent: RefObject<HTMLDivElement | null>
 }) {
     const ref = useRef<HTMLDivElement>(null);
-    console.log(ref.current, position)
     return {
         target: {
             ref,
@@ -123,34 +131,35 @@ function useTooltip({
         },
         tooltip:
             showTooltip &&
-            createPortal(
-                <>
-                    <div className={styles.overlay} />
-                    <div
-                        className={`${styles.tooltip} ${styles[position]}`}
-                        style={{
-                            ...getTooltipPosition(refParent.current, position),
-                        }}
-                    >
-                        <div className={styles.tooltipContent}>{content}</div>
-                        <div className={styles.tooltipButtons}>
-                            <button
-                                className={`${styles.tooltipButton} ${styles.skip}`}
-                                onClick={handleSkip}
-                            >
-                                Завершить
-                            </button>
-                            <button
-                                className={`${styles.tooltipButton} ${styles.next}`}
-                                onClick={handleNext}
-                            >
-                                {isLastStep ? "Завершить" : "Дальше"}
-                            </button>
-                        </div>
+            <>
+                <div className={styles.overlay} />
+                <div
+                    className={`${styles.tooltip} ${styles[position]}`}
+                    style={{
+                        ...getTooltipPosition(ref.current, position),
+                    }}
+                >
+                    <div className={styles.tooltipContent}>{content}</div>
+                    <div className={styles.tooltipButtons}>
+                        <ButtonKit
+                            btnStatus='default'
+                            btnClick={handleSkip}
+                            btnType='additional'
+                            btnContent={'Завершить'}
+                        />
+                        <ButtonKit
+                            btnStatus='default'
+                            btnClick={handleNext}
+                            btnType='primary'
+                            btnContent={isLastStep ? "Завершить" : "Дальше"}
+                        />
                     </div>
-                </>,
-                document.body
-            ),
+                </div>
+            </>
+        /*createPortal(
+            ,
+            document.body
+        ),*/
     };
 }
 
@@ -162,7 +171,7 @@ function getTooltipPosition(
 
     const rect = element.getBoundingClientRect();
     const spacing = 12;
-
+    console.log(rect)
     switch (position) {
         case "top":
             return {
