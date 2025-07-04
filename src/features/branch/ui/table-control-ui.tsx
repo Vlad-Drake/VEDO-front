@@ -10,7 +10,7 @@ export type Row = number;
 type PrevRow = number | null;
 type ObjId = string;
 type NextRow = number | null;
-type RowType = {
+export type RowType = {
     prevRow: PrevRow,
     objId: ObjId,
     nextRow: NextRow,
@@ -48,7 +48,7 @@ export function TableControlUI({
     createObject?: CreateObjectFn,
     isPending: boolean,
     addText: string,
-    saveBtn: (changed: boolean) => React.ReactNode,
+    saveBtn: (changed: boolean, rows: RowsRecord, resetCache: () => void) => React.ReactNode,
 }) {
     const [rowsState, setRowsState] = useState<RowsRecord>({});
     const [removedRows, setRemovedRows] = useState<Row[]>([]);
@@ -129,6 +129,11 @@ export function TableControlUI({
         return Object.keys(rowsState).length || Object.keys(removedRows).length ? true : false;
     }, [rowsState, removedRows])
 
+    const resetCache = () => {
+        setRowsState({});
+        setRemovedRows([]);
+    }
+
     return (
         <>
             {!isPending &&
@@ -174,7 +179,7 @@ export function TableControlUI({
                     </div>
                 )
             }
-            {saveBtn(rowsChanged)}
+            {saveBtn(rowsChanged, rows, resetCache)}
         </>
     );
 }

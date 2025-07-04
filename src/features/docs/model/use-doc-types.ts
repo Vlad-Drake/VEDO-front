@@ -10,10 +10,6 @@ export function useDocTypesWithState() {
     const types = useDocTypes();
     const formBranchNDates = useBranchNDatesContext();
 
-    if (types.docTypes.error) {
-        console.log('error docTypes')
-    }
-
     const docTypeId = useMemo(() =>
         types.docTypes.data?.list.find(item => item.docType === docTypeParam),
         [types.docTypes.data]);

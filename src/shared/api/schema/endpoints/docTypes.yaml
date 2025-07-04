@@ -4,10 +4,13 @@ schemas:
     required:
       - id
       - docType
+      - pref
     properties:
       id:
         type: integer
       docType:
+        type: string
+      pref:
         type: string
 
   DocTypeListResponse:

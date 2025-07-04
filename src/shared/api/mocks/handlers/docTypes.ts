@@ -4,9 +4,9 @@ import { delay, HttpResponse } from 'msw';
 
 const docTypes: ApiSchemas["DocTypeListResponse"] = {
   list: [
-    { id: 1, docType: 'ОП 4 - Производство' },
-    { id: 2, docType: 'Списание (AX)' },
-    { id: 3, docType: 'Остатки на начало дня' },
+    { id: 1, docType: 'ОП 4 - Производство', pref: 'd1' },
+    { id: 2, docType: 'Списание (AX)', pref: 'd2' },
+    { id: 3, docType: 'Остатки на начало дня', pref: 'd3' },
     /*{id: 4, docType: 'Результат ревизии'},
     {id: 5, docType: 'Расход продуктов Производство'},
     {id: 6, docType: 'Торг-13 Производство'},

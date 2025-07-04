@@ -2,7 +2,7 @@ import { http } from '../http';
 import type { ApiSchemas } from '../../schema';
 import { delay, HttpResponse } from 'msw';
 
-const branchSettings: ApiSchemas['BranchSettingsResponse'] = {
+const branchSigners: ApiSchemas['BranchSignersResponse'] = {
     signers: [
         {
             row: 1,
@@ -35,6 +35,8 @@ const branchSettings: ApiSchemas['BranchSettingsResponse'] = {
             ]
         }
     ],
+}
+const branchSettings: ApiSchemas['BranchSettingsResponse'] = {
     settings: [
         {
             row: 1,
@@ -43,8 +45,45 @@ const branchSettings: ApiSchemas['BranchSettingsResponse'] = {
         }
     ]
 }
-
+export const branchSignersHandler = [
+    http.put('/update-branch-signers', async (_) => {
+        //return HttpResponse.json({ code: '200', message: 'ok' });
+        return HttpResponse.json(
+            {
+                message: "ok",
+                code: "200"
+            },
+            {
+                status: 200,
+                statusText: "success",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+    }),
+    http.get('/branch-signers', async (_) => {
+        //console.log('ctx', ctx);
+        //await delay(1500);
+        return HttpResponse.json(branchSigners);
+    })
+]
 export const branchSettingsHandler = [
+    http.put('/update-branch-settings', async (_) => {
+        return HttpResponse.json(
+            {
+                message: "Can't do it",
+                code: "NotFound"
+            },
+            {
+                status: 500,
+                statusText: "Can't do it",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+    }),
     http.get('/branch-settings', async (_) => {
         //console.log('ctx', ctx);
         //await delay(1500);

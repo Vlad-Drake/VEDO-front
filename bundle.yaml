@@ -68,7 +68,7 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
         '404':
           $ref: '#/components/responses/NotFoundError'
-  /branch-settings:
+  /branch-signers:
     get:
       summary: Get signers of branch
       parameters:
@@ -83,11 +83,67 @@ paths:
           content:
             application/json:
               schema:
+                $ref: '#/components/schemas/BranchSignersResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+  /branch-settings:
+    get:
+      summary: Get settings of branch
+      parameters:
+        - name: branchId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: settings successful
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/BranchSettingsResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
           $ref: '#/components/responses/NotFoundError'
+  /update-branch-signers:
+    put:
+      summary: Update signers of branch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBranchSignersRequest'
+      responses:
+        '200':
+          description: Update signers successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateBranchResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /update-branch-settings:
+    put:
+      summary: Update settings of branch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBranchSettingsRequest'
+      responses:
+        '200':
+          description: Update settings successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateBranchResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
   /branch-codes:
     get:
       summary: Get codes branch
@@ -377,13 +433,25 @@ components:
         row:
           type: integer
         jobTitleId:
-          type: integer
+          type:
+            - integer
+            - 'null'
         email:
           type: string
         docTypes:
           type: array
           items:
             $ref: '#/components/schemas/DocTypesItem'
+    BranchSignersResponse:
+      type: object
+      required:
+        - signers
+      additionalProperties: false
+      properties:
+        signers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Signer'
     Setting:
       type: object
       required:
@@ -394,20 +462,54 @@ components:
         row:
           type: integer
         typeId:
-          type: integer
+          type:
+            - integer
+            - 'null'
         code:
           type: string
     BranchSettingsResponse:
       type: object
       required:
-        - signers
         - settings
       additionalProperties: false
       properties:
+        settings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Setting'
+    UpdateBranchSignersRequest:
+      type: object
+      required:
+        - branchId
+        - signers
+      additionalProperties: false
+      properties:
+        branchId:
+          type: integer
         signers:
           type: array
           items:
             $ref: '#/components/schemas/Signer'
+    UpdateBranchResponse:
+      type: object
+      required:
+        - code
+        - message
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    UpdateBranchSettingsRequest:
+      type: object
+      required:
+        - branchId
+        - settings
+      additionalProperties: false
+      properties:
+        branchId:
+          type: integer
         settings:
           type: array
           items:
@@ -437,10 +539,13 @@ components:
       required:
         - id
         - docType
+        - pref
       properties:
         id:
           type: integer
         docType:
+          type: string
+        pref:
           type: string
     DocTypeListResponse:
       type: object

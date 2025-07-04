@@ -15,6 +15,7 @@ import { ListCheckboxesKit } from "@/shared/ui/listCheckboxesKit";
 import { BorderDashed } from "@/shared/ui/border-dashed";
 import { ButtonKit } from "@/shared/ui/buttonKit/buttonKit";
 import { TutorProvider } from "./tutor";
+import { NotificationKit } from "@/shared/ui/notificationKit";
 
 function Branch() {
     const branches = useBranchesWithState();
@@ -42,10 +43,10 @@ function Branch() {
                     createObject={docTypes.docTypes ? branchSettings.createSigner : undefined}
                     isPending={branchSettings.isPending || jobTitles.jobTitles.isPending || docTypes.isPending}
                     addText="Добавить подписанта"
-                    saveBtn={(changed) => (changed || branchSettings.signersChanged) &&
+                    saveBtn={(changed, changedRows, resetCache) => (changed || branchSettings.signersChanged) &&
                         <ButtonKit
                             btnStatus='default'
-                            btnClick={() => console.log()}
+                            btnClick={() => branchSettings.updateBranchSigners(changedRows, resetCache)}
                             btnType='primary'
                             btnContent={
                                 'Сохранить'
@@ -92,6 +93,13 @@ function Branch() {
                         </>
                     )}
                 </TableControlUI>
+                {branchSettings.errorUpdateSigners.isError &&
+                    <NotificationKit
+                        type='error'
+                    >
+                        <h3>Ошибка</h3>
+                        {branchSettings.errorUpdateSigners.message}
+                    </NotificationKit>}
             </SignersSettings>
             <BorderDashed />
             <BranchSettings
@@ -102,10 +110,10 @@ function Branch() {
                     createObject={docTypes.docTypes ? branchSettings.createSetting : undefined}
                     isPending={branchSettings.isPending || branchCode.branchCode.isPending}
                     addText="Добавить настройку"
-                    saveBtn={(changed) => (changed || branchSettings.settingsChanged) &&
+                    saveBtn={(changed, changedRows, resetCache) => (changed || branchSettings.settingsChanged) &&
                         <ButtonKit
                             btnStatus='default'
-                            btnClick={() => console.log()}
+                            btnClick={() => branchSettings.updateBranchSettings(changedRows, resetCache)}
                             btnType='primary'
                             btnContent={
                                 'Сохранить'
@@ -138,6 +146,13 @@ function Branch() {
                         </>
                     )}
                 </TableControlUI>
+                {branchSettings.errorUpdateSettings.isError &&
+                    <NotificationKit
+                        type='error'
+                    >
+                        <h3>Ошибка</h3>
+                        {branchSettings.errorUpdateSettings.message}
+                    </NotificationKit>}
             </BranchSettings>
 
             <BorderDashed />

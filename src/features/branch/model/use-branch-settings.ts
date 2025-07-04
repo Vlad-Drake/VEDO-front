@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import { useMemo, useState } from "react";
 import type { DocTypesRecord } from "./use-doc-types";
 import type { RowsRecord } from "../ui/table-control-ui";
+import { queryClient } from "@/shared/api/query-client";
 
 
 export type SignerId = string;
@@ -44,8 +45,69 @@ export function useBranchSettings(
     const [signersState, setSignersState] = useState<SignersRecord>({});
     const [docsSignersState, setDocsSignersState] = useState<DocsSignerRecord>({});
 
+
     const [settingsState, setSettingsState] = useState<SettingsRecord>({});
 
+    const branchSignersMutation = rqClient.useMutation('put', '/update-branch-signers');
+
+    function updateBranchSigners(changedRows: RowsRecord, resetCacheTableControlUI: () => void) {
+        if (!branchId) return;
+
+        const dataReqiest = Object.entries(changedRows).map(([key, row]) => ({
+            row: +key,
+            jobTitleId: signers[row.objId].jobTitleId,
+            email: signers[row.objId].email,
+            docTypes: docsSigners[row.objId],
+        }));
+
+        branchSignersMutation.mutate({
+            body: { branchId: branchId, signers: dataReqiest }
+        }, {
+            onSuccess: () => {
+                setSignersState({});
+                setDocsSignersState({});
+                resetCacheTableControlUI();
+                queryClient.invalidateQueries({
+                    queryKey: ["get", "/branch-signers"]
+                })
+            }
+        })
+    }
+
+    const branchSettingsMutation = rqClient.useMutation('put', '/update-branch-settings');
+
+    function updateBranchSettings(changedRows: RowsRecord, resetCacheTableControlUI: () => void) {
+        if (!branchId) return;
+        const dataReqiest = Object.entries(changedRows).map(([key, row]) => ({
+            row: +key,
+            typeId: settings[row.objId].typeId,
+            code: settings[row.objId].code
+        }));
+
+        branchSettingsMutation.mutate({
+            body: { branchId: branchId, settings: dataReqiest }
+        }, {
+            onSuccess: () => {
+                setSettingsState({});
+                resetCacheTableControlUI();
+                queryClient.invalidateQueries({
+                    queryKey: ["get", "/branch-settings"]
+                })
+            }
+        })
+    }
+
+    const branchSigners = rqClient.useQuery('get', '/branch-signers', {
+        params: {
+            query: {
+                branchId: branchId || -1,
+            },
+        },
+    },
+        {//queryOptions
+            enabled: branchId != undefined && branchId != null,
+        },
+    );
     const branchSettings = rqClient.useQuery('get', '/branch-settings', {
         params: {
             query: {
@@ -57,20 +119,21 @@ export function useBranchSettings(
             enabled: branchId != undefined && branchId != null,
         },
     );
+    const processedBranchSigners = useMemo(() => ({
+        signers: branchSigners.data?.signers.map(signer => ({ ...signer, id: nanoid() })),
+    }), [branchSigners.data])
     const processedBranchSettings = useMemo(() => ({
-        signers: branchSettings.data?.signers.map(signer => ({ ...signer, id: nanoid() })),
         settings: branchSettings.data?.settings.map(setting => ({ ...setting, id: nanoid() })),
-    }), [branchSettings.data]);
+    }), [branchSettings.data])
 
-
-    const rowSignersCache = useMemo(() => processedBranchSettings.signers?.reduce((acc, signer) => {
+    const rowSignersCache = useMemo(() => processedBranchSigners.signers?.reduce((acc, signer) => {
         const prevRow = acc[signer.row - 1] ? signer.row - 1 : null;
         acc[signer.row] = { prevRow, objId: signer.id, nextRow: null };
         if (signer.row - 1 !== 0) {
             acc[signer.row - 1] = { ...acc[signer.row - 1], nextRow: signer.row };
         }
         return acc;
-    }, {} as RowsRecord), [processedBranchSettings]);
+    }, {} as RowsRecord), [processedBranchSigners]);
 
     const rowSettingsCache = useMemo(() => processedBranchSettings.settings?.reduce((acc, setting) => {
         const prevRow = acc[setting.row - 1] ? setting.row - 1 : null;
@@ -83,16 +146,16 @@ export function useBranchSettings(
 
     const signersCache = useMemo(() => {
         //return processedBranchSettings.signers?.map(signer => signer as SignerModel)
-        return processedBranchSettings.signers?.reduce((acc, signer) => {
+        return processedBranchSigners.signers?.reduce((acc, signer) => {
             acc[signer.id] = signer;
             return acc;
         }, {} as SignersRecord);
-    }, [processedBranchSettings]);
+    }, [processedBranchSigners]);
 
     const signers = { ...signersCache, ...signersState };
 
     const docsSignersCache = useMemo(() => {
-        return processedBranchSettings.signers?.reduce((acc, signer) => {
+        return processedBranchSigners.signers?.reduce((acc, signer) => {
             acc[signer.id] = acc[signer.id] ?? [];
 
             for (const setting of signer.docTypes) {
@@ -100,7 +163,7 @@ export function useBranchSettings(
             }
             return acc;
         }, {} as DocsSignerRecord)
-    }, [processedBranchSettings, docTypesRecord]);
+    }, [processedBranchSigners, docTypesRecord]);
 
     const docsSigners = { ...docsSignersCache, ...docsSignersState };
 
@@ -112,9 +175,6 @@ export function useBranchSettings(
     }, [processedBranchSettings]);
 
     const settings = { ...settingsCache, ...settingsState };
-
-    //mutation
-    //const branchSettingsMutation = rqClient.useMutation('post', '');
 
     const createSigner = (newId: string) => {
         if (!docTypes) return;
@@ -171,6 +231,18 @@ export function useBranchSettings(
         setDocsSignersState,
         setSettingsState,
         signersChanged,
-        settingsChanged
+        settingsChanged,
+        updateBranchSigners,
+        updateBranchSettings,
+        errorUpdateSigners: {
+            code: branchSignersMutation.error?.code,
+            message: branchSignersMutation.error?.message,
+            isError: branchSignersMutation.isError,
+        },
+        errorUpdateSettings: {
+            code: branchSettingsMutation.error?.code,
+            message: branchSettingsMutation.error?.message,
+            isError: branchSettingsMutation.isError,
+        }
     }
 }

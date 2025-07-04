@@ -162,7 +162,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/branch-settings": {
+    "/branch-signers": {
         parameters: {
             query?: never;
             header?: never;
@@ -187,6 +187,46 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
+                        "application/json": components["schemas"]["BranchSignersResponse"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/branch-settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get settings of branch */
+        get: {
+            parameters: {
+                query: {
+                    branchId: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description settings successful */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
                         "application/json": components["schemas"]["BranchSettingsResponse"];
                     };
                 };
@@ -195,6 +235,88 @@ export interface paths {
             };
         };
         put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/update-branch-signers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update signers of branch */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["UpdateBranchSignersRequest"];
+                };
+            };
+            responses: {
+                /** @description Update signers successful */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["UpdateBranchResponse"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/update-branch-settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update settings of branch */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["UpdateBranchSettingsRequest"];
+                };
+            };
+            responses: {
+                /** @description Update settings successful */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["UpdateBranchResponse"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
         post?: never;
         delete?: never;
         options?: never;
@@ -550,17 +672,31 @@ export interface components {
         };
         Signer: {
             row: number;
-            jobTitleId: number;
+            jobTitleId: number | null;
             email: string;
             docTypes: components["schemas"]["DocTypesItem"][];
         };
+        BranchSignersResponse: {
+            signers: components["schemas"]["Signer"][];
+        };
         Setting: {
             row: number;
-            typeId: number;
+            typeId: number | null;
             code: string;
         };
         BranchSettingsResponse: {
+            settings: components["schemas"]["Setting"][];
+        };
+        UpdateBranchSignersRequest: {
+            branchId: number;
             signers: components["schemas"]["Signer"][];
+        };
+        UpdateBranchResponse: {
+            code: string;
+            message: string;
+        };
+        UpdateBranchSettingsRequest: {
+            branchId: number;
             settings: components["schemas"]["Setting"][];
         };
         BranchCodeItem: {
@@ -573,6 +709,7 @@ export interface components {
         DocTypeItem: {
             id: number;
             docType: string;
+            pref: string;
         };
         DocTypeListResponse: {
             list: components["schemas"]["DocTypeItem"][];

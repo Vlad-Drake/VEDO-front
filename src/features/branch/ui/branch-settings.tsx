@@ -11,6 +11,7 @@ export function BranchSettings({
             <div className='flex gap-[10px]'>
                 <h4 className='w-[340px]'>Тип кода</h4>
                 <h4 className='w-[330px]'>Код</h4>
+
             </div>
             {selectedBranchId && children}
             {!selectedBranchId &&

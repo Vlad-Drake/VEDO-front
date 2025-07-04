@@ -27,9 +27,12 @@ export function useRegisterUser(resetForm: () => void) {
     ? registerUserMutation.error.message
     : undefined;
 
+  const successMessage = registerUserMutation.status === "success" ? 'Пользователь успешно заведён!' : undefined
+
   return {
     registerUserQuery,
     isPending: registerUserMutation.isPending,
     errorMessage,
+    successMessage,
   };
 }

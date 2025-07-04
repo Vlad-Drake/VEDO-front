@@ -2,9 +2,10 @@ import { useRegularApprovers } from "./use-regular-approvers";
 import { SkeletonKit } from "@/shared/ui/skeleton-kit";
 import { RegularApproversForm } from "./regular-approvers-form";
 import { NotificationKit } from "@/shared/ui/notificationKit";
+import { useDocTypesProcessed } from "./use-docs-types-processed";
 
 function RegularApprovers() {
-
+    const docTypes = useDocTypesProcessed();
     const { regularApprovers, isPending, createRegularApprover, error: errorGet } = useRegularApprovers();
 
     return (
@@ -13,20 +14,20 @@ function RegularApprovers() {
             <div className='flex gap-[50px] justify-center'>
 
                 <div className='flex flex-col gap-[20px]'>
-                    <table className="w-[500px] border border-[var(--color-gray)] divide-y divide-[var(--color-gray)]">
+                    <table className="w-[600px] border border-[var(--color-gray)] divide-y divide-[var(--color-gray)]">
                         <thead>
                             <tr className="bg-[var(--color-gray-light)] divide-x divide-[var(--color-gray)]">
                                 <th className="px-4 py-2 text-left w-[100px]">Префикс</th>
-                                <th className="px-4 py-2 text-left w-[200px]">Тип документа</th>
+                                <th className="px-4 py-2 text-left w-[300px]">Тип документа</th>
                                 <th className="px-4 py-2 text-left w-[200px]">Почта</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-[var(--color-gray)]">
-                            {regularApprovers && !isPending &&
+                            {regularApprovers && !isPending && docTypes.docsTypesProcessed &&
                                 regularApprovers.map(approver =>
                                     <tr key={approver.pref} className="odd:bg-[var(--color-gray-light)] divide-x divide-[var(--color-gray)]">
                                         <td className="px-4 py-2 text-left">{approver.pref}</td>
-                                        <td className="px-4 py-2 text-left">{approver.docId}</td>
+                                        <td className="px-4 py-2 text-left">{docTypes.docsTypesProcessed?.[approver.docId].docType}</td>
                                         <td className="px-4 py-2 text-left">{approver.email}</td>
                                     </tr>
                                 )

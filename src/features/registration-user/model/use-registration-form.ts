@@ -40,7 +40,7 @@ export function useRegistrationForm() {
     const [registerUser, setRegisterUserModel] = useState<RegisterUserModel>(initialRegisterUser);
     const [errors, setErrors] = useState<Partial<Record<keyof RegisterUserModel, string>>>({})
 
-    const { registerUserQuery, isPending, errorMessage } = useRegisterUser(resetForm);
+    const { registerUserQuery, isPending, errorMessage, successMessage } = useRegisterUser(resetForm);
 
     const validateField = (field: keyof ValidRegUser, value: string): void => {
         const result = registerUserschema.shape[field].safeParse(value);
@@ -97,6 +97,7 @@ export function useRegistrationForm() {
         errorMessage,
         validateField,
         handleChange,
-        handlerSubmit
+        handlerSubmit,
+        successMessage
     };
 }

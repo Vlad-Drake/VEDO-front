@@ -49,7 +49,8 @@ export function RegistrationForm() {
         errorMessage,
         validateField,
         handleChange,
-        handlerSubmit
+        handlerSubmit,
+        successMessage,
     } = useRegistrationForm();
 
     const renderFormField = (field: FormField) => {
@@ -101,7 +102,13 @@ export function RegistrationForm() {
                 />
             </div>
             <div className="flex justify-center">
-                <NotificationKit type="error">{errorMessage}</NotificationKit>
+                {errorMessage && <NotificationKit type="error">
+                    <h3>Ошибка</h3>
+                    {errorMessage}
+                </NotificationKit>}
+                {successMessage && <NotificationKit type='success'>
+                    {successMessage}
+                </NotificationKit>}
             </div>
         </form>
     );
