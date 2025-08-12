@@ -1,10 +1,10 @@
-import { LoadingKit } from "@/shared/ui/loadingKit/loadingKit";
+import { LoadingKit } from "@/shared/ui/loading-kit";
 import classes from "./preparing-page.module.scss";
 import { StatusPage, useLoadingPage } from "@/shared/model/loadingPage";
-import { NotificationKit } from '@/shared/ui/notificationKit/notificationKit';
+import { NotificationKit } from '@/shared/ui/notification-kit';
 
 export function PreparingPage() {
-  const { loadingPage,  } = useLoadingPage();
+  const { loadingPage, } = useLoadingPage();
 
   const renderContent = () => {
     switch (loadingPage.status) {
@@ -17,13 +17,13 @@ export function PreparingPage() {
       }
       case StatusPage.Error: {
         return (
-          
+
           <div className={classes["loading-background"]}>
             <div className={classes["loading"]}>
               <NotificationKit
                 type='error'
               >
-                  {loadingPage.errorMessage}
+                {loadingPage.errorMessage}
               </NotificationKit>
             </div>
           </div>

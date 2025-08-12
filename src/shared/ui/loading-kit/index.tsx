@@ -27,8 +27,6 @@ export function LoadingKit() {
 
   return (
     <div className={classes["loading"]}>
-      {/*<div className={classes['satellite']}></div>*/}
-
       <img src={VEDOIco} alt="" />
       <p>{text}</p>
     </div>

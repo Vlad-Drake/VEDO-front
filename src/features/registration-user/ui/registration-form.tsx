@@ -1,10 +1,10 @@
 import { useJobTitles } from "@/shared/model/use-job-titles";
-import { ButtonKit } from "@/shared/ui/buttonKit/buttonKit";
-import { NotificationKit } from "@/shared/ui/notificationKit/notificationKit";
-import { SelectKit } from "@/shared/ui/selectKit";
+import { ButtonKit } from "@/shared/ui/button-kit";
+import { NotificationKit } from "@/shared/ui/notification-kit";
+import { SelectKit } from "@/shared/ui/select-kit";
 import { useRegistrationForm, type RegisterUserModel } from "../model/use-registration-form";
 import { FormRowLayout } from "./form-row-layout";
-import { TextInputKit } from "@/shared/ui/textInputKit/textInputKit";
+import { TextInputKit } from "@/shared/ui/text-input-kit";
 
 type FormField = {
     fieldName: keyof RegisterUserModel;
@@ -76,9 +76,10 @@ export function RegistrationForm() {
                             {...commonProps}
                             selectedId={registerUser[field.fieldName]}
                             updateId={(event) => handleChange(String(event), field.fieldName)}
-                            blured={(event) => validateField(field.fieldName, String(event))}
+                            onBlur={(event) => validateField(field.fieldName, String(event))}
                             options={field.fieldName === "jobTitle" ? (jobTitles.jobTitles.data?.list ?? []) : []}
                             getValue={val => val.jobTitle}
+                            getId={val => val.id}
                         />
                     ) : (
                         <TextInputKit {...commonProps} />

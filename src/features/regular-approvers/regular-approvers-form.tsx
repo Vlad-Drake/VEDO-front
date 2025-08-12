@@ -1,5 +1,5 @@
-import { ButtonKit } from "@/shared/ui/buttonKit/buttonKit";
-import { TextInputKit } from "@/shared/ui/textInputKit/textInputKit";
+import { ButtonKit } from "@/shared/ui/button-kit";
+import { TextInputKit } from "@/shared/ui/text-input-kit";
 import { useState } from "react";
 
 type RegularApproversForm = {

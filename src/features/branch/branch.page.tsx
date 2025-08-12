@@ -9,13 +9,13 @@ import { SignersSettings } from './ui/signers-settings';
 import { useDocTypesProcessed } from './model/use-doc-types';
 import { BranchSettings } from "./ui/branch-settings";
 import { TableControlUI } from "./ui/table-control-ui";
-import { SelectKit } from "@/shared/ui/selectKit";
-import { TextInputKit } from "@/shared/ui/textInputKit/textInputKit";
+import { SelectKit } from "@/shared/ui/select-kit";
+import { TextInputKit } from "@/shared/ui/text-input-kit";
 import { ListCheckboxesKit } from "@/shared/ui/listCheckboxesKit";
 import { BorderDashed } from "@/shared/ui/border-dashed";
-import { ButtonKit } from "@/shared/ui/buttonKit/buttonKit";
+import { ButtonKit } from "@/shared/ui/button-kit";
 import { TutorProvider } from "./tutor";
-import { NotificationKit } from "@/shared/ui/notificationKit";
+import { NotificationKit } from "@/shared/ui/notification-kit";
 
 function Branch() {
     const branches = useBranchesWithState();
@@ -67,6 +67,7 @@ function Branch() {
                                     }))}
                                 options={(jobTitles.jobTitles.data?.list ?? [])}
                                 getValue={val => val.jobTitle}
+                                getId={val => val.id}
                             />
                             <TextInputKit
                                 name="email"
@@ -133,6 +134,7 @@ function Branch() {
                                 }))}
                                 options={branchCode.branchCode.data?.list ?? []}
                                 getValue={val => val.code}
+                                getId={val => val.id}
                             />
                             <TextInputKit
                                 width='330px'

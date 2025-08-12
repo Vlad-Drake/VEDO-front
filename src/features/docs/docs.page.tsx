@@ -7,7 +7,7 @@ import { FormDocType } from "./ui/form-doc-type";
 import { Page } from "./ui/docs-page";
 import { FormBranchNDatesProvider } from "./ui/form-branch-n-dates-context";
 import { BorderDashed } from "@/shared/ui/border-dashed";
-import { NotificationKit } from "@/shared/ui/notificationKit";
+import { NotificationKit } from "@/shared/ui/notification-kit";
 
 function Docs() {
     const docTypes = useDocTypesWithState();

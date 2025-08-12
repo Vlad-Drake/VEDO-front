@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useChains } from '../model/use-chains';
 import classes from './chains-approve.module.scss';
-import { ButtonKit } from '@/shared/ui/buttonKit/buttonKit';
-import { ModalWindow } from '@/shared/ui/modalWindow/modalWindow';
+import { ButtonKit } from '@/shared/ui/button-kit';
+import { ModalWindow } from '@/shared/ui/modal-window';
 import { SkeletonKit } from '@/shared/ui/skeleton-kit';
 import { createPortal } from 'react-dom';
 

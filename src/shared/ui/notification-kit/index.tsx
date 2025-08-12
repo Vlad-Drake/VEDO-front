@@ -26,10 +26,10 @@ export function NotificationKit({
       <div
         className={clsx(
           classes["notification-block"],
-          type === "success" && classes[type],
-          type === "info" && classes[type],
-          type === "error" && classes[type],
-          type === "alert" && classes[type]
+          type === NOTIFICATION_TYPES.Success && classes[type],
+          type === NOTIFICATION_TYPES.Info && classes[type],
+          type === NOTIFICATION_TYPES.Error && classes[type],
+          type === NOTIFICATION_TYPES.Alert && classes[type]
         )}
       >
         {children}

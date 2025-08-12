@@ -3,28 +3,30 @@ import ArrowIco from "./assets/arrow.svg";
 import styles from "./selectKit.module.scss";
 import { clsx } from 'clsx';
 
-export function SelectKit<T extends { id: string | number }>({
+export function SelectKit<T extends { id: string | number }, V extends string | number, I extends string | number>({
   width = "auto",
   selectedId,
   options,
   placeholder = "Выберите из списка",
-  error = "",
+  error,
   getValue,
-  focused,
-  blured,
+  getId,
+  onFocus,
+  onBlur,
   updateId,
-  updateName,
+  updateValue,
 }: {
   width?: string,
-  selectedId: string | number | null,
+  selectedId: I | null,
   options: T[],
   placeholder?: string,
   error?: string,
-  getValue: (value: T) => string | number,
-  focused?: () => void,
-  blured?: (id: string | number | null) => void,
-  updateId?: (id: string | number) => void,
-  updateName?: (name: string | number) => void,
+  getValue: (value: T) => V,
+  getId: (value: T) => I,
+  onFocus?: () => void,
+  onBlur?: (id: I | null) => void,
+  updateId?: (id: I) => void,
+  updateValue?: (value: V) => void,
 }) {
   const selectorContainer = useRef<HTMLDivElement | null>(null);
   const dropdownBody = useRef<HTMLDivElement | null>(null);
@@ -38,7 +40,7 @@ export function SelectKit<T extends { id: string | number }>({
     setIsOpen(newIsOpen);
 
     if (newIsOpen && selectorContainer.current) {
-      focused?.();
+      onFocus?.();
 
       setTimeout(() => {
         searcherInput.current?.focus();
@@ -51,7 +53,7 @@ export function SelectKit<T extends { id: string | number }>({
       const handleClickOutside = (event: MouseEvent) => {
         if (selectorContainer.current && !selectorContainer.current.contains(event.target as Node)) {
           setIsOpen(false);
-          blured?.(selectedId);
+          onBlur?.(selectedId);
         }
       }
       document.addEventListener('mousedown', handleClickOutside);
@@ -81,9 +83,9 @@ export function SelectKit<T extends { id: string | number }>({
   };
 
   const SelectOption = (option: T) => {
-    updateId?.(option.id);
-    updateName?.(getValue(option));
-    blured?.(option.id);
+    updateId?.(getId(option));
+    updateValue?.(getValue(option));
+    onBlur?.(getId(option));
     setIsOpen(false);
   };
 
@@ -108,7 +110,6 @@ export function SelectKit<T extends { id: string | number }>({
           style={{ width }}
           ref={dropdownBody}
         >
-          {/*TODO использовать семинтически верный html, случай когда нет options*/}
           {selectedId != null && selectedId != "" && (
             <p>{selectedValue}</p>
           )}

@@ -3,7 +3,7 @@ import styles from "./tutor.module.css";
 import clsx from "clsx";
 import { createPortal } from "react-dom";
 import { mergeRefs } from "react-merge-refs";
-import { ButtonKit } from "@/shared/ui/buttonKit/buttonKit";
+import { ButtonKit } from "@/shared/ui/button-kit";
 
 export function TutorWrapper({
     children,

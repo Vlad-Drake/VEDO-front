@@ -67,7 +67,7 @@ export function ListCheckboxesKit<T>({
   const adjustDropdownPosition = (): { isAbove: boolean, dropdownListHeight: number } => {
     if (!dropdownBody.current || !isOpen) return { isAbove: false, dropdownListHeight: 550 };
 
-    const menuHeight = 560;
+    const menuHeight = 550;
     const navbarHeight = 50;
 
     const containerRect = dropdownBody.current.getBoundingClientRect();

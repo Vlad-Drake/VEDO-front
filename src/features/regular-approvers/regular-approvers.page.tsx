@@ -1,7 +1,7 @@
 import { useRegularApprovers } from "./use-regular-approvers";
 import { SkeletonKit } from "@/shared/ui/skeleton-kit";
 import { RegularApproversForm } from "./regular-approvers-form";
-import { NotificationKit } from "@/shared/ui/notificationKit";
+import { NotificationKit } from "@/shared/ui/notification-kit";
 import { useDocTypesProcessed } from "./use-docs-types-processed";
 
 function RegularApprovers() {

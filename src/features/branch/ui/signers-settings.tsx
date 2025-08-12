@@ -1,5 +1,5 @@
 //import { ButtonKit } from '@/shared/ui/buttonKit/buttonKit';
-import { TooltipKit } from '@/shared/ui/tooltipKit';
+import { TooltipKit } from '@/shared/ui/tooltip-kit';
 import React from 'react';
 //import { useTutor } from '../tutor';
 //import { TutorApprovers } from '../tutor/tutor-aprrovers';

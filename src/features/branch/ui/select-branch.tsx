@@ -1,4 +1,4 @@
-import { SelectKit } from "@/shared/ui/selectKit";
+import { SelectKit } from "@/shared/ui/select-kit";
 import { SkeletonKit } from "@/shared/ui/skeleton-kit";
 import { useNavigate, href } from 'react-router-dom';
 
@@ -36,9 +36,10 @@ export function SelectBranch({
                     const newId = Number(event)
                     setSelectedBranchId(newId);
                 }}
-                updateName={(event) => setURL(String(event))}
+                updateValue={(event) => setURL(String(event))}
                 options={(branches ?? [])}
                 getValue={val => val.branch}
+                getId={val => val.id}
             />}
             {isPending && <SkeletonKit type='rect' />}
         </div>

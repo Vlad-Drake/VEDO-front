@@ -7,9 +7,10 @@ export function TextInputKit({
   placeholder = "Заполните поле",
   name,
   updateValue,
-  blured,
-  focused,
+  onBlur,
+  onFocus,
   error,
+  ...props
 }: {
   password?: boolean;
   value: string | undefined;
@@ -17,16 +18,16 @@ export function TextInputKit({
   placeholder?: string;
   name?: string;
   updateValue: (value: string) => void;
-  blured?: () => void;
-  focused?: () => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
   error?: string;
-}) {
+} & React.InputHTMLAttributes<HTMLInputElement>) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateValue(e.target.value);
   };
 
   return (
-    <div className={classes["text-editor"]} style={{ width }}>
+    <div className={classes["text-editor"]} style={{ width }} >
       <input
         name={name}
         type={password ? "password" : "text"}
@@ -34,10 +35,11 @@ export function TextInputKit({
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
-        onBlur={blured}
-        onFocus={focused}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        {...props}
       />
       {error && <span className={classes["error-text"]}>{error}</span>}
-    </div>
+    </div >
   );
 }

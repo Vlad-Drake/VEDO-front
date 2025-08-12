@@ -1,6 +1,6 @@
-import { ButtonKit } from "@/shared/ui/buttonKit/buttonKit";
+import { ButtonKit } from "@/shared/ui/button-kit";
 import { CalendarKit } from "@/shared/ui/calendarKit/calendarKit";
-import { SelectKit } from "@/shared/ui/selectKit";
+import { SelectKit } from "@/shared/ui/select-kit";
 import { useContext } from "react";
 import { FormBranchNDatesContext } from "./form-branch-n-dates-context";
 
@@ -56,6 +56,7 @@ export function FormBranchNDates({
                         }}
                         options={branches ?? []}
                         getValue={(val) => val.branch}
+                        getId={val => val.id}
                     />
                 </div>
 

@@ -1,8 +1,8 @@
 import { ListCheckboxKit } from '@/shared/ui/listCheckboxKit/listCheckboxKit';
 import { useJobTitles } from '@/shared/model/use-job-titles';
-import { TextInputKit } from '@/shared/ui/textInputKit/textInputKit';
-import { ButtonKit } from '@/shared/ui/buttonKit/buttonKit';
-import { SelectKit } from '@/shared/ui/selectKit';
+import { TextInputKit } from '@/shared/ui/text-input-kit';
+import { ButtonKit } from '@/shared/ui/button-kit';
+import { SelectKit } from '@/shared/ui/select-kit';
 import { useGroupChangeForm } from './use-group-change-form';
 import { useBranchProcess } from './use-branch-process';
 import { SkeletonKit } from '@/shared/ui/skeleton-kit';
@@ -40,13 +40,15 @@ function GroupChangeApprover() {
                         2. Укажите должность:
                     </p>
 
-                    {!jobTitles.jobTitles.isPending && <SelectKit
-                        selectedId={form.selectedJobTitleId}
-                        options={jobTitles.jobTitles.data?.list ?? []}
-                        updateId={event => form.setSelectedJobTitleId(Number(event))}
-                        width='350px'
-                        getValue={val => val.jobTitle}
-                    />}
+                    {!jobTitles.jobTitles.isPending &&
+                        <SelectKit
+                            selectedId={form.selectedJobTitleId}
+                            options={jobTitles.jobTitles.data?.list ?? []}
+                            updateId={event => form.setSelectedJobTitleId(Number(event))}
+                            width='350px'
+                            getValue={val => val.jobTitle}
+                            getId={val => val.id}
+                        />}
                     {jobTitles.jobTitles.isPending &&
                         <SkeletonKit type='rect' />
                     }

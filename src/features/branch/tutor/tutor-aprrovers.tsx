@@ -1,6 +1,6 @@
-import { SelectKit } from "@/shared/ui/selectKit";
+import { SelectKit } from "@/shared/ui/select-kit";
 import { TutorStep, TutorWrapper } from ".";
-import { TextInputKit } from "@/shared/ui/textInputKit/textInputKit";
+import { TextInputKit } from "@/shared/ui/text-input-kit";
 import { ListCheckboxesKit } from "@/shared/ui/listCheckboxesKit";
 import clsx from "clsx";
 
@@ -25,6 +25,7 @@ export function TutorApprovers({
                         updateId={(_) => { }}
                         options={[]}
                         getValue={val => val}
+                        getId={val => val}
                     />
                 </TutorWrapper>
 

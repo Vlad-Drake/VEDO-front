@@ -9,7 +9,7 @@ export const BTN_STATUSES = {
 
 export type BtnStatuses = (typeof BTN_STATUSES)[keyof typeof BTN_STATUSES];
 
-export const BTN_TYPES = {
+export const COLOR_TYPE = {
   Primary: "primary",
   Additional: "additional",
   Secondary: "secondary",
@@ -17,45 +17,45 @@ export const BTN_TYPES = {
   Soft: "soft",
 } as const;
 
-export type BtnTypes = (typeof BTN_TYPES)[keyof typeof BTN_TYPES];
+export type BtnTypes = (typeof COLOR_TYPE)[keyof typeof COLOR_TYPE];
 
 type ButtonType = "button" | "submit" | "reset";
 
 export function ButtonKit({
-  btnContent,
-  btnStatus,
-  btnClick,
-  btnWidth,
+  children,
+  status,
+  onClick,
+  width,
   type = "button",
-  btnType,
+  colorType,
 }: {
-  btnContent: React.ReactNode;
-  btnStatus: BtnStatuses;
-  btnClick: () => void;
-  btnWidth?: string;
+  children: React.ReactNode;
+  status: BtnStatuses;
+  onClick: () => void;
+  width?: string;
   type?: ButtonType;
-  btnType: BtnTypes;
+  colorType: BtnTypes;
 }) {
   const handleClick = () => {
-    if (btnStatus !== "default") return;
-    btnClick();
+    if (status !== "default") return;
+    onClick();
   };
 
   return (
     <button
-      className={`${classes["button"]} ${classes[`${btnType}${btnStatus !== BTN_STATUSES.Default ? "-" + btnStatus : ""}`]}`}
-      style={{ width: btnWidth }}
+      className={`${classes["button"]} ${classes[`${colorType}${status !== BTN_STATUSES.Default ? "-" + status : ""}`]}`}
+      style={{ width }}
       onClick={handleClick}
       type={type}
     >
       <span
         className={
-          btnStatus === BTN_STATUSES.Loading ? classes["invisible"] : ""
+          status === BTN_STATUSES.Loading ? classes["invisible"] : ""
         }
       >
-        {btnContent}
+        {children}
       </span>
-      {btnStatus === BTN_STATUSES.Loading && (
+      {status === BTN_STATUSES.Loading && (
         <div className={classes["loader"]}>
           <img src={Circle} alt="" />
         </div>

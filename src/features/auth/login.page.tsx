@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { TextInputKit } from "@/shared/ui/textInputKit/textInputKit";
-import { NotificationKit } from "@/shared/ui/notificationKit/notificationKit";
-import { ButtonKit } from "@/shared/ui/buttonKit/buttonKit";
+import { TextInputKit } from "@/shared/ui/text-input-kit";
+import { NotificationKit } from "@/shared/ui/notification-kit";
+import { ButtonKit } from "@/shared/ui/button-kit";
 import { useLogin } from "./model/use-login";
 import { z } from "zod";
 
@@ -86,7 +86,7 @@ function Login() {
                                     value={user.user}
                                     updateValue={(event) => setUser({ ...user, user: event })}
                                     placeholder="login@slata.com"
-                                    blured={() => validateField("user", user.user)}
+                                    onBlur={() => validateField("user", user.user)}
                                     error={errors.user}
                                 />
                             </div>
@@ -98,19 +98,18 @@ function Login() {
                                     value={user.password}
                                     updateValue={(event) => setUser({ ...user, password: event })}
                                     placeholder="Пароль"
-                                    blured={() => validateField("password", user.password)}
+                                    onBlur={() => validateField("password", user.password)}
                                     error={errors.password}
                                 />
                             </div>
                             <div className="right-side__btn text-center">
                                 <ButtonKit
-                                    btnClick={() => 1}
-                                    btnContent={<p>Войти</p>}
-                                    btnStatus={isPending ? 'loading' : 'default'}
+                                    onClick={() => 1}
+                                    status={isPending ? 'loading' : 'default'}
                                     type="submit"
-                                    btnType="primary"
-                                    btnWidth="80%"
-                                />
+                                    colorType="primary"
+                                    width="80%"
+                                ><p>Войти</p></ButtonKit>
                                 {/*className="btn"*/}
                             </div>
                             <div className="right-side__item">

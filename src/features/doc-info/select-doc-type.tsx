@@ -1,4 +1,4 @@
-import { SelectKit } from "@/shared/ui/selectKit";
+import { SelectKit } from "@/shared/ui/select-kit";
 import { SkeletonKit } from "@/shared/ui/skeleton-kit";
 import type { RefObject } from "react";
 import { href, useNavigate } from "react-router-dom";
@@ -39,12 +39,13 @@ export function SelectDocType({
                     const newId = Number(event)
                     setSelectedDocId(newId);
                 }}
-                updateName={(event) => {
+                updateValue={(event) => {
                     setURL(String(event));
                     docName.current = String(event);
                 }}
                 options={docTypes ?? []}
                 getValue={val => val.docType}
+                getId={val => val.id}
             />}
             {isPending &&
                 <SkeletonKit
