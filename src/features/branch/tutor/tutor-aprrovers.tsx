@@ -1,7 +1,7 @@
 import { SelectKit } from "@/shared/ui/select-kit";
 import { TutorStep, TutorWrapper } from ".";
 import { TextInputKit } from "@/shared/ui/text-input-kit";
-import { ListCheckboxesKit } from "@/shared/ui/listCheckboxesKit";
+import { ListCheckboxesKit } from "@/shared/ui/checkboxes-kit";
 import clsx from "clsx";
 
 export function TutorApprovers({

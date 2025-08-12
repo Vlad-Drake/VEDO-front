@@ -11,7 +11,7 @@ import { BranchSettings } from "./ui/branch-settings";
 import { TableControlUI } from "./ui/table-control-ui";
 import { SelectKit } from "@/shared/ui/select-kit";
 import { TextInputKit } from "@/shared/ui/text-input-kit";
-import { ListCheckboxesKit } from "@/shared/ui/listCheckboxesKit";
+import { ListCheckboxesKit } from "@/shared/ui/checkboxes-kit";
 import { BorderDashed } from "@/shared/ui/border-dashed";
 import { ButtonKit } from "@/shared/ui/button-kit";
 import { TutorProvider } from "./tutor";
@@ -45,13 +45,10 @@ function Branch() {
                     addText="Добавить подписанта"
                     saveBtn={(changed, changedRows, resetCache) => (changed || branchSettings.signersChanged) &&
                         <ButtonKit
-                            btnStatus='default'
-                            btnClick={() => branchSettings.updateBranchSigners(changedRows, resetCache)}
-                            btnType='primary'
-                            btnContent={
-                                'Сохранить'
-                            }
-                        />
+                            status='default'
+                            onClick={() => branchSettings.updateBranchSigners(changedRows, resetCache)}
+                            colorType='primary'
+                        >Сохранить</ButtonKit>
                     }
                 >
                     {(id) => (
@@ -113,13 +110,10 @@ function Branch() {
                     addText="Добавить настройку"
                     saveBtn={(changed, changedRows, resetCache) => (changed || branchSettings.settingsChanged) &&
                         <ButtonKit
-                            btnStatus='default'
-                            btnClick={() => branchSettings.updateBranchSettings(changedRows, resetCache)}
-                            btnType='primary'
-                            btnContent={
-                                'Сохранить'
-                            }
-                        />
+                            status='default'
+                            onClick={() => branchSettings.updateBranchSettings(changedRows, resetCache)}
+                            colorType='primary'
+                        >Сохранить</ButtonKit>
                     }
                 >
                     {(id) => (

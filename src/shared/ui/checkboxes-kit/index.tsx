@@ -1,31 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import ArrowIco from "./assets/arrow.svg";
-import { CheckboxKit } from '@/shared/ui/checkboxKit/checkboxKit';
+import { CheckboxKit } from '@/shared/ui/checkbox-kit';
 import styles from './listCheckboxesKit.module.scss';
 import clsx from "clsx";
 
-export function ListCheckboxesKit<T>({
+export function ListCheckboxesKit<T, V extends string | number, I extends string | number>({
   width = "auto",
-  //selected,
   options,
   error = "",
-  focused,
-  //blured,
+  onFocus,
+  //onBlur,
   update,
   getValue,
   getCheck,
   getId,
 }: {
   width?: string,
-  //selected: SelectCheckbox[],
   options: T[],
   error?: string,
-  focused?: () => void,
-  //blured?: (id: string) => void,
+  onFocus?: () => void,
+  //onBlur?: (id: string) => void,
   update: (values: T[]) => void,
-  getValue: (value: T) => string | number,
+  getValue: (value: T) => V,
   getCheck: (value: T) => boolean,
-  getId: (value: T) => string | number,
+  getId: (value: T) => I,
 }) {
   const selectorContainer = useRef<HTMLDivElement | null>(null);
   const dropdownBody = useRef<HTMLDivElement | null>(null);
@@ -42,7 +40,7 @@ export function ListCheckboxesKit<T>({
     setIsOpen(newIsOpen);
 
     if (newIsOpen && selectorContainer.current) {
-      focused?.();
+      onFocus?.();
 
       setTimeout(() => {
         searcherInput.current?.focus();
@@ -85,7 +83,6 @@ export function ListCheckboxesKit<T>({
   };
 
   const toggleOption = (option: T) => {
-    //update({...option, checked: !option.checked})
     const newSigners = [...options];
     const idx = newSigners.findIndex(item => getId(item) === getId(option))
     newSigners[idx] = {

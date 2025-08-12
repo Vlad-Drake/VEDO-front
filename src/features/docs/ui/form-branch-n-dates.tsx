@@ -1,5 +1,5 @@
 import { ButtonKit } from "@/shared/ui/button-kit";
-import { CalendarKit } from "@/shared/ui/calendarKit/calendarKit";
+import { CalendarKit } from "@/shared/ui/calendar-kit/calendarKit";
 import { SelectKit } from "@/shared/ui/select-kit";
 import { useContext } from "react";
 import { FormBranchNDatesContext } from "./form-branch-n-dates-context";
@@ -80,11 +80,10 @@ export function FormBranchNDates({
                             placeholder='dd.mm.yyyy'
                         />
                         <ButtonKit
-                            btnContent={<p>Найти</p>}
-                            btnStatus={isPending ? 'loading' : 'default'}
-                            btnClick={getDocsForm}
-                            btnType='primary'
-                        />
+                            status={isPending ? 'loading' : 'default'}
+                            onClick={getDocsForm}
+                            colorType='primary'
+                        ><p>Найти</p></ButtonKit>
                     </div>
                 </div>
 

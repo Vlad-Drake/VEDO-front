@@ -39,8 +39,8 @@ export function RegularApproversForm({
                 width={'100%'}
                 placeholder='Префикс'
                 updateValue={e => setForm({ ...form, pref: e })}
-                blured={() => console.log()}
-                focused={() => console.log()}
+                onBlur={() => console.log()}
+                onFocus={() => console.log()}
                 error={''}
             />
             <TextInputKit
@@ -49,18 +49,17 @@ export function RegularApproversForm({
                 placeholder='login@slata.com'
                 name='email'
                 updateValue={e => setForm({ ...form, email: e })}
-                blured={() => console.log()}
-                focused={() => console.log()}
+                onBlur={() => console.log()}
+                onFocus={() => console.log()}
                 error={''}
             />
             <ButtonKit
                 type='submit'
-                btnStatus='default'
-                btnClick={() => { }}
-                btnWidth='100%'
-                btnType='primary'
-                btnContent='Создать'
-            />
+                status='default'
+                onClick={() => { }}
+                width='100%'
+                colorType='primary'
+            >Создать</ButtonKit>
         </form>
     );
 }

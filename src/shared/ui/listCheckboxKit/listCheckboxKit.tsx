@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './listCheckboxKit.module.scss';
-import { CheckboxKit } from '@/shared/ui/checkboxKit/checkboxKit';
+import { CheckboxKit } from '@/shared/ui/checkbox-kit';
 import { SkeletonKit } from '../skeleton-kit';
 import clsx from 'clsx';
 

@@ -110,15 +110,6 @@
     cursor: default;
     text-decoration: none;
   }
-
-  /*a:hover {
-    color: var(--color-white);
-    background-color: var(--color-gray);
-  }
-  p:hover {
-    color: var(--color-white);
-    background-color: var(--color-gray);
-  }*/
 }
 
 .default-input-focus {
@@ -133,31 +124,6 @@
   background-color: #fba788;
 }
 
-/*
-.checkbox-wrapper {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-.checkbox {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-.checkbox-wrapper.checked .checkbox {
-  background-color: var(--color-additional-dark);
-  border-color: var(--color-additional-dark);
-}
-.checkmark {
-  width: 20px;
-  height: 20px;
-}*/
 .selector-all {
   display: flex;
   gap: 10px;

@@ -64,12 +64,11 @@ function GroupChangeApprover() {
                     />
 
                     <ButtonKit
-                        btnContent={'Изменить'}
-                        btnStatus='default'
-                        btnClick={() => console.log('edit')}
-                        btnWidth='350px'
-                        btnType='primary'
-                    />
+                        status='default'
+                        onClick={() => console.log('edit')}
+                        width='350px'
+                        colorType='primary'
+                    >Изменить</ButtonKit>
                 </div>
             </div>
 
