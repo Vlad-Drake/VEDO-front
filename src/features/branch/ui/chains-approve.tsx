@@ -111,17 +111,15 @@ export function ChainModal({
 
                     <div className='flex justify-end gap-[10px]'>
                         <ButtonKit
-                            btnStatus='default'
-                            btnClick={() => setIsShow(false)}
-                            btnType='additional'
-                            btnContent='Отмена'
-                        />
+                            status='default'
+                            onClick={() => setIsShow(false)}
+                            colorType='additional'
+                        >Отмена</ButtonKit>
                         <ButtonKit
-                            btnStatus='default'
-                            btnClick={() => updateChain(chain)}
-                            btnType='primary'
-                            btnContent='Сохранить'
-                        />
+                            status='default'
+                            onClick={() => updateChain(chain)}
+                            colorType='primary'
+                        >Сохранить</ButtonKit>
                     </div>
 
                 </div>
@@ -169,11 +167,10 @@ export function ChainsApprove({ branchId }: { branchId: number | null }) {
                         <div className={classes['title']}>
 
                             <ButtonKit
-                                btnContent='Редактировать'
-                                btnStatus='default'
-                                btnClick={() => updateChain(item)}
-                                btnType='primary'
-                            />
+                                status='default'
+                                onClick={() => updateChain(item)}
+                                colorType='primary'
+                            >Редактировать</ButtonKit>
                             <h3>{item.docType}</h3>
 
                         </div>

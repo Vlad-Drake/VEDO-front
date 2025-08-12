@@ -15,10 +15,7 @@ const initialRegularApprovers = {
 export function RegularApproversForm({
     createRegularApprover,
 }: {
-    createRegularApprover: (data: {
-        pref: string,
-        email: string,
-    }) => void,
+    createRegularApprover: (data: RegularApproversForm) => void,
 }) {
 
     const [form, setForm] = useState<RegularApproversForm>(initialRegularApprovers);

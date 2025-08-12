@@ -3,6 +3,7 @@ import { useDocInfo } from "./use-doc-info";
 import { SelectDocType } from "./select-doc-type";
 import { Page } from "./doc-info-page";
 import { DocInfoTable } from "./doc-info-table";
+import { BorderDashed } from "@/shared/ui/border-dashed";
 
 function DocInfo() {
 	const docTypes = useDocTypesWithState();
@@ -17,7 +18,7 @@ function DocInfo() {
 				setSelectedDocId={docTypes.setSelectedDocId}
 				isPending={docTypes.isPending}
 			/>
-			<div className='border-t-2 border-dashed'></div>
+			<BorderDashed />
 			<DocInfoTable
 				selectedDocId={docTypes.selectedDocId}
 				docName={docTypes.docName.current}

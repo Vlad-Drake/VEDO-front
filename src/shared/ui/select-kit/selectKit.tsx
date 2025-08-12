@@ -3,7 +3,7 @@ import ArrowIco from "./assets/arrow.svg";
 import styles from "./selectKit.module.scss";
 import { clsx } from 'clsx';
 
-export function SelectKit<T extends { id: string | number }, V extends string | number, I extends string | number>({
+export function SelectKit<T extends unknown, V extends string | number, I extends string | number>({
   width = "auto",
   selectedId,
   options,
@@ -91,7 +91,7 @@ export function SelectKit<T extends { id: string | number }, V extends string | 
 
   const filteredOptions = options.filter(option => String(getValue(option)).toLowerCase().includes(searchText.toLowerCase()));
 
-  const selectedValue = options.find((item) => item.id == selectedId) ? getValue(options.find((item) => item.id == selectedId)!) : '';
+  const selectedValue = options.find((item) => getId(item) == selectedId) ? getValue(options.find((item) => getId(item) == selectedId)!) : '';
 
   const { isAbove, dropdownListHeight } = adjustDropdownPosition();
 
@@ -145,7 +145,7 @@ export function SelectKit<T extends { id: string | number }, V extends string | 
                 .map((option, index) => (
                   <p
                     onClick={() => SelectOption(option)}
-                    key={`${option.id}-${index}`}
+                    key={`${getId(option)}-${index}`}
                   >
                     {getValue(option)}
                   </p>

@@ -1,7 +1,6 @@
-import React, { createContext, useContext, useRef, useState, type RefObject } from "react";
+import React, { createContext, useContext, useRef, useState } from "react";
 import styles from "./tutor.module.css";
 import clsx from "clsx";
-import { createPortal } from "react-dom";
 import { mergeRefs } from "react-merge-refs";
 import { ButtonKit } from "@/shared/ui/button-kit";
 
@@ -142,17 +141,15 @@ function useTooltip({
                     <div className={styles.tooltipContent}>{content}</div>
                     <div className={styles.tooltipButtons}>
                         <ButtonKit
-                            btnStatus='default'
-                            btnClick={handleSkip}
-                            btnType='additional'
-                            btnContent={'Завершить'}
-                        />
+                            status='default'
+                            onClick={handleSkip}
+                            colorType='additional'
+                        >Завершить</ButtonKit>
                         <ButtonKit
-                            btnStatus='default'
-                            btnClick={handleNext}
-                            btnType='primary'
-                            btnContent={isLastStep ? "Завершить" : "Дальше"}
-                        />
+                            status='default'
+                            onClick={handleNext}
+                            colorType='primary'
+                        >{isLastStep ? "Завершить" : "Дальше"}</ButtonKit>
                     </div>
                 </div>
             </>

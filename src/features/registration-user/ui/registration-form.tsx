@@ -74,7 +74,7 @@ export function RegistrationForm() {
                     field.type === "select" ? (
                         <SelectKit
                             {...commonProps}
-                            selectedId={registerUser[field.fieldName]}
+                            selectedId={+registerUser[field.fieldName]}
                             updateId={(event) => handleChange(String(event), field.fieldName)}
                             onBlur={(event) => validateField(field.fieldName, String(event))}
                             options={field.fieldName === "jobTitle" ? (jobTitles.jobTitles.data?.list ?? []) : []}
@@ -95,12 +95,11 @@ export function RegistrationForm() {
 
             <div className="flex justify-center">
                 <ButtonKit
-                    btnClick={() => 1}
-                    btnContent={<p>Зарегистрировать</p>}
-                    btnStatus={isPending ? 'loading' : 'default'}
+                    onClick={() => 1}
+                    status={isPending ? 'loading' : 'default'}
                     type="submit"
-                    btnType="primary"
-                />
+                    colorType="primary"
+                ><p>Зарегистрировать</p></ButtonKit>
             </div>
             <div className="flex justify-center">
                 {errorMessage && <NotificationKit type="error">

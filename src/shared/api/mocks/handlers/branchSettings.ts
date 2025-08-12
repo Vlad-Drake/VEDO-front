@@ -1,6 +1,6 @@
 import { http } from '../http';
 import type { ApiSchemas } from '../../schema';
-import { delay, HttpResponse } from 'msw';
+import { HttpResponse } from 'msw';
 
 const branchSigners: ApiSchemas['BranchSignersResponse'] = {
     signers: [

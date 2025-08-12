@@ -2,15 +2,12 @@
 import { SelectRadioKit } from '@/shared/ui/selectRadioKit/selectRadioKit';
 import { TextInputKit } from '@/shared/ui/textInputKit/textInputKit';
 import { NotificationKit } from '@/shared/ui/notificationKit/notificationKit';*/
-import { useLoadingPage } from '@/shared/model/loadingPage';
 //import { useState } from 'react';
 /*import { CalendarKit } from '@/shared/ui/calendarKit/calendarKit';
 import { SelectCheckboxKit } from '@/shared/ui/selectCheckboxKit/selectCheckboxKit';
 import { CheckboxKit } from '@/shared/ui/checkboxKit/checkboxKit';*/
 
 function Home() {
-    const { done } = useLoadingPage();
-    done();
     /*function test() {
         console.log('Hi!')
     }

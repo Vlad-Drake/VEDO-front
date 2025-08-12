@@ -1,5 +1,3 @@
-import type { SignersRecord } from "../model/use-branch-settings";
-
 export const moveRowUp = <T extends { row: number }>(currentRow: number, signers: Record<number, T>): Record<number, T> | undefined => {
     if (signers[currentRow - 1]) {
         const currentObj = signers[currentRow];

@@ -2,11 +2,11 @@ import { http } from '../http';
 import type { ApiSchemas } from '../../schema';
 import { delay, HttpResponse } from 'msw';
 
-const branchCodes: ApiSchemas["CodeListResponse"] = {
+const branchCodes: ApiSchemas["BranchCodeListResponse"] = {
     list: [
-        {id: 1, code: 'Код 1С'},
-        {id: 2, code: 'Код SM'},
-        {id: 3, code: 'Код общепита'},
+        { id: 1, code: 'Код 1С' },
+        { id: 2, code: 'Код SM' },
+        { id: 3, code: 'Код общепита' },
     ]
 }
 
